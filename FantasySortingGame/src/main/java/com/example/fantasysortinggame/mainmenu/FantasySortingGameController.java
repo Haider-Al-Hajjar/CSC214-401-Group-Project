@@ -3,7 +3,7 @@ package com.example.fantasysortinggame.mainmenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class FantasySortingGameController {
     @FXML
     private Label welcomeText;
 

@@ -1,6 +1,6 @@
 package com.example.fantasysortinggame.datatypes;
 
-public class EventTrigger {
+public class StoryEventTrigger {
     int requiredDay;
     String requiredSort;
     boolean requiredItemIsSoldValue;

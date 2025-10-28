@@ -14,13 +14,13 @@ public class StoryEvent {
     private boolean eventHasHappened;
     private boolean eventSolvedCorrectly;
     private ArrayList<Item> itemsAffected;
-    private ArrayList<EventTrigger> eventTriggers;
-    boolean isEventValid(ArrayList<EventTrigger> eventTriggers) {
+    private ArrayList<StoryEventTrigger> storyEventTriggers;
+    boolean isEventValid(ArrayList<StoryEventTrigger> storyEventTriggers) {
         // loop through arraylist and check each trigger.
         return false;
     }
 
-    public StoryEvent(String title, String description, ArrayList<String> options, String correctOption, long start, long end, long maxTime, boolean solvedInTime, boolean eventHasHappened, boolean eventSolvedCorrectly, ArrayList<Item> itemsAffected, ArrayList<EventTrigger> eventTriggers) {
+    public StoryEvent(String title, String description, ArrayList<String> options, String correctOption, long start, long end, long maxTime, boolean solvedInTime, boolean eventHasHappened, boolean eventSolvedCorrectly, ArrayList<Item> itemsAffected, ArrayList<StoryEventTrigger> storyEventTriggers) {
         this.title = title;
         this.description = description;
         this.options = options;
@@ -32,6 +32,6 @@ public class StoryEvent {
         this.eventHasHappened = eventHasHappened;
         this.eventSolvedCorrectly = eventSolvedCorrectly;
         this.itemsAffected = itemsAffected;
-        this.eventTriggers = eventTriggers;
+        this.storyEventTriggers = storyEventTriggers;
     }
 }
