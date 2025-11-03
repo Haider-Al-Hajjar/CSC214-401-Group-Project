@@ -1,6 +1,7 @@
 module com.example.fantasysortinggame {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.example.fantasysortinggame to javafx.fxml;
