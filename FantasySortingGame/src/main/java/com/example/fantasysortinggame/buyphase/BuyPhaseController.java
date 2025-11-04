@@ -4,10 +4,12 @@ import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Upgrade;
 import com.example.fantasysortinggame.mainmenu.SoundEffectController;
 
+import java.util.ArrayList;
+
 public class BuyPhaseController {
 
     private final Database database;
-
+    private ArrayList<Upgrade> unboughtUpgrades;
     public BuyPhaseController(Database database) {
         this.database = database;
     }
@@ -16,11 +18,11 @@ public class BuyPhaseController {
         This method should get all unbought upgrades from the database.
      */
     void loadUpgrades() {
-        /*
-            unboughtUpgrades = database.getUnboughtUpgrades
-            displayBuyMenu(unboughtUpgrades)
-            potentially have something related to the current day count.
-         */
+
+            unboughtUpgrades = database.getUnboughtUpgrades();
+            displayBuyMenu();
+            //potentially have something related to the current day count.
+
     }
 
 
