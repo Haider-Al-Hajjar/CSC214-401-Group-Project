@@ -53,14 +53,14 @@ public class BuyPhaseController {
     /*
         // Until kayla does her thing this can stay kind of undone.
         should make a new stage and populate it with an upgrade menu, and then individual upgrades.
-        for(Upgrade upgrade : unboutUpgrades)
+        for(Upgrade upgrade : unboughtUpgrades)
         displayUpgrade(upgrade)
      */
         }
 
         void displayUpgrade (Upgrade upgrade){
         /*
-            should populate the display with the appropraite fxml.
+            should populate the display with the appropriate fxml.
          */
         }
     }

@@ -11,7 +11,8 @@ public class Database { // might need to be static? I'm not sure. There should o
     private ArrayList<Item> usedItems;
     private ArrayList<Item> allItems;
     private ArrayList<Upgrade> allUpgrades;
-    private ArrayList<Upgrade> usedUpgrades;
+    private ArrayList<Upgrade> unboughtUpgrades;
+    private ArrayList<Upgrade> boughtUpgrades;
     private ArrayList<StoryEvent> allEvents;
     private ArrayList<Npc> allNpcs;
     private ArrayList<Dialogue> allDialogues;
@@ -77,13 +78,13 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.allUpgrades = allUpgrades;
     }
 
-    public ArrayList<Upgrade> getUsedUpgrades() {
-        return usedUpgrades;
-    }
+    public ArrayList<Upgrade> getUnboughtUpgrades() {return unboughtUpgrades;}
 
-    public void setUsedUpgrades(ArrayList<Upgrade> usedUpgrades) {
-        this.usedUpgrades = usedUpgrades;
-    }
+    public void setUnboughtUpgrades(ArrayList<Upgrade> unboughtUpgrades) {this.unboughtUpgrades = unboughtUpgrades;}
+
+    public ArrayList<Upgrade> getBoughtUpgrades() {return boughtUpgrades;}
+
+    public void setBoughtUpgrades(ArrayList<Upgrade> boughtUpgrades) {this.boughtUpgrades = boughtUpgrades;}
 
     public ArrayList<StoryEvent> getAllEvents() {
         return allEvents;
