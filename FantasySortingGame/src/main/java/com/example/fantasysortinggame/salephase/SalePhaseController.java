@@ -54,6 +54,8 @@ public class SalePhaseController {
             displaySaleMenu(usedItems)
          */
 
+
+        //comment test
     }
 
     void displaySaleMenu(ArrayList<Item> usedItems) {
