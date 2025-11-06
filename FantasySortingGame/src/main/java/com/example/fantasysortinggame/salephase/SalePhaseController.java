@@ -25,7 +25,7 @@ public class SalePhaseController {
 
     void onChangeFilterButtonClickedHandler(String filter) {
         /*
-            // probably gonna have to navigate to wherever the filter string is to get the string
+            // probably gon7na have to navigate to wherever the filter string is to get the string
             // this part can wait until Kayla's done.
             this.filter = filter.
          */
