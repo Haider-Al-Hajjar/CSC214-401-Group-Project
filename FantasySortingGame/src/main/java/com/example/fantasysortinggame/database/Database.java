@@ -8,6 +8,7 @@ public class Database { // might need to be static? I'm not sure. There should o
     private String fileName;
     private int day;
     private int seed;
+    private int gold;
     private ArrayList<Item> usedItems;
     private ArrayList<Item> allItems;
     private ArrayList<Upgrade> allUpgrades;
@@ -43,6 +44,14 @@ public class Database { // might need to be static? I'm not sure. There should o
 
     public void setDay(int day) {
         this.day = day;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     public ArrayList<Item> getUsedItems() {
