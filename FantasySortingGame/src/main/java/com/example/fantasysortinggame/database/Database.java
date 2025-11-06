@@ -13,7 +13,7 @@ public class Database { // might need to be static? I'm not sure. There should o
     private ArrayList<Upgrade> allUpgrades;
     private ArrayList<Upgrade> unboughtUpgrades;
     private ArrayList<Upgrade> boughtUpgrades;
-    private ArrayList<StoryEvent> allEvents;
+    private ArrayList<QuickTimeEvent> allEvents;
     private ArrayList<Npc> allNpcs;
     private ArrayList<Dialogue> allDialogues;
 
@@ -86,11 +86,11 @@ public class Database { // might need to be static? I'm not sure. There should o
 
     public void setBoughtUpgrades(ArrayList<Upgrade> boughtUpgrades) {this.boughtUpgrades = boughtUpgrades;}
 
-    public ArrayList<StoryEvent> getAllEvents() {
+    public ArrayList<QuickTimeEvent> getAllEvents() {
         return allEvents;
     }
 
-    public void setAllEvents(ArrayList<StoryEvent> allEvents) {
+    public void setAllEvents(ArrayList<QuickTimeEvent> allEvents) {
         this.allEvents = allEvents;
     }
 

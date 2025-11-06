@@ -11,14 +11,14 @@ public class DialogueBoxController {
         this.database = database;
     }
 
-    void runDialogue(Dialogue dialogue) {
+    public void runDialogue(Dialogue dialogue) {
         /*
                 this.dialogue = dialogue;
                 displayDialogue(dialogue, "")
                 dialogue.setHasHappened(true)
         */
     }
-    void displayDialogue(Dialogue dialogue, String theStorySoFar) {
+    public void displayDialogue(Dialogue dialogue, String theStorySoFar) {
         /*
             if thestory so far != dialogue.getDialogue
                 update the screen with dialogue after theStorySoFar
@@ -28,7 +28,7 @@ public class DialogueBoxController {
          */
     }
 
-    void onNextButtonClickHandler(){
+    public void onNextButtonClickHandler(){
         /*
             get the text from the display and store in
             String theStorySoFar

@@ -3,35 +3,36 @@ package com.example.fantasysortinggame.datatypes;
 import java.util.ArrayList;
 
 public class StoryEvent {
-    private String title;
-    private String description;
-    private ArrayList<String> options;
-    private String correctOption;
-    private long start;
-    private long end;
-    private long maxTime;
-    private boolean solvedInTime;
-    private boolean eventHasHappened;
-    private boolean eventSolvedCorrectly;
-    private ArrayList<Item> itemsAffected;
+    private boolean happened;
     private ArrayList<StoryEventTrigger> storyEventTriggers;
-    boolean isEventValid(ArrayList<StoryEventTrigger> storyEventTriggers) {
-        // loop through arraylist and check each trigger.
+    public boolean isTriggered() {
+        // run through the story event triggers to see if it's been triggered.
+        return false;
+    }
+    public boolean isTriggered(String newSort) {
+        // run through the story event triggers to see if it's been triggered.
+        // also check if newSort is a trigger and if so what does it change.
         return false;
     }
 
-    public StoryEvent(String title, String description, ArrayList<String> options, String correctOption, long start, long end, long maxTime, boolean solvedInTime, boolean eventHasHappened, boolean eventSolvedCorrectly, ArrayList<Item> itemsAffected, ArrayList<StoryEventTrigger> storyEventTriggers) {
-        this.title = title;
-        this.description = description;
-        this.options = options;
-        this.correctOption = correctOption;
-        this.start = start;
-        this.end = end;
-        this.maxTime = maxTime;
-        this.solvedInTime = solvedInTime;
-        this.eventHasHappened = eventHasHappened;
-        this.eventSolvedCorrectly = eventSolvedCorrectly;
-        this.itemsAffected = itemsAffected;
+    public StoryEvent(boolean happened, ArrayList<StoryEventTrigger> storyEventTriggers) {
+        this.happened = happened;
+        this.storyEventTriggers = storyEventTriggers;
+    }
+
+    public boolean hasHappened() {
+        return happened;
+    }
+
+    public void setHappened(boolean happened) {
+        this.happened = happened;
+    }
+
+    public ArrayList<StoryEventTrigger> getStoryEventTriggers() {
+        return storyEventTriggers;
+    }
+
+    public void setStoryEventTriggers(ArrayList<StoryEventTrigger> storyEventTriggers) {
         this.storyEventTriggers = storyEventTriggers;
     }
 }

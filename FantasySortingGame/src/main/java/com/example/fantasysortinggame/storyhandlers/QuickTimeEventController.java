@@ -1,10 +1,10 @@
 package com.example.fantasysortinggame.storyhandlers;
 
 import com.example.fantasysortinggame.datatypes.Item;
-import com.example.fantasysortinggame.datatypes.StoryEvent;
+import com.example.fantasysortinggame.datatypes.QuickTimeEvent;
 
-public class StoryEventController {
-    void runStoryEvent(StoryEvent storyEvent, Item item) {
+public class QuickTimeEventController {
+    public void runStoryEvent(QuickTimeEvent quickTimeEvent, Item item) {
         /*
             EventUI.displayStoryEvent(storyEvent)
             startTimer(storyEvent.startingTime)
@@ -13,7 +13,7 @@ public class StoryEventController {
          */
     }
 
-    void onOptionClick(String option) {
+    public void onOptionClick(String option) {
         /*
             eventSolvedCorrectly = storyEvent.correctOption().equals(option))
             endTimer()

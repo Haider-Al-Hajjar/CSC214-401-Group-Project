@@ -8,17 +8,9 @@ public class SoundEffectController {
     /*
         Once we finish the rest of the classes, we should have onButtonClickedHandlers call the sound effect controller to play a sound.
      */
-    private final Database database;
+    protected File buttonClickSound = new File("com/example/fantasysortinggame/sound files/PLACEHOLDERButtonClickSoundFile");
 
-    public SoundEffectController(Database database) {
-        this.database = database;
-    }
-
-    void onButtonPressed() {
-
-    }
-
-    void playSound(File soundFile) {
+    protected void playSound(File soundFile) {
 
     }
 }
