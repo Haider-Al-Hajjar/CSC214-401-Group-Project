@@ -16,6 +16,7 @@ public class Database { // might need to be static? I'm not sure. There should o
     private ArrayList<QuickTimeEvent> allEvents;
     private ArrayList<Npc> allNpcs;
     private ArrayList<Dialogue> allDialogues;
+    private double gold = 0.0; //(suyog- added this field)
 
     public String getFileName() {
         return fileName;
@@ -108,6 +109,20 @@ public class Database { // might need to be static? I'm not sure. There should o
 
     public void setAllDialogues(ArrayList<Dialogue> allDialogues) {
         this.allDialogues = allDialogues;
+    }
+
+    //Suyog - added fer more getters and setters
+    public double getGold(){
+        return  gold;
+    }
+
+    public void setGold(double gold) {
+        this.gold = gold;
+    }
+
+    public void addGold(double amount){
+        this.gold += amount;
+
     }
 
     void LoadFromFile(String fileName) {
