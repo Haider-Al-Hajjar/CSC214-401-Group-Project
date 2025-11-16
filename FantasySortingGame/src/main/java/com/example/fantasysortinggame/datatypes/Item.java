@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 public class Item {
     private String itemSort;
-    private File imageLink;
+    private String imageLink; // had to change this to string instead of file
     private String description;
     private String title;
     private ItemType itemType;
     private boolean isSold;
     private ArrayList<QuickTimeEvent> events;
     private ArrayList<Dialogue> dialogues;
-    Item() {
+    public Item() {
         // itemSort is going to be a String that has many substrings inside of it each for each subcategory.
         // ex: "Magic Item, Magic Weapon, Magic Sword"
         this.itemSort = "";
@@ -25,7 +25,7 @@ public class Item {
         this.dialogues = new ArrayList<Dialogue>();
 
     }
-    public Item(String itemSort, File imageLink, String description, String title, ItemType itemType, boolean isSold, ArrayList<QuickTimeEvent> events, ArrayList<Dialogue> dialogues) {
+    public Item(String itemSort, String imageLink, String description, String title, ItemType itemType, boolean isSold, ArrayList<QuickTimeEvent> events, ArrayList<Dialogue> dialogues) {
         this.itemSort = itemSort;
         this.imageLink = imageLink;
         this.description = description;
@@ -44,11 +44,12 @@ public class Item {
         this.itemSort = itemSort;
     }
 
-    public File getImageLink() {
+
+    public String getImageLink() {
         return imageLink;
     }
 
-    public void setImageLink(File imageLink) {
+    public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
     }
 

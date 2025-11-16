@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Npc {
     String name;
-    File profilePicturePath;
+    //had to change this to String instead of file datatype
+    String profilePicturePath;
     ArrayList<Dialogue> diolaguesAppearing;
 }

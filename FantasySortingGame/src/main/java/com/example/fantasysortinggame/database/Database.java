@@ -1,7 +1,12 @@
 package com.example.fantasysortinggame.database;
 
 import com.example.fantasysortinggame.datatypes.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Database { // might need to be static? I'm not sure. There should only ever be one of these.
@@ -78,13 +83,21 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.allUpgrades = allUpgrades;
     }
 
-    public ArrayList<Upgrade> getUnboughtUpgrades() {return unboughtUpgrades;}
+    public ArrayList<Upgrade> getUnboughtUpgrades() {
+        return unboughtUpgrades;
+    }
 
-    public void setUnboughtUpgrades(ArrayList<Upgrade> unboughtUpgrades) {this.unboughtUpgrades = unboughtUpgrades;}
+    public void setUnboughtUpgrades(ArrayList<Upgrade> unboughtUpgrades) {
+        this.unboughtUpgrades = unboughtUpgrades;
+    }
 
-    public ArrayList<Upgrade> getBoughtUpgrades() {return boughtUpgrades;}
+    public ArrayList<Upgrade> getBoughtUpgrades() {
+        return boughtUpgrades;
+    }
 
-    public void setBoughtUpgrades(ArrayList<Upgrade> boughtUpgrades) {this.boughtUpgrades = boughtUpgrades;}
+    public void setBoughtUpgrades(ArrayList<Upgrade> boughtUpgrades) {
+        this.boughtUpgrades = boughtUpgrades;
+    }
 
     public ArrayList<QuickTimeEvent> getAllEvents() {
         return allEvents;
@@ -117,10 +130,33 @@ public class Database { // might need to be static? I'm not sure. There should o
                 run tutorial from tutorial handler class
          */
     }
+
     void SaveToFile() {
-        /*
-            save to a file using the current filename
-                if none exists, create a new one.
-         */
+        if (fileName == null || fileName.isEmpty()) {
+            fileName = "saveFile.json";
+        }
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter(fileName)) {
+            gson.toJson(this, writer);
+            System.out.println("Saved everything to " + fileName);
+        } catch (IOException e) {
+            System.out.println("Couldn't save file: " + e.getMessage());
+        }
     }
+
+    public static void main(String[] args) {
+        // this is a test case;
+        Database db = new Database();
+        db.setFileName("saveFile.json");
+        db.setDay(3);
+        db.setSeed(9876);
+
+        ArrayList<Upgrade> upgrades = new ArrayList<>();
+        upgrades.add(new Upgrade("Sharper Blades", 200, false));
+        db.setAllUpgrades(upgrades);
+
+        db.SaveToFile();
+    }
+
+
 }
