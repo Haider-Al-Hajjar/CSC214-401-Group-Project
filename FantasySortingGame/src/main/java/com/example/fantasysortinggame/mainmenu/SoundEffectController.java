@@ -11,6 +11,7 @@ public class SoundEffectController {
     protected File buttonClickSound = new File("com/example/fantasysortinggame/sound files/PLACEHOLDERButtonClickSoundFile");
 
     public static SoundEffectController getInstance() {
+        return null;
     }
 
     protected void playSound(File soundFile) {
@@ -18,6 +19,7 @@ public class SoundEffectController {
     }
 
     public void playPhaseEnd() {
+
     }
 
     public void playSellSuccess() {
