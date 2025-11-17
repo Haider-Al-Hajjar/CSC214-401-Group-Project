@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b7349a5d-8ec2-4106-b9c8-a48e82409ebc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/FantasySortingGame/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FantasySortingGame/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/database/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/datatypes/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/datatypes/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/datatypes/Npc.java" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/datatypes/Npc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FantasySortingGame/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/src/main/java/module-info.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="35D8TWjyMexBnsmdz7nZCsCh8Qa" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "DataBase-Test",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/omard/IdeaProjects/CSC214-401-Group-Project/FantasySortingGame"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b7349a5d-8ec2-4106-b9c8-a48e82409ebc" name="Changes" comment="" />
+      <created>1762633290580</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762633290580</updated>
+    </task>
+    <servers />
+  </component>
+</project>

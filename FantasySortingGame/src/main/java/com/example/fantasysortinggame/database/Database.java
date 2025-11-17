@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -124,12 +125,56 @@ public class Database { // might need to be static? I'm not sure. There should o
     }
 
     void LoadFromFile(String fileName) {
-        /*
-            if no file
-                create new file
-                run tutorial from tutorial handler class
-         */
+        this.fileName = fileName;
+        File file = new File(fileName);
+
+      //this will check if file exist and if it doesnt it will start tutorial
+        //its empty so far
+        if (!file.exists()) {
+            //starts new data if empty
+            this.day = 0;
+            this.seed = (int)(Math.random() * Integer.MAX_VALUE);
+
+            this.usedItems = new ArrayList<>();
+            this.allItems = new ArrayList<>();
+            this.allUpgrades = new ArrayList<>();
+            this.unboughtUpgrades = new ArrayList<>();
+            this.boughtUpgrades = new ArrayList<>();
+            this.allEvents = new ArrayList<>();
+            this.allNpcs = new ArrayList<>();
+            this.allDialogues = new ArrayList<>();
+
+
+            // Then save the new tutorial started gane
+            SaveToFile();
+            return;
+        }
+
+        // else there is a save file
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader(file)) {
+            Database loaded = gson.fromJson(reader, Database.class);
+
+            // copies trh= all the valuhes into this instance
+            this.fileName = loaded.fileName;
+            this.day = loaded.day;
+            this.seed = loaded.seed;
+            this.usedItems = loaded.usedItems;
+            this.allItems = loaded.allItems;
+            this.allUpgrades = loaded.allUpgrades;
+            this.unboughtUpgrades = loaded.unboughtUpgrades;
+            this.boughtUpgrades = loaded.boughtUpgrades;
+            this.allEvents = loaded.allEvents;
+            this.allNpcs = loaded.allNpcs;
+            this.allDialogues = loaded.allDialogues;
+
+
+
+        } catch (Exception e) {
+            System.out.println("error happened");
+        }
     }
+
 
     void SaveToFile() {
         if (fileName == null || fileName.isEmpty()) {
@@ -138,25 +183,9 @@ public class Database { // might need to be static? I'm not sure. There should o
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(fileName)) {
             gson.toJson(this, writer);
-            System.out.println("Saved everything to " + fileName);
         } catch (IOException e) {
-            System.out.println("Couldn't save file: " + e.getMessage());
+            System.out.println("error happened");
         }
     }
-
-    public static void main(String[] args) {
-        // this is a test case;
-        Database db = new Database();
-        db.setFileName("saveFile.json");
-        db.setDay(3);
-        db.setSeed(9876);
-
-        ArrayList<Upgrade> upgrades = new ArrayList<>();
-        upgrades.add(new Upgrade("Sharper Blades", 200, false));
-        db.setAllUpgrades(upgrades);
-
-        db.SaveToFile();
-    }
-
 
 }
