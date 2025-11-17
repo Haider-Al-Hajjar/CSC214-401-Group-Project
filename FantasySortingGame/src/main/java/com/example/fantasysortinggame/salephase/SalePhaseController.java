@@ -181,13 +181,9 @@ public class SalePhaseController {
                         " [" + item.getItemSort() + "] → " + value + " gold");
             }
         }
-
-        // In real UI: SalePhaseUI.render(toShow, this::onSellButtonClickedHandler, currentFilter);
     }
 
     // 5. END OF PHASE
-
-
     /*
       Called when player clicks "Proceed" button
       Tells the main game loop to go to Buy Phase
