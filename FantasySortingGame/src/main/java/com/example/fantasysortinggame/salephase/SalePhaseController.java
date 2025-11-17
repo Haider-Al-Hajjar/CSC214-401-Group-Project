@@ -22,8 +22,8 @@ This class handles everything in the "Sell Items" phase.
   Add gold
   Mark item as sold
   Remove from display
- Trigger story event or dialogue if needed
- When player clicks "Proceed" → go to Buy Phase
+  Trigger story event or dialogue if needed
+  When player clicks "Proceed" → go to Buy Phase
 
  */
 public class SalePhaseController {
@@ -48,9 +48,8 @@ public class SalePhaseController {
         this.dialogueCtrl = dialogueCtrl;
     }
 
-    // ==============================================================
     // 1. LOAD ITEMS WHEN SALE PHASE STARTS
-    // ==============================================================
+
 
     /*
      Called when entering Sale Phase.
@@ -70,9 +69,9 @@ public class SalePhaseController {
         sfx.playPhaseStart(); // Optional: play sound
     }
 
-    // ==============================================================
+
     // 2. FILTERING
-    // ==============================================================
+
 
     /*
      Called when player clicks a filter button (e.g., "Magic", "All")
@@ -84,9 +83,9 @@ public class SalePhaseController {
         sfx.playButtonClick();
     }
 
-    // ==============================================================
+
     // 3. SELLING AN ITEM
-    // ==============================================================
+
 
     /*
      Called when player clicks "Sell" on an item
@@ -155,9 +154,9 @@ public class SalePhaseController {
         return 30.0; // default
     }
 
-    // ==============================================================
+
     // 4. UI DISPLAY
-    // ==============================================================
+
 
     /*
      Refresh the sale screen with current items and filter
@@ -186,24 +185,21 @@ public class SalePhaseController {
         // In real UI: SalePhaseUI.render(toShow, this::onSellButtonClickedHandler, currentFilter);
     }
 
-    // ==============================================================
     // 5. END OF PHASE
-    // ==============================================================
+
 
     /*
       Called when player clicks "Proceed" button
       Tells the main game loop to go to Buy Phase
      */
+
     public void onEndPhaseClick() {
         sfx.playPhaseEnd();
         // This should trigger BuyPhase
-        // Example: GameController.getInstance().startBuyPhase();
         System.out.println("Sale Phase Complete! Moving to Buy Phase...");
     }
 
-    // ==============================================================
     // GETTERS (for UI to read state)
-    // ==============================================================
 
     public ArrayList<Item> getUnsoldItems() {
         return unsoldItems;
