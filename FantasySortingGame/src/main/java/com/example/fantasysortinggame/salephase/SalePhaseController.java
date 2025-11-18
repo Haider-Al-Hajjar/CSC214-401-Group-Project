@@ -147,6 +147,9 @@ public class SalePhaseController {
      You can make this smarter later!
      */
     private double estimateItemValue(Item item) {
+
+        // remember to check for correctness and add a penalty if incorrect
+            // also remember to make that dpeend on the current day later.
         String sort = item.getItemSort().toLowerCase();
         if (sort.contains("legendary") || sort.contains("artifact")) return 100.0;
         if (sort.contains("rare") || sort.contains("magic")) return 50.0;
@@ -191,7 +194,7 @@ public class SalePhaseController {
 
     public void onEndPhaseClick() {
         sfx.playPhaseEnd();
-        // This should trigger BuyPhase
+        // This should trigger BuyPhase 12
         System.out.println("Sale Phase Complete! Moving to Buy Phase...");
     }
 
