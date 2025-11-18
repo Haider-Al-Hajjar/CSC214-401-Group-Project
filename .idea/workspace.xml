@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7349a5d-8ec2-4106-b9c8-a48e82409ebc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/FantasySortingGame/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FantasySortingGame/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/datatypes/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/datatypes/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/datatypes/Npc.java" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/src/main/java/com/example/fantasysortinggame/datatypes/Npc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FantasySortingGame/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/FantasySortingGame/src/main/java/module-info.java" afterDir="false" />
-    </list>
+    <list default="true" id="b7349a5d-8ec2-4106-b9c8-a48e82409ebc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +13,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "omaga1231"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Haider-Al-Hajjar/CSC214-401-Group-Project.git",
+    "accountId": "7a2f45e7-d8e1-4cd6-9bb5-edba1b64afd1"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -29,14 +34,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "DataBase-Test",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/omard/IdeaProjects/CSC214-401-Group-Project/FantasySortingGame"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;DataBase-Test&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/omard/IdeaProjects/CSC214-401-Group-Project/FantasySortingGame&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
