@@ -12,7 +12,6 @@ public class BuyPhaseController {
     private ArrayList<Upgrade> unboughtUpgrades;
     public BuyPhaseController(Database database) {
         this.database = database;
-        //this.unboughtUpgrades = database.getUnboughtUpgrades();
     }
 
     /*
@@ -34,45 +33,36 @@ public class BuyPhaseController {
         No parameters.
         Returns void.
      */
-        void onBuyUpgradeClickHandler (Upgrade upgrade) {
+        void onBuyUpgradeClickHandler () {
         /*
             // Until Kayla does her job, this part can stay undone.
             // Basically, you're gonna get the source of the click and then navigate to the name of the object
             // Once you've got the name, then you've gotta search the database to get the Upgrade associated with it
             // Lastly, use it below
-*/
-            if(database.getGold() >= upgrade.getCost()){    // if owned gold is less than or equal to cost, reduce gold and obtain upgrade
-                database.setGold(database.getGold() - upgrade.getCost());
-                upgrade.setBought(true);
-            }
-            displayBuyMenu();
 
+            code below isn't perfect but you get the gist
+            database.setGold(database.getGold() - upgrade.getCost())
+            upgrade.setIsBought(true)
+            BuyPhaseUI.displayUpgradeMenu()
+                for (Upgrade upgrade : upgrades)
+                    if (Upgrade.isBought() != true)
+                        upgradeDisplay(upgrade)
+         */
         }
 
 
         void displayBuyMenu () {
-
-            /*
+    /*
         // Until kayla does her thing this can stay kind of undone.
         should make a new stage and populate it with an upgrade menu, and then individual upgrades.
         for(Upgrade upgrade : unboughtUpgrades)
         displayUpgrade(upgrade)
-            */
-
-            for (Upgrade upgrade : unboughtUpgrades)    // if not bought display upgrade
-                if (!upgrade.isBought())
-                    displayUpgrade(upgrade);
+     */
         }
 
         void displayUpgrade (Upgrade upgrade){
-
-
-
-            /*
+        /*
             should populate the display with the appropriate fxml.
-            */
-
-
-
+         */
         }
     }

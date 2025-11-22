@@ -1,7 +1,13 @@
 package com.example.fantasysortinggame.database;
 
 import com.example.fantasysortinggame.datatypes.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Database { // might need to be static? I'm not sure. There should only ever be one of these.
@@ -16,7 +22,6 @@ public class Database { // might need to be static? I'm not sure. There should o
     private ArrayList<QuickTimeEvent> allEvents;
     private ArrayList<Npc> allNpcs;
     private ArrayList<Dialogue> allDialogues;
-    private double gold = 0.0; //(suyog- added this field)
 
     public String getFileName() {
         return fileName;
@@ -79,13 +84,21 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.allUpgrades = allUpgrades;
     }
 
-    public ArrayList<Upgrade> getUnboughtUpgrades() {return unboughtUpgrades;}
+    public ArrayList<Upgrade> getUnboughtUpgrades() {
+        return unboughtUpgrades;
+    }
 
-    public void setUnboughtUpgrades(ArrayList<Upgrade> unboughtUpgrades) {this.unboughtUpgrades = unboughtUpgrades;}
+    public void setUnboughtUpgrades(ArrayList<Upgrade> unboughtUpgrades) {
+        this.unboughtUpgrades = unboughtUpgrades;
+    }
 
-    public ArrayList<Upgrade> getBoughtUpgrades() {return boughtUpgrades;}
+    public ArrayList<Upgrade> getBoughtUpgrades() {
+        return boughtUpgrades;
+    }
 
-    public void setBoughtUpgrades(ArrayList<Upgrade> boughtUpgrades) {this.boughtUpgrades = boughtUpgrades;}
+    public void setBoughtUpgrades(ArrayList<Upgrade> boughtUpgrades) {
+        this.boughtUpgrades = boughtUpgrades;
+    }
 
     public ArrayList<QuickTimeEvent> getAllEvents() {
         return allEvents;
@@ -111,31 +124,68 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.allDialogues = allDialogues;
     }
 
-    //Suyog - added fer more getters and setters
-    public double getGold(){
-        return  gold;
-    }
-
-    public void setGold(double gold) {
-        this.gold = gold;
-    }
-
-    public void addGold(double amount){
-        this.gold += amount;
-
-    }
-
     void LoadFromFile(String fileName) {
-        /*
-            if no file
-                create new file
-                run tutorial from tutorial handler class
-         */
+        this.fileName = fileName;
+        File file = new File(fileName);
+
+      //this will check if file exist and if it doesnt it will start tutorial
+        //its empty so far
+        if (!file.exists()) {
+            //starts new data if empty
+            this.day = 0;
+            this.seed = (int)(Math.random() * Integer.MAX_VALUE);
+
+            this.usedItems = new ArrayList<>();
+            this.allItems = new ArrayList<>();
+            this.allUpgrades = new ArrayList<>();
+            this.unboughtUpgrades = new ArrayList<>();
+            this.boughtUpgrades = new ArrayList<>();
+            this.allEvents = new ArrayList<>();
+            this.allNpcs = new ArrayList<>();
+            this.allDialogues = new ArrayList<>();
+
+
+            // Then save the new tutorial started gane
+            SaveToFile();
+            return;
+        }
+
+        // else there is a save file
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader(file)) {
+            Database loaded = gson.fromJson(reader, Database.class);
+
+            // copies trh= all the valuhes into this instance
+            this.fileName = loaded.fileName;
+            this.day = loaded.day;
+            this.seed = loaded.seed;
+            this.usedItems = loaded.usedItems;
+            this.allItems = loaded.allItems;
+            this.allUpgrades = loaded.allUpgrades;
+            this.unboughtUpgrades = loaded.unboughtUpgrades;
+            this.boughtUpgrades = loaded.boughtUpgrades;
+            this.allEvents = loaded.allEvents;
+            this.allNpcs = loaded.allNpcs;
+            this.allDialogues = loaded.allDialogues;
+
+
+
+        } catch (Exception e) {
+            System.out.println("error happened");
+        }
     }
+
+
     void SaveToFile() {
-        /*
-            save to a file using the current filename
-                if none exists, create a new one.
-         */
+        if (fileName == null || fileName.isEmpty()) {
+            fileName = "saveFile.json";
+        }
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter(fileName)) {
+            gson.toJson(this, writer);
+        } catch (IOException e) {
+            System.out.println("error happened");
+        }
     }
+
 }

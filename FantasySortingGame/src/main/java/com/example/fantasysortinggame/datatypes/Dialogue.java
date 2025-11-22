@@ -1,32 +1,30 @@
 package com.example.fantasysortinggame.datatypes;
 
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Represents a full dialogue sequence, composed of multiple DialogueEntries.
- * Extends StoryEvent to allow triggering based on game conditions.
- */
 public class Dialogue extends StoryEvent {
+    private String dialogue;
+    private ArrayList<Npc> charactersAppearing;
 
-    /** The list of lines in this dialogue sequence */
-    private final List<DialogueEntry> entries;
-
-    /**
-     * Constructs a Dialogue object.
-     *
-     * @param entries           List of dialogue lines
-     * @param happened          Whether this dialogue has already occurred
-     * @param storyEventTriggers Conditions for triggering this dialogue
-     */
-    public Dialogue(List<DialogueEntry> entries, boolean happened, ArrayList<StoryEventTrigger> storyEventTriggers) {
-        super(happened, storyEventTriggers);
-        this.entries = entries;
+    public Dialogue(ArrayList<StoryEventTrigger> storyEventTriggers, String dialogue, ArrayList<Npc> charactersAppearing) {
+        super(false, storyEventTriggers);
+        this.dialogue = dialogue;
+        this.charactersAppearing = charactersAppearing;
     }
 
-    /** @return The list of dialogue entries */
-    public List<DialogueEntry> getDialogueEntries() {
-        return entries;
+    public String getDialogue() {
+        return dialogue;
     }
 
+    public void setDialogue(String dialogue) {
+        this.dialogue = dialogue;
+    }
+
+    public ArrayList<Npc> getCharactersAppearing() {
+        return charactersAppearing;
+    }
+
+    public void setCharactersAppearing(ArrayList<Npc> charactersAppearing) {
+        this.charactersAppearing = charactersAppearing;
+    }
 }
