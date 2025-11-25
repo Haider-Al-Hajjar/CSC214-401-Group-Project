@@ -161,7 +161,7 @@ public class Database { // might need to be static? I'm not sure. There should o
 
 
             // Then save the new tutorial started gane
-            SaveToFile();
+            saveToFile();
             return;
         }
 

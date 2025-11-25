@@ -92,7 +92,7 @@ public class DialogueBoxController {
      *
      * @param dialogue The Dialogue to display
      */
-    private void runDialogue(Dialogue dialogue) {
+    public void runDialogue(Dialogue dialogue) {
         this.currentDialogue = dialogue;
         dialogueQueue.clear();
         dialogueQueue.addAll(dialogue.getDialogueEntries());

@@ -99,7 +99,7 @@ public class QuickTimeEventController {
      * @param event The QuickTimeEvent to run
      * @param item  The item affected by the event
      */
-    private void runStoryEvent(QuickTimeEvent event, Item item) {
+    public void runStoryEvent(QuickTimeEvent event, Item item) {
         this.currentEvent = event;
         this.currentItem = item;
 

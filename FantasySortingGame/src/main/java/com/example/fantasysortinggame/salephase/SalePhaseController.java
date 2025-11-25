@@ -139,8 +139,8 @@ public class SalePhaseController {
             itemDescriptionField.setText(selectedItem.getDescription());
             itemTypeField.setText(selectedItem.getItemSort());
 
-            if (selectedItem.getImagePath() != null) {
-                Image img = new Image(selectedItem.getImagePath());
+            if (selectedItem.getImageLink() != null) {
+                Image img = new Image(String.valueOf(selectedItem.getImageLink()));
                 itemImageView.setImage(img);
             } else {
                 itemImageView.setImage(null);
