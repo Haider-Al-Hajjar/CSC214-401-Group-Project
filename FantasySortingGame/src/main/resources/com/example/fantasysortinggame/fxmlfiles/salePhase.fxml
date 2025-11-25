@@ -7,36 +7,67 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="com.example.fantasysortinggame.salephase.SalePhaseController"
+            maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1">
+
+   <!-- LEFT: Item Image & Name -->
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="158.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <TextField text="Image of item" />
-         </children></VBox>
+            <ImageView fx:id="itemImageView"
+                       fitHeight="158.0" fitWidth="200.0"
+                       pickOnBounds="true" preserveRatio="true" />
+            <TextField fx:id="itemNameField"
+                       text="Item Name" editable="false"/>
+         </children>
+      </VBox>
    </left>
+
+   <!-- RIGHT: Placeholder -->
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </right>
+
+   <!-- TOP: Filter Buttons -->
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="67.0" prefWidth="214.0" text="Unsorted" />
-            <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="195.0" text="Junk" />
-            <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="193.0" text="Treasure" />
-         </children></HBox>
+            <Button fx:id="unsortedButton" mnemonicParsing="false"
+                    prefHeight="67.0" prefWidth="214.0" text="Unsorted" />
+            <Button fx:id="junkButton" mnemonicParsing="false"
+                    prefHeight="66.0" prefWidth="195.0" text="Junk" />
+            <Button fx:id="treasureButton" mnemonicParsing="false"
+                    prefHeight="66.0" prefWidth="193.0" text="Treasure" />
+         </children>
+      </HBox>
    </top>
+
+   <!-- BOTTOM: Sell Button -->
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="191.0" text="Selll for x amount of gold" />
-         </children></HBox>
+            <Button fx:id="sellButton" mnemonicParsing="false"
+                    prefHeight="50.0" prefWidth="191.0" text="Sell for X gold" />
+         </children>
+      </HBox>
    </bottom>
+
+   <!-- CENTER: Item Description and Type -->
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField prefHeight="74.0" prefWidth="297.0" text="Description" />
-            <TextField prefHeight="72.0" prefWidth="139.0" text="Type" />
-         </children></HBox>
+            <TextField fx:id="itemDescriptionField"
+                       prefHeight="74.0" prefWidth="297.0"
+                       text="Description" editable="false"/>
+            <TextField fx:id="itemTypeField"
+                       prefHeight="72.0" prefWidth="139.0"
+                       text="Type" editable="false"/>
+         </children>
+      </HBox>
    </center>
+
 </BorderPane>

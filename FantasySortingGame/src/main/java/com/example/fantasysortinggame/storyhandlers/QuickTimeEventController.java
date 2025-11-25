@@ -4,6 +4,13 @@ import com.example.fantasysortinggame.datatypes.Item;
 import com.example.fantasysortinggame.datatypes.QuickTimeEvent;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -16,124 +23,190 @@ import javafx.util.Duration;
  */
 public class QuickTimeEventController {
 
-    /**
-     * The currently running QuickTimeEvent
-     */
+    @FXML private TextField timeLeftField;
+    @FXML private TextField titleField;
+    @FXML private TextField descriptionField;
+    @FXML private Button option1Field;
+    @FXML private Button option2Field;
+
+    /** The stage showing this QTE */
+    private Stage stage;
+
+    /** The currently running QuickTimeEvent */
     private QuickTimeEvent currentEvent;
 
-    /**
-     * The item affected by the current QuickTimeEvent
-     */
+    /** The item affected by the current QuickTimeEvent */
     private Item currentItem;
 
-    /**
-     * JavaFX timer used to track the QTE duration
-     */
+    /** JavaFX timer used to track the QTE duration */
     private Timeline timer;
 
     /**
-     * Starts a QuickTimeEvent for a given item.
+     * Sets the stage for this controller.
+     * Needed to properly close the window when done.
+     *
+     * @param stage The stage to assign
+     */
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    /**
+     * Closes the QTE window and stops the timer.
+     */
+    private void closeStage() {
+        if (timer != null) timer.stop();
+        if (stage != null) stage.close();
+    }
+
+    /**
+     * Launches a QTE window with the given event and item.
      * <p>
-     * This method sets the start time, initializes the solved flags,
-     * displays the event in the UI (placeholder comment), and starts
-     * the countdown timer based on the event's maximum allowed time.
+     * Loads the FXML, sets up a new stage, and runs the event.
      * </p>
      *
      * @param event The QuickTimeEvent to run
-     * @param item  The item that will be affected by the event
+     * @param item  The item affected by the event
      */
-    public void runStoryEvent(QuickTimeEvent event, Item item) {
+    public static void showQuickTimeEventWindow(QuickTimeEvent event, Item item) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    QuickTimeEventController.class.getResource("/path/to/QuickTimeEvent.fxml")
+            );
+            Parent root = loader.load();
+
+            QuickTimeEventController controller = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setTitle("Quick Time Event");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            controller.setStage(stage);
+            controller.runStoryEvent(event, item);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Starts a QuickTimeEvent.
+     * <p>
+     * Initializes timer, sets UI fields, and records start time.
+     * </p>
+     *
+     * @param event The QuickTimeEvent to run
+     * @param item  The item affected by the event
+     */
+    private void runStoryEvent(QuickTimeEvent event, Item item) {
         this.currentEvent = event;
         this.currentItem = item;
 
-        // Record start time
         currentEvent.setStart(System.currentTimeMillis());
         currentEvent.setSolvedInTime(false);
         currentEvent.setEventSolvedCorrectly(false);
 
-        // Display the event in the UI
-        // EventUI.displayStoryEvent(currentEvent);
+        // Update UI fields
+        titleField.setText(currentEvent.getTitle());
+        descriptionField.setText(currentEvent.getDescription());
+        option1Field.setText(currentEvent.getOptions().get(0));
+        option2Field.setText(currentEvent.getOptions().get(1));
 
-        // Start the countdown timer
+        // Wire buttons
+        option1Field.setOnAction(e -> onOptionClick(option1Field.getText()));
+        option2Field.setOnAction(e -> onOptionClick(option2Field.getText()));
+
+        // Start countdown timer
         startTimer(currentEvent.getMaxTime());
     }
 
     /**
-     * Starts a countdown timer for the QuickTimeEvent.
-     * <p>
-     * When the timer expires, {@link #onTimeExpired()} is called.
-     * </p>
+     * Starts a countdown timer for the QTE.
      *
-     * @param maxTime Duration of the QTE in milliseconds
+     * @param maxTimeMillis Duration of the QTE in milliseconds
      */
-    private void startTimer(long maxTime) {
-        timer = new Timeline(new KeyFrame(Duration.millis(maxTime), e -> onTimeExpired()));
-        timer.setCycleCount(1);
+    private void startTimer(long maxTimeMillis) {
+        long[] timeLeft = {maxTimeMillis / 1000}; // in seconds
+
+        updateTimeDisplay(timeLeft[0]);
+
+        timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            timeLeft[0]--;
+            updateTimeDisplay(timeLeft[0]);
+
+            if (timeLeft[0] <= 0) {
+                timer.stop();
+                onTimeExpired();
+            }
+        }));
+
+        timer.setCycleCount((int) timeLeft[0]);
         timer.play();
     }
 
     /**
-     * Handles the player's option selection for the QTE.
-     * <p>
-     * This method stops the timer, records the end time, checks if the
-     * chosen option is correct, marks whether the event was solved in time,
-     * applies effects to the item, and closes the event UI.
-     * </p>
+     * Updates the UI element displaying time left.
      *
-     * @param option The option chosen by the player
+     * @param seconds Time remaining in seconds
      */
-    public void onOptionClick(String option) {
-        if (timer != null) timer.stop();
-
-        // Record end time
-        currentEvent.setEnd(System.currentTimeMillis());
-
-        // Check correctness
-        boolean correct = option.equals(currentEvent.getCorrectOption());
-        currentEvent.setEventSolvedCorrectly(correct);
-
-        // Determine if solved in time
-        long elapsed = currentEvent.getEnd() - currentEvent.getStart();
-        currentEvent.setSolvedInTime(elapsed <= currentEvent.getMaxTime());
-
-        // Apply any item transformations
-        applyItemEffects(currentEvent, currentItem);
-
-        // Close UI (placeholder for JavaFX implementation)
-        // EventUI.endEventDisplay();
+    private void updateTimeDisplay(long seconds) {
+        timeLeftField.setText(formatTime(seconds));
     }
 
     /**
-     * Called automatically when the QTE timer expires.
-     * <p>
-     * Marks the event as failed, both in correctness and timing, and closes the UI.
-     * </p>
+     * Converts seconds to a human-readable "MM:SS" format.
+     *
+     * @param seconds Seconds left
+     * @return Formatted string
+     */
+    private String formatTime(long seconds) {
+        long mins = seconds / 60;
+        long secs = seconds % 60;
+        return String.format("%02d:%02d", mins, secs);
+    }
+
+    /**
+     * Called when the player selects an option.
+     *
+     * @param option The option chosen
+     */
+    private void onOptionClick(String option) {
+        if (timer != null) timer.stop();
+
+        currentEvent.setEnd(System.currentTimeMillis());
+        boolean correct = option.equals(currentEvent.getCorrectOption());
+        currentEvent.setEventSolvedCorrectly(correct);
+        currentEvent.setSolvedInTime(
+                (currentEvent.getEnd() - currentEvent.getStart()) <= currentEvent.getMaxTime()
+        );
+
+        applyItemEffects(currentEvent, currentItem);
+
+        closeStage();
+    }
+
+    /**
+     * Called when the timer expires.
+     * Marks the event as failed and closes the window.
      */
     private void onTimeExpired() {
         currentEvent.setEnd(System.currentTimeMillis());
-        currentEvent.setSolvedInTime(false);
         currentEvent.setEventSolvedCorrectly(false);
+        currentEvent.setSolvedInTime(false);
 
-        // Close UI (placeholder for JavaFX implementation)
-        // EventUI.endEventDisplay();
+        closeStage();
     }
 
     /**
-     * Applies the effects of the QTE to the affected item.
-     * <p>
-     * Depending on whether the event was solved correctly, the item is
-     * updated using the success or failure result item.
-     * </p>
+     * Applies the effects of the QTE to the item.
      *
-     * @param event The QuickTimeEvent containing the result items
-     * @param item  The item to apply the transformation to
+     * @param event The QuickTimeEvent
+     * @param item  The affected item
      */
     private void applyItemEffects(QuickTimeEvent event, Item item) {
         if (item == null) return;
-
         Item result = event.isEventSolvedCorrectly() ? event.getSuccessResult() : event.getFailureResult();
-
-        // Update the item's properties
         item.copyFrom(result);
     }
 }

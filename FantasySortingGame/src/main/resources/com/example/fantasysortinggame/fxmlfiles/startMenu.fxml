@@ -7,33 +7,41 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<BorderPane
+        fx:controller="com.example.fantasysortinggame.mainmenu.StartMenuController"
+        maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+        prefHeight="400.0" prefWidth="600.0"
+        xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField prefHeight="97.0" prefWidth="601.0" text="                                                                                        Game Name " />
+            <TextField fx:id="gameNameField" prefHeight="97.0" prefWidth="601.0" promptText="Enter Game Name" />
          </children>
       </HBox>
    </top>
+
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" spacing="10">
          <children>
-            <ToggleButton mnemonicParsing="false" prefHeight="99.0" prefWidth="415.0" text="Strart New Game " />
-            <ToggleButton mnemonicParsing="false" prefHeight="99.0" prefWidth="395.0" text="Load Saved Game " />
+            <ToggleButton fx:id="startNewGameButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="200.0" text="Start New Game" />
+            <ToggleButton fx:id="loadSavedGameButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="200.0" text="Load Saved Game" />
          </children>
       </HBox>
    </bottom>
-   <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-   </left>
+
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="213.0" fitWidth="448.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="menuImageView" fitHeight="213.0" fitWidth="448.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </VBox>
    </center>
+
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
+
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </right>
