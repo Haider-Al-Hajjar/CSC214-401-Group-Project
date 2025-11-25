@@ -22,6 +22,8 @@ public class Database { // might need to be static? I'm not sure. There should o
     private ArrayList<QuickTimeEvent> allEvents;
     private ArrayList<Npc> allNpcs;
     private ArrayList<Dialogue> allDialogues;
+    private String gameMode;
+
 
     public String getFileName() {
         return fileName;
@@ -124,16 +126,17 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.allDialogues = allDialogues;
     }
 
-    void LoadFromFile(String fileName) {
+    void LoadFromFile(String fileName, String gameMode) {
         this.fileName = fileName;
         File file = new File(fileName);
 
-      //this will check if file exist and if it doesnt it will start tutorial
+        //this will check if file exist and if it doesnt it will start tutorial
         //its empty so far
-        if (!file.exists()) {
+        if (!file.exists()) { // set the game mode
+
             //starts new data if empty
             this.day = 0;
-            this.seed = (int)(Math.random() * Integer.MAX_VALUE);
+            this.seed = (int) (Math.random() * Integer.MAX_VALUE);
 
             this.usedItems = new ArrayList<>();
             this.allItems = new ArrayList<>();
@@ -144,7 +147,11 @@ public class Database { // might need to be static? I'm not sure. There should o
             this.allNpcs = new ArrayList<>();
             this.allDialogues = new ArrayList<>();
 
-
+            if (gameMode != null && !gameMode.isEmpty()) {
+                this.gameMode = gameMode;
+            } else {
+                this.gameMode = "Story";
+            }
             // Then save the new tutorial started gane
             SaveToFile();
             return;
@@ -167,7 +174,7 @@ public class Database { // might need to be static? I'm not sure. There should o
             this.allEvents = loaded.allEvents;
             this.allNpcs = loaded.allNpcs;
             this.allDialogues = loaded.allDialogues;
-
+            this.gameMode = loaded.gameMode;
 
 
         } catch (Exception e) {
@@ -180,8 +187,11 @@ public class Database { // might need to be static? I'm not sure. There should o
         if (fileName == null || fileName.isEmpty()) {
             fileName = "saveFile.json";
         }
+        final String SAVE_DIR = "src/main/java/com/example/fantasysortinggame/database/data/";
+        File file = new File(SAVE_DIR + fileName);
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter(fileName)) {
+        try (FileWriter writer = new FileWriter(file)) {
             gson.toJson(this, writer);
         } catch (IOException e) {
             System.out.println("error happened");
