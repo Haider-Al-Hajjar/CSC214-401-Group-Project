@@ -1,0 +1,13 @@
+{
+  "fileName": "testSave.json",
+  "day": 5,
+  "seed": 12345,
+  "usedItems": [],
+  "allItems": [],
+  "allUpgrades": [],
+  "unboughtUpgrades": [],
+  "boughtUpgrades": [],
+  "allEvents": [],
+  "allNpcs": [],
+  "allDialogues": []
+}

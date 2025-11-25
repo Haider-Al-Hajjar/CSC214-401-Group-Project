@@ -1,0 +1,12 @@
+{
+  "fileName": "saveFile.json",
+  "day": 3,
+  "seed": 9876,
+  "allUpgrades": [
+    {
+      "ability": "Sharper Blades",
+      "cost": 200.0,
+      "isBought": false
+    }
+  ]
+}
