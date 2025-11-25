@@ -29,7 +29,7 @@ public class GamePhaseManager {
 
     /** Sale Phase → waits for player to finish → Buy Phase */
     public static void runSalePhase() {
-        SalePhaseController.showSalePhase(database, primaryStage, GamePhaseManager::runBuyPhase);
+        SalePhaseController.showSalePhase(database, primaryStage);
     }
 
     /** Buy Phase → end of day or loop for next day */

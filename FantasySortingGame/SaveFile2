@@ -1,0 +1,75 @@
+{
+  "fileName": "SaveFile2",
+  "day": 0,
+  "seed": 627144169,
+  "usedItems": [],
+  "allItems": [
+    {
+      "itemSort": "Weapon",
+      "description": "A sturdy iron sword. Reliable in combat.",
+      "title": "Iron Sword",
+      "itemType": {
+        "itemType": "Weapon"
+      },
+      "isSold": false,
+      "value": 10.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Armor",
+      "description": "Simple leather armor. Offers basic protection.",
+      "title": "Leather Armor",
+      "itemType": {
+        "itemType": "Armor"
+      },
+      "isSold": false,
+      "value": 8.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Consumable",
+      "description": "Restores a small amount of health when used.",
+      "title": "Health Potion",
+      "itemType": {
+        "itemType": "Consumable"
+      },
+      "isSold": false,
+      "value": 5.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Magic Item",
+      "description": "A scroll containing a minor spell.",
+      "title": "Magic Scroll",
+      "itemType": {
+        "itemType": "Magic Item"
+      },
+      "isSold": false,
+      "value": 12.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Accessory",
+      "description": "Lightweight boots that improve agility slightly.",
+      "title": "Leather Boots",
+      "itemType": {
+        "itemType": "Accessory"
+      },
+      "isSold": false,
+      "value": 7.0,
+      "events": [],
+      "dialogues": []
+    }
+  ],
+  "allUpgrades": [],
+  "unboughtUpgrades": [],
+  "boughtUpgrades": [],
+  "allEvents": [],
+  "allNpcs": [],
+  "allDialogues": [],
+  "gold": 0.0
+}

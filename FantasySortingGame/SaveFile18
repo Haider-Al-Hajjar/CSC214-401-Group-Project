@@ -1,0 +1,88 @@
+{
+  "fileName": "SaveFile18",
+  "day": 0,
+  "seed": 1924702801,
+  "usedItems": [
+    {
+      "itemSort": "Unsorted",
+      "description": "A shiny sword",
+      "title": "Sword of Light",
+      "itemType": {
+        "itemType": "Magic Weapon"
+      },
+      "isSold": false,
+      "value": 100.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Unsorted",
+      "description": "Heals 50 HP",
+      "title": "Healing Potion",
+      "itemType": {
+        "itemType": "Potion"
+      },
+      "isSold": false,
+      "value": 25.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Unsorted",
+      "description": "Ancient gold coins",
+      "title": "Gold Coins",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": false,
+      "value": 200.0,
+      "events": [],
+      "dialogues": []
+    }
+  ],
+  "allItems": [
+    {
+      "itemSort": "Unsorted",
+      "description": "A shiny sword",
+      "title": "Sword of Light",
+      "itemType": {
+        "itemType": "Magic Weapon"
+      },
+      "isSold": false,
+      "value": 100.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Unsorted",
+      "description": "Heals 50 HP",
+      "title": "Healing Potion",
+      "itemType": {
+        "itemType": "Potion"
+      },
+      "isSold": false,
+      "value": 25.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Unsorted",
+      "description": "Ancient gold coins",
+      "title": "Gold Coins",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": false,
+      "value": 200.0,
+      "events": [],
+      "dialogues": []
+    }
+  ],
+  "allUpgrades": [],
+  "unboughtUpgrades": [],
+  "boughtUpgrades": [],
+  "allEvents": [],
+  "allNpcs": [],
+  "allDialogues": [],
+  "gold": 0.0
+}

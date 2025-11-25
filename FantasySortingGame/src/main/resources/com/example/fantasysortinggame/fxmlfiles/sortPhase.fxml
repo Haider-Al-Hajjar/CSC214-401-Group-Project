@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -15,12 +14,7 @@
             xmlns:fx="http://javafx.com/fxml/1">
 
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <TextField prefHeight="48.0" prefWidth="200.0" text="               Image of type" />
-         </children>
-      </VBox>
+      <!-- Removed the preview VBox entirely -->
    </left>
 
    <right>
@@ -30,9 +24,9 @@
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ToggleButton mnemonicParsing="false" prefHeight="70.0" prefWidth="229.0" text="Unsorted" />
-            <ToggleButton mnemonicParsing="false" prefHeight="70.0" prefWidth="226.0" text="Junk" />
-            <ToggleButton mnemonicParsing="false" prefHeight="71.0" prefWidth="212.0" text="Treasure" />
+            <ToggleButton fx:id="unsortedFilterButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="229.0" text="Unsorted" />
+            <ToggleButton fx:id="junkFilterButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="226.0" text="Junk" />
+            <ToggleButton fx:id="treasureFilterButton" mnemonicParsing="false" prefHeight="71.0" prefWidth="212.0" text="Treasure" />
          </children>
       </HBox>
    </top>
@@ -40,21 +34,13 @@
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <!-- This is now the proceed button hooked to the controller -->
             <Button fx:id="proceedButton" mnemonicParsing="false" prefHeight="79.0" prefWidth="92.0" text="End Phase" />
          </children>
       </HBox>
    </bottom>
 
    <center>
-      <VBox fx:id="itemContainer" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <!-- Optional placeholder nodes; you can remove these if you'll populate dynamically -->
-            <TextField prefHeight="61.0" prefWidth="400.0" text="                                               Title" />
-            <TextField prefHeight="67.0" prefWidth="400.0" text="                            Description of Item" />
-            <TextField prefHeight="69.0" prefWidth="300.0" text="                                            Type" />
-         </children>
-      </VBox>
+      <VBox fx:id="itemContainer" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </center>
 
 </BorderPane>

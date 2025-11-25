@@ -31,13 +31,4 @@ public class StartMenuController {
             GamePhaseManager.startDayCycle();
         });
     }
-
-    public static void showStartMenu(Database db, Runnable onStartGame) throws IOException {
-        FXMLLoader loader = new FXMLLoader(StartMenuController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/startMenu.fxml"));
-        loader.setControllerFactory(param -> new StartMenuController(db));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(loader.load()));
-        stage.setTitle("Start Menu");
-        stage.show();
-    }
 }

@@ -164,9 +164,9 @@ public class Database { // might need to be static? I'm not sure. There should o
             ItemType type2 = new ItemType("Potion");
             ItemType type3 = new ItemType("Treasure");
 
-            allItems.add(new Item("Weapon", null, "A shiny sword", "Sword of Light", type1, false, new ArrayList<>(), new ArrayList<>(), 100));
-            allItems.add(new Item("Potion", null, "Heals 50 HP", "Healing Potion", type2, false, new ArrayList<>(), new ArrayList<>(), 25));
-            allItems.add(new Item("Treasure", null, "Ancient gold coins", "Gold Coins", type3, false, new ArrayList<>(), new ArrayList<>(), 200));
+            allItems.add(new Item("Unsorted", null, "A shiny sword", "Sword of Light", type1, false, new ArrayList<>(), new ArrayList<>(), 100));
+            allItems.add(new Item("Unsorted", null, "Heals 50 HP", "Healing Potion", type2, false, new ArrayList<>(), new ArrayList<>(), 25));
+            allItems.add(new Item("Unsorted", null, "Ancient gold coins", "Gold Coins", type3, false, new ArrayList<>(), new ArrayList<>(), 200));
 
             // Copy them into usedItems so SortPhaseController can show them
             this.usedItems.addAll(allItems);

@@ -2,10 +2,18 @@ package com.example.fantasysortinggame.salephase;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Item;
+import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -15,20 +23,27 @@ import java.util.stream.Collectors;
 public class SalePhaseController {
 
     private final Database database;
-    private Runnable onPhaseComplete;
     private ArrayList<Item> unsoldItems;
+    private Stage stage;
 
     @FXML
     private VBox itemContainer;
-    @FXML private Button proceedButton;
+    @FXML
+    private Button proceedButton;
 
     public SalePhaseController(Database database) {
         this.database = database;
     }
 
-    public static void showSalePhase(Database db, Stage parentStage, Runnable onPhaseComplete) {
+    @FXML
+    public void initialize() {
+        proceedButton.setVisible(false);
+        proceedButton.setOnAction(e -> finishPhase());
+    }
+
+    public static void showSalePhase(Database db, Stage parentStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(SalePhaseController.class.getResource("/path/to/SalePhase.fxml"));
+            FXMLLoader loader = new FXMLLoader(SalePhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/SalePhase.fxml"));
             loader.setControllerFactory(param -> new SalePhaseController(db));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
@@ -36,7 +51,7 @@ public class SalePhaseController {
             stage.show();
 
             SalePhaseController controller = loader.getController();
-            controller.setOnPhaseComplete(onPhaseComplete, stage);
+            controller.setStage(stage);
             controller.loadItems();
 
         } catch (Exception e) {
@@ -44,26 +59,56 @@ public class SalePhaseController {
         }
     }
 
-    public void setOnPhaseComplete(Runnable callback, Stage stage) {
-        this.onPhaseComplete = () -> {
-            stage.close();
-            callback.run();
-        };
-        proceedButton.setOnAction(e -> {
-            if (onPhaseComplete != null) onPhaseComplete.run();
-        });
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     public void loadItems() {
-        unsoldItems = database.getUsedItems().stream().filter(item -> !item.isSold()).collect(Collectors.toCollection(ArrayList::new));
+        unsoldItems = database.getUsedItems()
+                .stream()
+                .filter(item -> !item.isSold())
+                .collect(Collectors.toCollection(ArrayList::new));
         displaySaleMenu();
     }
 
     private void displaySaleMenu() {
         itemContainer.getChildren().clear();
+
+        boolean allSold = unsoldItems.isEmpty();
+
         for (Item item : unsoldItems) {
-            // TODO: create sell buttons and UI nodes
+            HBox row = new HBox(10);
+
+            // Item Image
+            ImageView imageView = new ImageView();
+            if (item.getImageLink() != null) {
+                try {
+                    imageView.setImage(new Image(item.getImageLink().toURI().toString()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
+
+            // Item Info
+            VBox infoBox = new VBox(5);
+            Label nameLabel = new Label(item.getTitle());
+            Label descLabel = new Label(item.getDescription());
+            Label typeLabel = new Label("Type: " + item.getItemSort());
+            Label valueLabel = new Label("Value: " + estimateItemValue(item) + " gold");
+
+            infoBox.getChildren().addAll(nameLabel, descLabel, typeLabel, valueLabel);
+
+            // Sell Button
+            Button sellButton = new Button("Sell for " + estimateItemValue(item) + " gold");
+            sellButton.setOnAction(e -> onSellItem(item));
+
+            row.getChildren().addAll(imageView, infoBox, sellButton);
+            itemContainer.getChildren().add(row);
         }
+
+        proceedButton.setVisible(allSold); // enable when all items sold
     }
 
     public void onSellItem(Item item) {
@@ -74,6 +119,14 @@ public class SalePhaseController {
     }
 
     private double estimateItemValue(Item item) {
-        return 30.0; // placeholder
+        // Bonus for correctly sorted items
+        double baseValue = 30.0;
+        if (!item.getItemSort().equals("Unsorted")) baseValue *= 1.5;
+        return baseValue;
+    }
+
+    private void finishPhase() {
+        if (stage != null) stage.close();
+        GamePhaseManager.runBuyPhase();
     }
 }
