@@ -15,10 +15,14 @@ public class StartMenuController {
     private final Database database;
     private Stage stage;
 
-    @FXML private TextField gameNameField;
-    @FXML private ToggleButton startNewGameButton;
-    @FXML private ToggleButton loadSavedGameButton;
-    @FXML private ImageView menuImageView;
+    @FXML
+    private TextField gameNameField;
+    @FXML
+    private ToggleButton startNewGameButton;
+    @FXML
+    private ToggleButton loadSavedGameButton;
+    @FXML
+    private ImageView menuImageView;
 
     private String gameMode = "default";
 
@@ -30,7 +34,9 @@ public class StartMenuController {
         this.stage = stage;
     }
 
-    /** Opens the start menu in a new Stage */
+    /**
+     * Opens the start menu in a new Stage
+     */
     public static void showStartMenu(Database database) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -54,13 +60,17 @@ public class StartMenuController {
         }
     }
 
-    /** Attaches actions to the buttons */
+    /**
+     * Attaches actions to the buttons
+     */
     private void attachButtonHandlers() {
         startNewGameButton.setOnAction(e -> onStartGameButtonClickHandler(true));
         loadSavedGameButton.setOnAction(e -> onStartGameButtonClickHandler(false));
     }
 
-    /** Handles starting or loading a game */
+    /**
+     * Handles starting or loading a game
+     */
     private void onStartGameButtonClickHandler(boolean isNewGame) {
         String gameName = gameNameField.getText().trim();
         if (gameName.isEmpty()) {
@@ -68,18 +78,14 @@ public class StartMenuController {
             return;
         }
 
-        if (isNewGame) {
-            database.createNewGame(gameName, gameMode);
-            System.out.println("New game started: " + gameName + " (Mode: " + gameMode + ")");
-        } else {
-            database.loadFile(gameName, gameMode);
-            System.out.println("Loaded game: " + gameName + " (Mode: " + gameMode + ")");
-        }
-
+        database.loadFromFile(gameName, gameMode);
+        System.out.println("Loaded game: " + gameName + " (Mode: " + gameMode + ")");
         if (stage != null) stage.close();
     }
 
-    /** Updates the game mode text (example: called from UI or toggle) */
+    /**
+     * Updates the game mode text (example: called from UI or toggle)
+     */
     public void onDisplayGameModeButton(String mode) {
         this.gameMode = mode;
         System.out.println("Game mode set to: " + mode);

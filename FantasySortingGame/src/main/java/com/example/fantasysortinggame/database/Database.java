@@ -139,7 +139,7 @@ public class Database { // might need to be static? I'm not sure. There should o
 
     }
 
-    void LoadFromFile(String fileName) {
+    public void loadFromFile(String fileName, String gameMode) { // added a parameter but didn't update the code to handle the gameMode accordingly.
         this.fileName = fileName;
         File file = new File(fileName);
 
@@ -191,7 +191,7 @@ public class Database { // might need to be static? I'm not sure. There should o
     }
 
 
-    void SaveToFile() {
+    public void saveToFile() {
         if (fileName == null || fileName.isEmpty()) {
             fileName = "saveFile.json";
         }
