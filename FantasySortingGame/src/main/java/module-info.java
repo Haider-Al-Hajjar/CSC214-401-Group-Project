@@ -5,6 +5,12 @@ module com.example.fantasysortinggame {
     requires com.google.gson;
 
 
+    opens com.example.fantasysortinggame.mainmenu to javafx.fxml;
+    opens com.example.fantasysortinggame.buyphase to javafx.fxml;
+    opens com.example.fantasysortinggame.sortphase to javafx.fxml;
+
+    exports com.example.fantasysortinggame.buyphase;
+    exports com.example.fantasysortinggame.sortphase;
 
 
     //opens com.example.fantasysortinggame to javafx.fxml;

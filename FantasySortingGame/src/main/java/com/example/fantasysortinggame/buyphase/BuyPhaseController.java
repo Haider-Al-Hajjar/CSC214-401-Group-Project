@@ -2,7 +2,12 @@ package com.example.fantasysortinggame.buyphase;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Upgrade;
-import com.example.fantasysortinggame.mainmenu.SoundEffectController;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
 import java.util.ArrayList;
 
@@ -10,69 +15,90 @@ public class BuyPhaseController {
 
     private final Database database;
     private ArrayList<Upgrade> unboughtUpgrades;
+    private Runnable onPhaseComplete;
+
+    @FXML private VBox shopContainer;
+    @FXML private Button proceedButton;
+
     public BuyPhaseController(Database database) {
         this.database = database;
-        //this.unboughtUpgrades = database.getUnboughtUpgrades();
     }
 
-    /*
-        This method should get all unbought upgrades from the database.
+    /**
+     * Static helper to show the Buy Phase window and chain to next phase.
      */
-    void loadUpgrades() {
+    public static void showBuyPhase(Database db, Stage parentStage, Runnable onPhaseComplete) {
+        try {
+            FXMLLoader loader = new FXMLLoader(BuyPhaseController.class.getResource("/path/to/BuyPhase.fxml"));
+            loader.setControllerFactory(param -> new BuyPhaseController(db));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("Buy Phase");
+            stage.show();
 
-            unboughtUpgrades = database.getUnboughtUpgrades();
-            displayBuyMenu();
-            //potentially have something related to the current day count.
+            BuyPhaseController controller = loader.getController();
+            controller.setOnPhaseComplete(onPhaseComplete, stage);
+            controller.loadUpgrades();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-
-    /*
-        This method should check the database to see if you have enough gold
-            if so, decrease gold by said amount and update item to be bought in database
-            regardless, redisplay menu.
-        No parameters.
-        Returns void.
+    /**
+     * Set the callback to be run when player clicks Proceed.
      */
-        void onBuyUpgradeClickHandler (Upgrade upgrade) {
-        /*
-            // Until Kayla does her job, this part can stay undone.
-            // Basically, you're gonna get the source of the click and then navigate to the name of the object
-            // Once you've got the name, then you've gotta search the database to get the Upgrade associated with it
-            // Lastly, use it below
-*/
-            if(database.getGold() >= upgrade.getCost()){    // if owned gold is less than or equal to cost, reduce gold and obtain upgrade
-                database.setGold(database.getGold() - upgrade.getCost());
-                upgrade.setBought(true);
+    public void setOnPhaseComplete(Runnable callback, Stage stage) {
+        this.onPhaseComplete = () -> {
+            stage.close();
+            callback.run();
+        };
+
+        proceedButton.setOnAction(e -> {
+            if (onPhaseComplete != null) onPhaseComplete.run();
+        });
+    }
+
+    /**
+     * Load all unbought upgrades from the database.
+     */
+    public void loadUpgrades() {
+        unboughtUpgrades = database.getUnboughtUpgrades();
+        displayBuyMenu();
+    }
+
+    /**
+     * Handle a player clicking to buy an upgrade.
+     */
+    public void onBuyUpgradeClickHandler(Upgrade upgrade) {
+        if (database.getGold() >= upgrade.getCost()) {
+            database.setGold(database.getGold() - upgrade.getCost());
+            upgrade.setBought(true);
+        }
+        displayBuyMenu();
+    }
+
+    /**
+     * Display the upgrades that are still available to buy.
+     */
+    public void displayBuyMenu() {
+        shopContainer.getChildren().clear();
+
+        for (Upgrade upgrade : unboughtUpgrades) {
+            if (!upgrade.isBought()) {
+                displayUpgrade(upgrade);
             }
-            displayBuyMenu();
-
-        }
-
-
-        void displayBuyMenu () {
-
-            /*
-        // Until kayla does her thing this can stay kind of undone.
-        should make a new stage and populate it with an upgrade menu, and then individual upgrades.
-        for(Upgrade upgrade : unboughtUpgrades)
-        displayUpgrade(upgrade)
-            */
-
-            for (Upgrade upgrade : unboughtUpgrades)    // if not bought display upgrade
-                if (!upgrade.isBought())
-                    displayUpgrade(upgrade);
-        }
-
-        void displayUpgrade (Upgrade upgrade){
-
-
-
-            /*
-            should populate the display with the appropriate fxml.
-            */
-
-
-
         }
     }
+
+    /**
+     * Populate the display for a single upgrade.
+     */
+    public void displayUpgrade(Upgrade upgrade) {
+        // TODO: load individual upgrade FXML node or build a UI element
+        // Example: button to buy this upgrade
+        Button buyButton = new Button(upgrade.getName() + " - " + upgrade.getCost() + "G");
+        buyButton.setOnAction(e -> onBuyUpgradeClickHandler(upgrade));
+        shopContainer.getChildren().add(buyButton);
+    }
+}
