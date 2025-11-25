@@ -15,7 +15,9 @@ public class Database { // might need to be static? I'm not sure. There should o
     private int day;
     private int seed;
     private ArrayList<Item> usedItems;
-    private ArrayList<Item> allItems;
+
+    private ArrayList<ArrayList<Item>> allItems;
+
     private ArrayList<Upgrade> allUpgrades;
     private ArrayList<Upgrade> unboughtUpgrades;
     private ArrayList<Upgrade> boughtUpgrades;
@@ -31,7 +33,7 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.fileName = fileName;
     }
 
-    public ArrayList<Item> getAllItems() {
+    public ArrayList<ArrayList<Item>> getAllItems() {
         return allItems;
     }
 
@@ -69,10 +71,10 @@ public class Database { // might need to be static? I'm not sure. There should o
                 add these items to usedItems
                 return these items.
          */
-        return allItems;
+        return allItems.get(day - 1);
     }
 
-    public void setAllItems(ArrayList<Item> allItems) {
+    public void setAllItems(ArrayList<ArrayList<Item>> allItems) {
         this.allItems = allItems;
     }
 
@@ -125,18 +127,24 @@ public class Database { // might need to be static? I'm not sure. There should o
     }
 
     void LoadFromFile(String fileName) {
-        this.fileName = fileName;
-        File file = new File(fileName);
 
-      //this will check if file exist and if it doesnt it will start tutorial
-        //its empty so far
+
+        this.fileName = "src/main/java/com/example/fantasysortinggame/database/data/saveFile.json";
+
+        File file = new File(this.fileName);
+
+        // If file does not exist: create new default save
         if (!file.exists()) {
-            //starts new data if empty
             this.day = 0;
             this.seed = (int)(Math.random() * Integer.MAX_VALUE);
 
             this.usedItems = new ArrayList<>();
+
+
             this.allItems = new ArrayList<>();
+            for (int i = 0; i < 6; i++)
+                this.allItems.add(new ArrayList<>());
+
             this.allUpgrades = new ArrayList<>();
             this.unboughtUpgrades = new ArrayList<>();
             this.boughtUpgrades = new ArrayList<>();
@@ -144,34 +152,55 @@ public class Database { // might need to be static? I'm not sure. There should o
             this.allNpcs = new ArrayList<>();
             this.allDialogues = new ArrayList<>();
 
-
-            // Then save the new tutorial started gane
             SaveToFile();
             return;
         }
 
-        // else there is a save file
+        // Load existing JSON
         Gson gson = new Gson();
         try (FileReader reader = new FileReader(file)) {
-            Database loaded = gson.fromJson(reader, Database.class);
 
-            // copies trh= all the valuhes into this instance
-            this.fileName = loaded.fileName;
+            Database loaded = gson.fromJson(reader, Database.class);
             this.day = loaded.day;
             this.seed = loaded.seed;
-            this.usedItems = loaded.usedItems;
-            this.allItems = loaded.allItems;
-            this.allUpgrades = loaded.allUpgrades;
-            this.unboughtUpgrades = loaded.unboughtUpgrades;
-            this.boughtUpgrades = loaded.boughtUpgrades;
-            this.allEvents = loaded.allEvents;
-            this.allNpcs = loaded.allNpcs;
-            this.allDialogues = loaded.allDialogues;
 
+            this.usedItems = (loaded.usedItems != null) ? loaded.usedItems : new ArrayList<>();
 
+            //  If file has old JSON format with "day1", "day2", etc. -> auto convert
+            if (loaded.allItems == null || loaded.allItems.size() == 0) {
+
+                this.allItems = new ArrayList<>();
+                for (int i = 0; i < 6; i++)
+                    this.allItems.add(new ArrayList<>());
+
+                // get raw JSON for day1/day2/day3 keys
+                FileReader rawReader = new FileReader(file);
+                var jsonObject = gson.fromJson(rawReader, com.google.gson.JsonObject.class);
+
+                for (int i = 0; i < 6; i++) {
+                    String dayKey = "day" + (i + 1);
+                    if (jsonObject.has(dayKey)) {
+                        ArrayList<Item> converted =
+                                gson.fromJson(jsonObject.get(dayKey),
+                                        new com.google.gson.reflect.TypeToken<ArrayList<Item>>() {}.getType());
+                        this.allItems.set(i, converted);
+                    }
+                }
+
+            } else {
+                // already new format
+                this.allItems = loaded.allItems;
+            }
+
+            this.allUpgrades = (loaded.allUpgrades != null) ? loaded.allUpgrades : new ArrayList<>();
+            this.unboughtUpgrades = (loaded.unboughtUpgrades != null) ? loaded.unboughtUpgrades : new ArrayList<>();
+            this.boughtUpgrades = (loaded.boughtUpgrades != null) ? loaded.boughtUpgrades : new ArrayList<>();
+            this.allEvents = (loaded.allEvents != null) ? loaded.allEvents : new ArrayList<>();
+            this.allNpcs = (loaded.allNpcs != null) ? loaded.allNpcs : new ArrayList<>();
+            this.allDialogues = (loaded.allDialogues != null) ? loaded.allDialogues : new ArrayList<>();
 
         } catch (Exception e) {
-            System.out.println("error happened");
+            System.out.println("Error loading save file: " + e.getMessage());
         }
     }
 
