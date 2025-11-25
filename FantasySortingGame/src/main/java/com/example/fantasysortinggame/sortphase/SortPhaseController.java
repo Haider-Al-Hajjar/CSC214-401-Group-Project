@@ -2,10 +2,10 @@ package com.example.fantasysortinggame.sortphase;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Item;
+import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class SortPhaseController {
 
-    private final Database database;
-    private Runnable onPhaseComplete;
+    private Database database;
+    private Stage stage;
 
     private ArrayList<Item> unsortedItems;
 
@@ -23,51 +23,73 @@ public class SortPhaseController {
     @FXML
     private Button proceedButton;
 
-    public SortPhaseController(Database database) {
+    /** Empty constructor needed by FXMLLoader */
+    public SortPhaseController() {}
+
+    /** Called automatically by FXMLLoader */
+    @FXML
+    public void initialize() {
+        // Hook up the proceed button
+        proceedButton.setOnAction(e -> finishPhase());
+    }
+
+    /** Set dependencies after FXML load */
+    public void setDependencies(Database database, Stage stage) {
         this.database = database;
+        this.stage = stage;
+
+        // Load items now that dependencies are available
+        loadItems();
     }
 
-    public static void showSortPhase(Database db, Stage parentStage, Runnable onPhaseComplete) {
-        try {
-            FXMLLoader loader = new FXMLLoader(SortPhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/sortPhase.fxml"));
-            loader.setControllerFactory(param -> new SortPhaseController(db));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Sort Phase");
-            stage.show();
-
-            SortPhaseController controller = loader.getController();
-            controller.setOnPhaseComplete(onPhaseComplete, stage);
-            controller.loadItems();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void finishPhase() {
+        if (stage != null) stage.close();
+        GamePhaseManager.runSalePhase();
     }
 
-    public void setOnPhaseComplete(Runnable callback, Stage stage) {
-        this.onPhaseComplete = () -> {
-            stage.close();
-            callback.run();
-        };
-        proceedButton.setOnAction(e -> {
-            if (onPhaseComplete != null) onPhaseComplete.run();
-        });
-    }
+    private void loadItems() {
+        if (database == null) return;
 
-    public void loadItems() {
-        unsortedItems = database.getUsedItems(); // or filter by today
-        if (unsortedItems == null) {
-            unsortedItems = new ArrayList<>(); // prevent NPE
-        }
-
+        unsortedItems = database.getUsedItems();
+        if (unsortedItems == null) unsortedItems = new ArrayList<>();
         displayItems();
     }
 
     private void displayItems() {
         itemContainer.getChildren().clear();
         for (Item item : unsortedItems) {
-            // TODO: add UI node for each item
+            VBox itemBox = new VBox(5);
+
+            Label titleLabel = new Label(item.getTitle());
+            titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+            Label descLabel = new Label(item.getDescription());
+            Label typeLabel = new Label("Type: " + (item.getItemType() != null ? item.getItemType().getItemType() : "Unknown"));
+            Label valueLabel = new Label("Value: " + item.getValue());
+
+            itemBox.getChildren().addAll(titleLabel, descLabel, typeLabel, valueLabel);
+            itemBox.setStyle("-fx-border-color: gray; -fx-padding: 5; -fx-background-color: #f0f0f0;");
+
+            itemContainer.getChildren().add(itemBox);
+        }
+    }
+
+    /** Static helper to show this phase */
+    public static void showSortPhase(Database db, Stage primaryStage) {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                    SortPhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/sortPhase.fxml")
+            );
+            Stage stage = new Stage();
+            stage.setScene(new javafx.scene.Scene(loader.load()));
+            stage.setTitle("Sort Phase");
+
+            SortPhaseController controller = loader.getController();
+            controller.setDependencies(db, stage);
+
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

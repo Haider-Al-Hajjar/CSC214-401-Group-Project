@@ -1,23 +1,27 @@
 package com.example.fantasysortinggame.mainmenu;
 
 import com.example.fantasysortinggame.database.Database;
+import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
+import com.example.fantasysortinggame.mainmenu.StartMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
 
 public class FantasySortingGameApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Database database = new Database();
-        // Show main menu first
-        StartMenuController.showStartMenu(database, () -> {
-            GamePhaseManager manager = new GamePhaseManager(database, stage);
-            manager.startDayCycle();
-        });
+        GamePhaseManager.initialize(database, stage);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/fantasysortinggame/fxmlfiles/startMenu.fxml"));
+        loader.setControllerFactory(param -> new StartMenuController(database));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
+        stage.setTitle("Start Menu");
+        stage.show();
     }
 
     public static void main(String[] args) {

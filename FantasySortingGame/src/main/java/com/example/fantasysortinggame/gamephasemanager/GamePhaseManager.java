@@ -1,41 +1,39 @@
 package com.example.fantasysortinggame.gamephasemanager;
 
 import com.example.fantasysortinggame.database.Database;
-
-import javafx.stage.Stage;
 import com.example.fantasysortinggame.sortphase.SortPhaseController;
 import com.example.fantasysortinggame.buyphase.BuyPhaseController;
 import com.example.fantasysortinggame.salephase.SalePhaseController;
+import javafx.stage.Stage;
+
 public class GamePhaseManager {
 
-    private final Database database;
-    private final Stage primaryStage;
-    private SortPhaseController SortPhaseController;
-    private BuyPhaseController BuyPhaseController;
-    private SalePhaseController SalePhaseController;
+    private static Database database;
+    private static Stage primaryStage;
 
-    public GamePhaseManager(Database database, Stage primaryStage) {
-        this.database = database;
-        this.primaryStage = primaryStage;
+    // Initialize the utility class once
+    public static void initialize(Database db, Stage stage) {
+        database = db;
+        primaryStage = stage;
     }
 
     /** Entry point: start the day cycle */
-    public void startDayCycle() {
+    public static void startDayCycle() {
         runSortPhase();
     }
 
     /** Sort Phase → calls UI, waits for completion, then Sale Phase */
-    private void runSortPhase() {
-        SortPhaseController.showSortPhase(database, primaryStage, this::runSalePhase);
+    public static void runSortPhase() {
+        SortPhaseController.showSortPhase(database, primaryStage);
     }
 
     /** Sale Phase → waits for player to finish → Buy Phase */
-    private void runSalePhase() {
-        SalePhaseController.showSalePhase(database, primaryStage, this::runBuyPhase);
+    public static void runSalePhase() {
+        SalePhaseController.showSalePhase(database, primaryStage, GamePhaseManager::runBuyPhase);
     }
 
     /** Buy Phase → end of day or loop for next day */
-    private void runBuyPhase() {
+    public static void runBuyPhase() {
         BuyPhaseController.showBuyPhase(database, primaryStage, () -> {
             System.out.println("End of day completed.");
             // Optionally: start next day
