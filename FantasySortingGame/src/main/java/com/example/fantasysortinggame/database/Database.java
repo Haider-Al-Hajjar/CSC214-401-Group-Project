@@ -151,10 +151,11 @@ public class Database { // might need to be static? I'm not sure. There should o
             this.seed = (int)(Math.random() * Integer.MAX_VALUE);
 
             this.usedItems = new ArrayList<>();
-            this.allItems = new ArrayList<>();
-            this.allUpgrades = new ArrayList<>();
             this.unboughtUpgrades = new ArrayList<>();
             this.boughtUpgrades = new ArrayList<>();
+
+            this.allItems = new ArrayList<>();
+            this.allUpgrades = new ArrayList<>();
             this.allEvents = new ArrayList<>();
             this.allNpcs = new ArrayList<>();
             this.allDialogues = new ArrayList<>();

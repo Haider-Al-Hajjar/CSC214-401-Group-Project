@@ -18,35 +18,22 @@ public class SortPhaseController {
     private Database database;
     private Stage stage;
 
-    @FXML
-    private ToggleButton unsortedFilterButton;
-    @FXML
-    private ToggleButton junkFilterButton;
-    @FXML
-    private ToggleButton treasureFilterButton;
+    @FXML private ToggleButton unsortedFilterButton;
+    @FXML private ToggleButton junkFilterButton;
+    @FXML private ToggleButton treasureFilterButton;
+    @FXML private VBox itemContainer;
+    @FXML private Button proceedButton;
 
-    @FXML
-    private VBox itemContainer;
-    @FXML
-    private Button proceedButton;
-
-    private ArrayList<Item> unsortedItems;
+    private ArrayList<Item> items;
     private String currentFilter = "All"; // default shows all
 
-    /**
-     * Empty constructor needed by FXMLLoader
-     */
-    public SortPhaseController() {
-    }
+    public SortPhaseController() {}
 
-    /**
-     * Called automatically by FXMLLoader
-     */
     @FXML
     public void initialize() {
-        proceedButton.setVisible(false); // hidden initially
+        proceedButton.setVisible(false);
 
-        // Set up filter buttons
+        // Setup filter buttons
         unsortedFilterButton.setOnAction(e -> {
             currentFilter = "Unsorted";
             displayItems();
@@ -60,30 +47,20 @@ public class SortPhaseController {
             displayItems();
         });
 
-        // Hook up the end phase button
         proceedButton.setOnAction(e -> finishPhase());
     }
 
-    /**
-     * Set dependencies after FXML load
-     */
     public void setDependencies(Database database, Stage stage) {
         this.database = database;
         this.stage = stage;
 
-        // Load items now that dependencies are available
         loadItems();
-    }
-
-    private void finishPhase() {
-        if (stage != null) stage.close();
-        GamePhaseManager.runSalePhase();
     }
 
     private void loadItems() {
         if (database == null) return;
-        unsortedItems = database.getUsedItems();
-        if (unsortedItems == null) unsortedItems = new ArrayList<>();
+        items = database.getUsedItems();
+        if (items == null) items = new ArrayList<>();
         displayItems();
     }
 
@@ -92,14 +69,15 @@ public class SortPhaseController {
 
         boolean allSorted = true;
 
-        for (Item item : unsortedItems) {
-            if (item.getItemSort().equals("Unsorted")) allSorted = false;
+        for (Item item : items) {
+            if ("Unsorted".equals(item.getItemSort())) allSorted = false;
 
-            // Apply filter
-            if (!currentFilter.equals("All") && !item.getItemSort().equals(currentFilter)) continue;
+            // Apply strict filter
+            if (!"All".equals(currentFilter) && !item.getItemSort().equals(currentFilter)) continue;
 
             HBox row = new HBox(10);
 
+            // Image
             ImageView imageView = new ImageView();
             if (item.getImageLink() != null) {
                 try {
@@ -111,6 +89,7 @@ public class SortPhaseController {
             imageView.setFitHeight(50);
             imageView.setFitWidth(50);
 
+            // Info box
             VBox infoBox = new VBox(5);
             TextField titleField = new TextField(item.getTitle());
             titleField.setEditable(false);
@@ -122,26 +101,23 @@ public class SortPhaseController {
 
             infoBox.getChildren().addAll(titleField, descField, sortButton);
             row.getChildren().addAll(imageView, infoBox);
-
             itemContainer.getChildren().add(row);
         }
 
-        // Show proceed button only if all items are sorted
         proceedButton.setVisible(allSorted);
     }
 
     private void showSortMenu(Button button, Item item) {
         ContextMenu menu = new ContextMenu();
+        int day = database.getDay();
 
-        int currentDay = database.getDay();
-
-        if (currentDay <= 2) {
+        if (day <= 2) {
             menu.getItems().addAll(
+                    createMenuItem("Unsorted", button, item),
                     createMenuItem("Junk", button, item),
-                    createMenuItem("Treasure", button, item),
-                    createMenuItem("Unsorted", button, item)
+                    createMenuItem("Treasure", button, item)
             );
-        } else if (currentDay <= 4) {
+        } else if (day <= 4) {
             menu.getItems().addAll(
                     createSubMenu("Junk", new String[]{"Usable Junk", "Broken Junk", "Curious Junk"}, button, item),
                     createSubMenu("Treasure", new String[]{"Magical Treasure", "Historical Treasure", "Luxurious Treasure"}, button, item),
@@ -171,7 +147,7 @@ public class SortPhaseController {
         mi.setOnAction(e -> {
             item.setItemSort(name);
             button.setText(name);
-            displayItems(); // refresh list to update End Phase button visibility
+            displayItems();
         });
         return mi;
     }
@@ -183,16 +159,18 @@ public class SortPhaseController {
             mi.setOnAction(e -> {
                 item.setItemSort(sub);
                 button.setText(sub);
-                displayItems(); // refresh list to update End Phase button visibility
+                displayItems();
             });
             menu.getItems().add(mi);
         }
         return menu;
     }
 
-    /**
-     * Static helper to show this phase
-     */
+    private void finishPhase() {
+        if (stage != null) stage.close();
+        GamePhaseManager.runSalePhase(); // moves to the next phase
+    }
+
     public static void showSortPhase(Database db, Stage primaryStage) {
         try {
             javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(

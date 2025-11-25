@@ -29,7 +29,7 @@ public class BuyPhaseController {
      */
     public static void showBuyPhase(Database db, Stage parentStage, Runnable onPhaseComplete) {
         try {
-            FXMLLoader loader = new FXMLLoader(BuyPhaseController.class.getResource("/path/to/BuyPhase.fxml"));
+            FXMLLoader loader = new FXMLLoader(BuyPhaseController.class.getResource("src/main/resources/com/example/fantasysortinggame/fxmlfiles/BuyPhase.fxml"));
             loader.setControllerFactory(param -> new BuyPhaseController(db));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
