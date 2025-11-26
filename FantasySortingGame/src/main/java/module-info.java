@@ -6,9 +6,7 @@ module com.example.fantasysortinggame {
 
     // JavaFX FXML
     opens com.example.fantasysortinggame.mainmenu to javafx.fxml;
-    opens com.example.fantasysortinggame.buyphase to javafx.fxml;
-    opens com.example.fantasysortinggame.sortphase to javafx.fxml;
-    opens com.example.fantasysortinggame.salephase to javafx.fxml;
+    opens com.example.fantasysortinggame.phasecontrollers to javafx.fxml;
     opens com.example.fantasysortinggame.datatypes to javafx.fxml, com.google.gson;
 
 
@@ -17,8 +15,6 @@ module com.example.fantasysortinggame {
 
     // Exports
     exports com.example.fantasysortinggame.mainmenu;
-    exports com.example.fantasysortinggame.buyphase;
-    exports com.example.fantasysortinggame.sortphase;
-    exports com.example.fantasysortinggame.salephase;
+    exports com.example.fantasysortinggame.phasecontrollers;
     exports com.example.fantasysortinggame.datatypes;
 }

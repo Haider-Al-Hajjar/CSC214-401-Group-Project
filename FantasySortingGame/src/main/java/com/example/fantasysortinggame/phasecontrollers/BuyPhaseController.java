@@ -1,35 +1,51 @@
-package com.example.fantasysortinggame.buyphase;
+package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Upgrade;
+import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class BuyPhaseController {
 
     private final Database database;
+    @FXML
+    public Label totalGoldLabel;
     private ArrayList<Upgrade> unboughtUpgrades;
     private Runnable onPhaseComplete;
 
-    @FXML private VBox shopContainer;
-    @FXML private Button proceedButton;
+    private Stage stage;
+    @FXML
+    private VBox shopContainer;
+    @FXML
+    private Button proceedButton;
+    @FXML
+    private Label dayLabel;
 
     public BuyPhaseController(Database database) {
         this.database = database;
     }
+
+    private void updateTopBar() {
+        if (dayLabel != null) dayLabel.setText("Day: " + database.getDay());
+        if (totalGoldLabel != null) totalGoldLabel.setText("Gold: " + database.getGold());
+    }
+
 
     /**
      * Static helper to show the Buy Phase window and chain to next phase.
      */
     public static void showBuyPhase(Database db, Stage parentStage, Runnable onPhaseComplete) {
         try {
-            FXMLLoader loader = new FXMLLoader(BuyPhaseController.class.getResource("src/main/resources/com/example/fantasysortinggame/fxmlfiles/BuyPhase.fxml"));
+            FXMLLoader loader = new FXMLLoader(BuyPhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/BuyPhase.fxml"));
             loader.setControllerFactory(param -> new BuyPhaseController(db));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
@@ -39,19 +55,30 @@ public class BuyPhaseController {
             BuyPhaseController controller = loader.getController();
             controller.setOnPhaseComplete(onPhaseComplete, stage);
             controller.loadUpgrades();
+            controller.updateTopBar();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void setDependencies(Database database, Stage stage) {
+        updateTopBar();
+    }
+
     /**
      * Set the callback to be run when player clicks Proceed.
      */
+
+
     public void setOnPhaseComplete(Runnable callback, Stage stage) {
+        this.stage = stage; // assign the stage
         this.onPhaseComplete = () -> {
-            stage.close();
-            callback.run();
+            if (this.stage != null) this.stage.close();
+            if (callback != null) callback.run();
+            database.setDay(database.getDay() + 1);
+            database.saveToFile();
+            GamePhaseManager.runSortPhase(); // next phase after buying
         };
 
         proceedButton.setOnAction(e -> {
@@ -59,11 +86,13 @@ public class BuyPhaseController {
         });
     }
 
+
     /**
      * Load all unbought upgrades from the database.
      */
     public void loadUpgrades() {
-        unboughtUpgrades = database.getUnboughtUpgrades();
+        ArrayList<Upgrade> allUpgrades = database.getAllUpgrades();
+        unboughtUpgrades = (ArrayList<Upgrade>) database.getAllUpgrades().stream().filter(u -> !u.isBought()).collect(Collectors.toList());
         displayBuyMenu();
     }
 
@@ -75,6 +104,8 @@ public class BuyPhaseController {
             database.setGold(database.getGold() - upgrade.getCost());
             upgrade.setBought(true);
         }
+        updateTopBar();
+        loadUpgrades();
         displayBuyMenu();
     }
 
@@ -95,10 +126,18 @@ public class BuyPhaseController {
      * Populate the display for a single upgrade.
      */
     public void displayUpgrade(Upgrade upgrade) {
-        // TODO: load individual upgrade FXML node or build a UI element
-        // Example: button to buy this upgrade
-        Button buyButton = new Button(upgrade.getName() + " - " + upgrade.getCost() + "G");
+        VBox box = new VBox();
+        box.setSpacing(4);
+        box.setStyle("-fx-padding: 10; -fx-border-color: #ccc; -fx-border-width: 1;");
+
+        Label title = new Label(upgrade.getName() + " (Cost: " + upgrade.getCost() + ")");
+        Label ability = new Label("Ability: " + upgrade.getAbility());
+
+        Button buyButton = new Button("Buy");
         buyButton.setOnAction(e -> onBuyUpgradeClickHandler(upgrade));
-        shopContainer.getChildren().add(buyButton);
+
+        box.getChildren().addAll(title, ability, buyButton);
+        shopContainer.getChildren().add(box);
     }
+
 }

@@ -1,9 +1,9 @@
 package com.example.fantasysortinggame.gamephasemanager;
 
 import com.example.fantasysortinggame.database.Database;
-import com.example.fantasysortinggame.sortphase.SortPhaseController;
-import com.example.fantasysortinggame.buyphase.BuyPhaseController;
-import com.example.fantasysortinggame.salephase.SalePhaseController;
+import com.example.fantasysortinggame.phasecontrollers.SortPhaseController;
+import com.example.fantasysortinggame.phasecontrollers.BuyPhaseController;
+import com.example.fantasysortinggame.phasecontrollers.SalePhaseController;
 import javafx.stage.Stage;
 
 public class GamePhaseManager {

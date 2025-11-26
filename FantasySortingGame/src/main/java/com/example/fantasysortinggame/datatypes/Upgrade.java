@@ -8,7 +8,9 @@ public class Upgrade {
     private double cost;
     private boolean isBought;
     private String name;
-    public Upgrade(String ability, double cost, boolean isBought, String name) {
+
+    public Upgrade(String name, double cost, boolean isBought, String ability) {
+        this.name = name;
         this.ability = ability;
         this.cost = cost;
         this.isBought = isBought;

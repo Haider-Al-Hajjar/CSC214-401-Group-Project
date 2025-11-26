@@ -1,4 +1,4 @@
-package com.example.fantasysortinggame.sortphase;
+package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Item;
@@ -15,25 +15,42 @@ import java.util.ArrayList;
 
 public class SortPhaseController {
 
+    public ToggleButton completeViewButton;
+    public ToggleButton loreViewButton;
+    public ToggleButton imageViewButton;
+    @FXML
+    private Label dayLabel;
+    @FXML
+    Label totalGoldLabel;
+    @FXML
+    public ToggleButton allFilterButton;
+    @FXML
+    private ToggleButton unsortedFilterButton;
+    @FXML
+    private ToggleButton junkFilterButton;
+    @FXML
+    private ToggleButton treasureFilterButton;
+    @FXML
+    private VBox itemContainer;
+    @FXML
+    private Button proceedButton;
+
     private Database database;
     private Stage stage;
-
-    @FXML private ToggleButton unsortedFilterButton;
-    @FXML private ToggleButton junkFilterButton;
-    @FXML private ToggleButton treasureFilterButton;
-    @FXML private VBox itemContainer;
-    @FXML private Button proceedButton;
-
+    private String currentView = "Complete"; // default
     private ArrayList<Item> items;
-    private String currentFilter = "All"; // default shows all
-
-    public SortPhaseController() {}
+    private String currentFilter = "Unsorted"; // default shows unsorted
 
     @FXML
     public void initialize() {
         proceedButton.setVisible(false);
 
         // Setup filter buttons
+        allFilterButton.setOnAction(e -> {
+            currentFilter = "All";
+            displayItems();
+        });
+
         unsortedFilterButton.setOnAction(e -> {
             currentFilter = "Unsorted";
             displayItems();
@@ -46,20 +63,39 @@ public class SortPhaseController {
             currentFilter = "Treasure";
             displayItems();
         });
+        completeViewButton.setOnAction(e -> {
+            currentView = "Complete";
+            displayItems();
+        });
+
+        imageViewButton.setOnAction(e -> {
+            currentView = "Image";
+            displayItems();
+        });
+
+        loreViewButton.setOnAction(e -> {
+            currentView = "Lore";
+            displayItems();
+        });
 
         proceedButton.setOnAction(e -> finishPhase());
+    }
+
+    private void updateTopBar() {
+        if (dayLabel != null) dayLabel.setText("Day: " + database.getDay());
+        if (totalGoldLabel != null) totalGoldLabel.setText("Gold: " + database.getGold());
     }
 
     public void setDependencies(Database database, Stage stage) {
         this.database = database;
         this.stage = stage;
-
+        updateTopBar();
         loadItems();
     }
 
     private void loadItems() {
         if (database == null) return;
-        items = database.getUsedItems();
+        items = database.getItemsByDayAndSeed();
         if (items == null) items = new ArrayList<>();
         displayItems();
     }
@@ -70,6 +106,9 @@ public class SortPhaseController {
         boolean allSorted = true;
 
         for (Item item : items) {
+            if (item.isSold()) {
+                continue;
+            }
             if ("Unsorted".equals(item.getItemSort())) allSorted = false;
 
             // Apply strict filter
@@ -168,6 +207,7 @@ public class SortPhaseController {
 
     private void finishPhase() {
         if (stage != null) stage.close();
+        database.saveToFile();
         GamePhaseManager.runSalePhase(); // moves to the next phase
     }
 

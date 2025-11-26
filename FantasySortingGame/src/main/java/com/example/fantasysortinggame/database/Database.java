@@ -10,15 +10,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Database { // might need to be static? I'm not sure. There should only ever be one of these.
+public class Database {
     private String fileName;
     private int day;
     private int seed;
     private ArrayList<Item> usedItems;
     private ArrayList<Item> allItems;
     private ArrayList<Upgrade> allUpgrades;
-    private ArrayList<Upgrade> unboughtUpgrades;
-    private ArrayList<Upgrade> boughtUpgrades;
+
     private ArrayList<QuickTimeEvent> allEvents;
     private ArrayList<Npc> allNpcs;
     private ArrayList<Dialogue> allDialogues;
@@ -60,7 +59,7 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.usedItems = usedItems;
     }
 
-    public ArrayList<Item> getItemsByDayAndSeed(int day, long seed) {
+    public ArrayList<Item> getItemsByDayAndSeed() {
         /*
             returns items based on current day and starting seed
             if day = {a specific day where complications occur}
@@ -85,21 +84,6 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.allUpgrades = allUpgrades;
     }
 
-    public ArrayList<Upgrade> getUnboughtUpgrades() {
-        return unboughtUpgrades;
-    }
-
-    public void setUnboughtUpgrades(ArrayList<Upgrade> unboughtUpgrades) {
-        this.unboughtUpgrades = unboughtUpgrades;
-    }
-
-    public ArrayList<Upgrade> getBoughtUpgrades() {
-        return boughtUpgrades;
-    }
-
-    public void setBoughtUpgrades(ArrayList<Upgrade> boughtUpgrades) {
-        this.boughtUpgrades = boughtUpgrades;
-    }
 
     public ArrayList<QuickTimeEvent> getAllEvents() {
         return allEvents;
@@ -151,8 +135,7 @@ public class Database { // might need to be static? I'm not sure. There should o
             this.seed = (int)(Math.random() * Integer.MAX_VALUE);
 
             this.usedItems = new ArrayList<>();
-            this.unboughtUpgrades = new ArrayList<>();
-            this.boughtUpgrades = new ArrayList<>();
+
 
             this.allItems = new ArrayList<>();
             this.allUpgrades = new ArrayList<>();
@@ -168,7 +151,7 @@ public class Database { // might need to be static? I'm not sure. There should o
             allItems.add(new Item("Unsorted", null, "A shiny sword", "Sword of Light", type1, false, new ArrayList<>(), new ArrayList<>(), 100));
             allItems.add(new Item("Unsorted", null, "Heals 50 HP", "Healing Potion", type2, false, new ArrayList<>(), new ArrayList<>(), 25));
             allItems.add(new Item("Unsorted", null, "Ancient gold coins", "Gold Coins", type3, false, new ArrayList<>(), new ArrayList<>(), 200));
-
+            allUpgrades.add(new Upgrade("Assistant",50.0, false, "Sorts the first item automatically."));
             // Copy them into usedItems so SortPhaseController can show them
             this.usedItems.addAll(allItems);
 
@@ -193,8 +176,6 @@ public class Database { // might need to be static? I'm not sure. There should o
             this.usedItems = loaded.usedItems;
             this.allItems = loaded.allItems;
             this.allUpgrades = loaded.allUpgrades;
-            this.unboughtUpgrades = loaded.unboughtUpgrades;
-            this.boughtUpgrades = loaded.boughtUpgrades;
             this.allEvents = loaded.allEvents;
             this.allNpcs = loaded.allNpcs;
             this.allDialogues = loaded.allDialogues;

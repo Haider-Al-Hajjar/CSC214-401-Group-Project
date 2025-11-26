@@ -1,4 +1,4 @@
-package com.example.fantasysortinggame.salephase;
+package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Item;
@@ -18,18 +18,40 @@ public class SalePhaseController {
 
     private Database database;
     private Stage stage;
+    @FXML
+    private Label dayLabel;
+    @FXML
+    public Button allButton;
+    @FXML
+    private VBox itemContainer;
+    @FXML
+    private Button proceedButton;
+    @FXML
+    private Label totalGoldLabel;
+    @FXML
+    private Button junkButton;
+    @FXML
+    private Button treasureButton;
 
-    @FXML private VBox itemContainer;
-    @FXML private Button proceedButton;
-    @FXML private Label totalGoldLabel;
 
     private ArrayList<Item> items;
-
-    public SalePhaseController() {}
+    private String currentFilter = "All";
 
     @FXML
     public void initialize() {
-        proceedButton.setVisible(false);
+        allButton.setOnAction(e -> {
+            currentFilter = "All";
+            displayItems();
+        });
+        junkButton.setOnAction(e -> {
+            currentFilter = "Junk";
+            displayItems();
+        });
+
+        treasureButton.setOnAction(e -> {
+            currentFilter = "Treasure";
+            displayItems();
+        });
         proceedButton.setOnAction(e -> finishPhase());
     }
 
@@ -37,11 +59,12 @@ public class SalePhaseController {
         this.database = database;
         this.stage = stage;
         loadItems();
-        updateTotalGold();
+        updateTopBar();
     }
 
     private void finishPhase() {
         if (stage != null) stage.close();
+        database.saveToFile();
         GamePhaseManager.runBuyPhase();
     }
 
@@ -53,11 +76,12 @@ public class SalePhaseController {
 
     private void displayItems() {
         itemContainer.getChildren().clear();
-        boolean allSold = true;
-
         for (Item item : items) {
             if (item.isSold()) continue; // skip sold items
-            allSold = false;
+            // Filtering
+            if (!"All".equals(currentFilter)) {
+                if (!item.getItemSort().equalsIgnoreCase(currentFilter)) continue;
+            }
 
             HBox row = new HBox(10);
 
@@ -84,15 +108,13 @@ public class SalePhaseController {
             row.getChildren().addAll(imageView, infoBox);
             itemContainer.getChildren().add(row);
         }
-
-        proceedButton.setVisible(allSold);
     }
 
     private void sellItem(Item item) {
         item.setSold(true);
         database.addGold(estimateItemValue(item));
         displayItems();
-        updateTotalGold();
+        updateTopBar();
     }
 
     private double estimateItemValue(Item item) {
@@ -101,10 +123,9 @@ public class SalePhaseController {
         return base;
     }
 
-    private void updateTotalGold() {
-        if (database != null && totalGoldLabel != null) {
-            totalGoldLabel.setText("Gold: " + database.getGold());
-        }
+    private void updateTopBar() {
+        if (dayLabel != null) dayLabel.setText("Day: " + database.getDay());
+        if (totalGoldLabel != null) totalGoldLabel.setText("Gold: " + database.getGold());
     }
 
     public static void showSalePhase(Database db, Stage parentStage) {

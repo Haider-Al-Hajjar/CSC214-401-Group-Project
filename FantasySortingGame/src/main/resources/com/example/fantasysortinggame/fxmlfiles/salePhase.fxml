@@ -9,47 +9,30 @@
 
 
 <?import javafx.scene.control.Label?>
-<BorderPane fx:controller="com.example.fantasysortinggame.salephase.SalePhaseController"
+<BorderPane fx:controller="com.example.fantasysortinggame.phasecontrollers.SalePhaseController"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             prefWidth="600" prefHeight="400">
 
-    <!-- LEFT: Item Image & Info -->
-    <left>
-        <VBox BorderPane.alignment="CENTER" spacing="10" prefWidth="200">
-            <ImageView fx:id="itemImageView"
-                       fitHeight="158" fitWidth="200"
-                       pickOnBounds="true" preserveRatio="true"/>
-
-            <TextField fx:id="itemNameField" text="Item Name" editable="false"/>
-            <TextField fx:id="itemDescriptionField" text="Description" editable="false" prefWidth="180"
-                       prefHeight="80"/>
-            <TextField fx:id="itemTypeField" text="Type" editable="false" prefWidth="180"/>
-
-            <!-- Single Sell Button -->
-            <Button fx:id="sellButton" text="Sell" prefWidth="180"/>
-        </VBox>
-    </left>
-
     <!-- CENTER: Items container (optional list display) -->
     <center>
         <ScrollPane fitToWidth="true">
-            <content>
-                <VBox fx:id="itemContainer"
-                      BorderPane.alignment="CENTER"
-                      spacing="10"
-                      prefWidth="350"
-                      prefHeight="300">
-                </VBox>
-            </content>
+            <VBox fx:id="itemContainer"
+                  BorderPane.alignment="CENTER"
+                  spacing="10"
+                  prefWidth="350"
+                  prefHeight="300">
+            </VBox>
         </ScrollPane>
     </center>
 
     <!-- TOP: Filter Buttons -->
     <top>
         <VBox spacing="5" BorderPane.alignment="CENTER">
+            <Label fx:id="dayLabel" text="Day: 0"/>
             <Label fx:id="totalGoldLabel" text="Gold: 0"/>
             <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="allButton" text="All"/>
                 <Button fx:id="junkButton" text="Junk"/>
                 <Button fx:id="treasureButton" text="Treasure"/>
             </HBox>
@@ -60,9 +43,7 @@
     <!-- BOTTOM: Proceed Button -->
     <bottom>
         <HBox BorderPane.alignment="CENTER" spacing="10">
-            <children>
-                <Button fx:id="proceedButton" text="Proceed" visible="false"/>
-            </children>
+            <Button fx:id="proceedButton" text="End Phase."/>
         </HBox>
     </bottom>
 
