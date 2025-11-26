@@ -9,14 +9,16 @@ import java.util.List;
  */
 public class Dialogue extends StoryEvent {
 
-    /** The list of lines in this dialogue sequence */
+    /**
+     * The list of lines in this dialogue sequence
+     */
     private final List<DialogueEntry> entries;
 
     /**
      * Constructs a Dialogue object.
      *
-     * @param entries           List of dialogue lines
-     * @param happened          Whether this dialogue has already occurred
+     * @param entries            List of dialogue lines
+     * @param happened           Whether this dialogue has already occurred
      * @param storyEventTriggers Conditions for triggering this dialogue
      */
     public Dialogue(List<DialogueEntry> entries, boolean happened, ArrayList<StoryEventTrigger> storyEventTriggers) {
@@ -24,9 +26,25 @@ public class Dialogue extends StoryEvent {
         this.entries = entries;
     }
 
-    /** @return The list of dialogue entries */
+    /**
+     * @return The list of dialogue entries
+     */
     public List<DialogueEntry> getDialogueEntries() {
         return entries;
+    }
+
+    public String getSpeaker() {
+        if (entries != null && entries.size() > 0 && entries.get(0).getSpeaker() != null) {
+            return entries.get(0).getSpeaker().getName();
+        }
+        return "Unknown";
+    }
+
+    public String getText() {
+        if (entries != null && entries.size() > 0) {
+            return entries.get(0).getText();
+        }
+        return "";
     }
 
 }

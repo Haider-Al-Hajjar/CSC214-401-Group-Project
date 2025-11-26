@@ -3,6 +3,8 @@ package com.example.fantasysortinggame.database;
 import com.example.fantasysortinggame.datatypes.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileReader;
@@ -15,13 +17,17 @@ public class Database {
     private int day;
     private int seed;
     private ArrayList<Item> usedItems;
-    private ArrayList<Item> allItems;
+
+
+    private ArrayList<ArrayList<Item>> allItems;
+
     private ArrayList<Upgrade> allUpgrades;
 
     private ArrayList<QuickTimeEvent> allEvents;
     private ArrayList<Npc> allNpcs;
     private ArrayList<Dialogue> allDialogues;
-    private double gold = 0.0; //(suyog- added this field)
+    private String gameMode;
+    private double gold = 0.0;
 
     public String getFileName() {
         return fileName;
@@ -31,7 +37,7 @@ public class Database {
         this.fileName = fileName;
     }
 
-    public ArrayList<Item> getAllItems() {
+    public ArrayList<ArrayList<Item>> getAllItems() {
         return allItems;
     }
 
@@ -59,8 +65,9 @@ public class Database {
         this.usedItems = usedItems;
     }
 
-    public ArrayList<Item> getItemsByDayAndSeed() {
-        /*
+    // Return list for that day
+    public ArrayList<Item> getItemsByDayAndSeed(int day, long seed) {
+     /*
             returns items based on current day and starting seed
             if day = {a specific day where complications occur}
                 return even old items and change their currentSort
@@ -69,10 +76,10 @@ public class Database {
                 add these items to usedItems
                 return these items.
          */
-        return allItems;
+        return allItems.get(day - 1);
     }
 
-    public void setAllItems(ArrayList<Item> allItems) {
+    public void setAllItems(ArrayList<ArrayList<Item>> allItems) {
         this.allItems = allItems;
     }
 
@@ -126,83 +133,146 @@ public class Database {
     public void loadFromFile(String fileName, String gameMode) { // added a parameter but didn't update the code to handle the gameMode accordingly.
         this.fileName = fileName;
         File file = new File(fileName);
+        }
+    // ================================================================
+    //                          LOAD FILE
+    // ================================================================
+    void LoadFromFile(String fileName) {
 
-      //this will check if file exist and if it doesnt it will start tutorial
-        //its empty so far
+        // Always use your real save path (ignore argument)
+        this.fileName = "src/main/java/com/example/fantasysortinggame/database/data/saveFile.json";
+
+        File file = new File(this.fileName);
+
+        // If file does not exist → create default database
         if (!file.exists()) {
-            //starts new data if empty
-            this.day = 0;
-            this.seed = (int)(Math.random() * Integer.MAX_VALUE);
-
-            this.usedItems = new ArrayList<>();
-
-
-            this.allItems = new ArrayList<>();
-            this.allUpgrades = new ArrayList<>();
-            this.allEvents = new ArrayList<>();
-            this.allNpcs = new ArrayList<>();
-            this.allDialogues = new ArrayList<>();
-
-            // --- Add stock items so SortPhaseController has something to display ---
-            ItemType type1 = new ItemType("Magic Weapon");
-            ItemType type2 = new ItemType("Potion");
-            ItemType type3 = new ItemType("Treasure");
-
-            allItems.add(new Item("Unsorted", null, "A shiny sword", "Sword of Light", type1, false, new ArrayList<>(), new ArrayList<>(), 100));
-            allItems.add(new Item("Unsorted", null, "Heals 50 HP", "Healing Potion", type2, false, new ArrayList<>(), new ArrayList<>(), 25));
-            allItems.add(new Item("Unsorted", null, "Ancient gold coins", "Gold Coins", type3, false, new ArrayList<>(), new ArrayList<>(), 200));
-            allUpgrades.add(new Upgrade("Assistant",50.0, false, "Sorts the first item automatically."));
-            // Copy them into usedItems so SortPhaseController can show them
-            this.usedItems.addAll(allItems);
-
-            // Then save the new tutorial started game
-            saveToFile();
+            createDefaultSave();
+            SaveToFile();
             return;
         }
 
-        // else there is a save file
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(File.class, new FileAdapter())
-                .create();
+        Gson gson = new Gson();
 
-        try (FileReader reader = new FileReader(file)) {
+        try {
+            // First pass: load normally
+            FileReader reader = new FileReader(file);
             Database loaded = gson.fromJson(reader, Database.class);
+            reader.close();
 
-            // copies trh= all the valuhes into this instance
-            this.fileName = loaded.fileName;
             this.day = loaded.day;
             this.seed = loaded.seed;
-            this.usedItems = loaded.usedItems;
-            this.allItems = loaded.allItems;
-            this.allUpgrades = loaded.allUpgrades;
-            this.allEvents = loaded.allEvents;
-            this.allNpcs = loaded.allNpcs;
-            this.allDialogues = loaded.allDialogues;
 
+            if (loaded.usedItems != null) {
+                this.usedItems = loaded.usedItems;
+            } else {
+                this.usedItems = new ArrayList<Item>();
+            }
 
+            // Detect if "allItems" is missing (old JSON format)
+            boolean hasNewFormat = loaded.allItems != null && !loaded.allItems.isEmpty();
+
+            if (!hasNewFormat) {
+
+                // Build new empty 6-day structure
+                this.allItems = new ArrayList<ArrayList<Item>>();
+                int i;
+                for (i = 0; i < 6; i++) {
+                    this.allItems.add(new ArrayList<Item>());
+                }
+
+                // Second pass: raw JSON to detect day1/day2/day3
+                FileReader rawReader = new FileReader(file);
+                JsonObject jsonObject = gson.fromJson(rawReader, JsonObject.class);
+                rawReader.close();
+
+                if (jsonObject.has("allItems") && jsonObject.get("allItems").isJsonObject()) {
+
+                    JsonObject oldItems = jsonObject.getAsJsonObject("allItems");
+
+                    for (i = 0; i < 6; i++) {
+                        String key = "day" + (i + 1);
+                        if (oldItems.has(key)) {
+                            ArrayList<Item> list = gson.fromJson(
+                                    oldItems.get(key),
+                                    new TypeToken<ArrayList<Item>>() {}.getType()
+                            );
+                            this.allItems.set(i, list);
+                        }
+                    }
+                }
+
+            } else {
+                this.allItems = loaded.allItems;
+            }
+
+            // Load upgrades, events, npcs, dialogues safely
+            if (loaded.allUpgrades != null) {
+                this.allUpgrades = loaded.allUpgrades;
+            } else {
+                this.allUpgrades = new ArrayList<Upgrade>();
+            }
+
+            if (loaded.allEvents != null) {
+                this.allEvents = loaded.allEvents;
+            } else {
+                this.allEvents = new ArrayList<QuickTimeEvent>();
+            }
+
+            if (loaded.allNpcs != null) {
+                this.allNpcs = loaded.allNpcs;
+            } else {
+                this.allNpcs = new ArrayList<Npc>();
+            }
+
+            if (loaded.allDialogues != null) {
+                this.allDialogues = loaded.allDialogues;
+            } else {
+                this.allDialogues = new ArrayList<Dialogue>();
+            }
 
         } catch (Exception e) {
-            System.out.println("error happened");
+            System.out.println("Error loading save file: " + e.getMessage());
         }
     }
 
+    // Create default empty database
+    private void createDefaultSave() {
 
-    public void saveToFile() {
+        this.day = 0;
+        this.seed = (int) (Math.random() * Integer.MAX_VALUE);
+
+        this.usedItems = new ArrayList<Item>();
+
+        this.allItems = new ArrayList<ArrayList<Item>>();
+        int i;
+        for (i = 0; i < 6; i++) {
+            this.allItems.add(new ArrayList<Item>());
+        }
+
+        this.allUpgrades = new ArrayList<Upgrade>();
+        this.allEvents = new ArrayList<QuickTimeEvent>();
+        this.allNpcs = new ArrayList<Npc>();
+        this.allDialogues = new ArrayList<Dialogue>();
+    }
+
+    // ================================================================
+    //                          SAVE FILE
+    // ================================================================
+    void SaveToFile() {
         if (fileName == null || fileName.isEmpty()) {
             fileName = "saveFile.json";
         }
+        final String SAVE_DIR = "src/main/java/com/example/fantasysortinggame/database/data/";
+        File file = new File(SAVE_DIR + fileName);
 
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(File.class, new FileAdapter())
-                .create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try (FileWriter writer = new FileWriter(fileName)) {
+        try {
+            FileWriter writer = new FileWriter(fileName);
             gson.toJson(this, writer);
+            writer.close();
         } catch (IOException e) {
             System.out.println("error happened");
         }
     }
-
 }
