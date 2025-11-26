@@ -79,7 +79,7 @@ public class SalePhaseController {
         for (Item item : items) {
             if (item.isSold()) continue; // skip sold items
             // Filtering
-            if (!"All".equals(currentFilter)) {
+            if (!"All".equalsIgnoreCase(currentFilter)) {
                 if (!item.getItemSort().equalsIgnoreCase(currentFilter)) continue;
             }
 
@@ -88,7 +88,7 @@ public class SalePhaseController {
             ImageView imageView = new ImageView();
             if (item.getImageLink() != null) {
                 try {
-                    imageView.setImage(new Image(item.getImageLink().toURI().toString()));
+                    imageView.setImage(new Image(item.getImageLink()));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

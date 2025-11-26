@@ -1,25 +1,1188 @@
 {
-  "fileName": "saveFile.json",
-  "day": 1,
+  "fileName": "src/main/java/com/example/fantasysortinggame/database/data/saveFile.json",
+  "day": 5,
   "seed": 123456789,
-  "gameMode": "STORY",
-  "usedItems": [],
+  "usedItems": [
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "An old sword with nicks and rust, but it feels strangely familiar in your hand.",
+      "title": "Grandpa\u0027s Rusted Sword",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A blue amulet that glows faintly when you hold it up to the light.",
+      "title": "Sapphire Amulet",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "An oil lantern with a cracked glass pane and the scent of smoke.",
+      "title": "Cracked Lantern",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A faded map showing mountains and a circled X labeled only \u0027First Find\u0027.",
+      "title": "Old Expedition Map",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A travel cloak full of holes, still carrying the smell of rain and campfire.",
+      "title": "Moth-Eaten Cloak",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A glass flask with dried residue at the bottom and a faint herbal smell.",
+      "title": "Empty Potion Flask",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A jagged fragment of some larger gem, still catching stray light.",
+      "title": "Gemstone Shard",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A torn page from Grandpa’s journal, mentioning \u0027the Last Compass\u0027 for the first time.",
+      "title": "Journal Page #1",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A bronze compass whose needle sometimes points somewhere other than north.",
+      "title": "Bronze Compass",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A simple carved idol with worn features and no obvious magic.",
+      "title": "Wooden Idol",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A wooden pipe, empty now, but stained from years of use.",
+      "title": "Grandpa\u0027s Pipe",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A silver ring engraved with the initials of someone you don’t recognize.",
+      "title": "Silver Ring with Inscription",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "An old sword with nicks and rust, but it feels strangely familiar in your hand.",
+      "title": "Grandpa\u0027s Rusted Sword",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A blue amulet that glows faintly when you hold it up to the light.",
+      "title": "Sapphire Amulet",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "An oil lantern with a cracked glass pane and the scent of smoke.",
+      "title": "Cracked Lantern",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A faded map showing mountains and a circled X labeled only \u0027First Find\u0027.",
+      "title": "Old Expedition Map",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A travel cloak full of holes, still carrying the smell of rain and campfire.",
+      "title": "Moth-Eaten Cloak",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A glass flask with dried residue at the bottom and a faint herbal smell.",
+      "title": "Empty Potion Flask",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A jagged fragment of some larger gem, still catching stray light.",
+      "title": "Gemstone Shard",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A torn page from Grandpa’s journal, mentioning \u0027the Last Compass\u0027 for the first time.",
+      "title": "Journal Page #1",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A bronze compass whose needle sometimes points somewhere other than north.",
+      "title": "Bronze Compass",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A simple carved idol with worn features and no obvious magic.",
+      "title": "Wooden Idol",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A wooden pipe, empty now, but stained from years of use.",
+      "title": "Grandpa\u0027s Pipe",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A silver ring engraved with the initials of someone you don’t recognize.",
+      "title": "Silver Ring with Inscription",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A dagger more suited for rituals than battles, its blade engraved with spirals.",
+      "title": "Ceremonial Dagger",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A metal badge stamped with the emblem of Grandpa’s old crew.",
+      "title": "Expedition Badge",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A warm flask that sends a tingle up your arm when you uncork it.",
+      "title": "Ember Potion",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A flattened bedroll that has seen too many cold nights on hard ground.",
+      "title": "Worn Bedroll",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A map scrap showing northern cliffs and a scribbled warning: \u0027Do NOT camp here\u0027.",
+      "title": "Map Fragment (North)",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "Half of a leather boot, the sole worn thin and patched twice.",
+      "title": "Torn Boot",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A small figurine carved from cloudy quartz in the shape of a fox.",
+      "title": "Quartz Figurine",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A vial of liquid that glows softly, like morning dew catching sunrise.",
+      "title": "Vial of Dewlight",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A charm made of tiny bones strung together with red thread.",
+      "title": "Bone Charm",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "An unsent letter addressed to \u0027L.\u0027, full of apologies and half-finished sentences.",
+      "title": "Grandpa’s Love Letter",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [
+        {
+          "title": "Grandpa\u0027s Friend Objects",
+          "description": "Rowan steps in as you consider selling a particularly sentimental item.",
+          "options": [
+            "Keep the item",
+            "Sell it anyway"
+          ],
+          "correctOption": "Keep the item",
+          "start": 0,
+          "end": 0,
+          "maxTime": 5000,
+          "solvedInTime": false,
+          "eventSolvedCorrectly": false,
+          "itemsAffected": [],
+          "happened": false
+        }
+      ],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A single iron gauntlet sized for a large hand, the fingers dented.",
+      "title": "Iron Gauntlet",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A necklace strung with bits of smooth green and blue sea-glass.",
+      "title": "Sea-Glass Necklace",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A small lockbox that rattles with disappointment—whatever was inside is gone.",
+      "title": "Rusted Lockbox (Empty)",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A feather colored in shades you’re not sure exist in nature.",
+      "title": "Feather of Unknown Bird",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "Bundles of old folded papers detailing the cost of maintaining an airship.",
+      "title": "Old Tax Receipts",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A page describing a friend named Rowan and a job that went \u0027very wrong\u0027.",
+      "title": "Journal Page #2",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A coin stamped with an unfamiliar ruler wearing a broken crown.",
+      "title": "Copper Coin from Lost Empire",
+      "itemType": {
+        "itemType": "Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A brass spyglass with cracked lenses, stuck half-extended.",
+      "title": "Broken Spyglass",
+      "itemType": {
+        "itemType": "Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Historical Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A more intricate idol whose eyes seem too carefully carved to be comforting.",
+      "title": "Cursed Wooden Idol",
+      "itemType": {
+        "itemType": "Curious Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [
+        {
+          "title": "Cursed Idol Awakens",
+          "description": "Sorting the Cursed Wooden Idol incorrectly seems to stir something dark.",
+          "options": [
+            "Resist the curse",
+            "Ignore it",
+            "Touch the idol"
+          ],
+          "correctOption": "Resist the curse",
+          "start": 0,
+          "end": 0,
+          "maxTime": 3000,
+          "solvedInTime": false,
+          "eventSolvedCorrectly": false,
+          "itemsAffected": [],
+          "happened": false
+        }
+      ],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Historical Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A map scrap showing a jungle valley and the note \u0027We weren’t welcome here\u0027.",
+      "title": "Map Fragment (South)",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Curious Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A gold-plated chalice inlaid with glass gems, stained at the rim.",
+      "title": "Ornate Chalice",
+      "itemType": {
+        "itemType": "Luxurious Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Luxurious Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A small shard of something that looks like solidified poison.",
+      "title": "Crystallized Venom",
+      "itemType": {
+        "itemType": "Magical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Magical Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A sturdy leather bracer embossed with a faded crest.",
+      "title": "Leather Bracer",
+      "itemType": {
+        "itemType": "Usable Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A coil of rope that still smells faintly of saltwater.",
+      "title": "Expedition Rope",
+      "itemType": {
+        "itemType": "Usable Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Historical Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A pebble that hums quietly when you hold it to your ear.",
+      "title": "Singing Pebble",
+      "itemType": {
+        "itemType": "Curious Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A shaken entry about a \u0027deal we should never have taken\u0027.",
+      "title": "Journal Page #3",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Curious Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A coin punched out of a signet, the crest deliberately scratched away.",
+      "title": "Royal Signet Coin",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Historical Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A locket that refuses to open, no matter how you pry.",
+      "title": "Golden Locket (Locked)",
+      "itemType": {
+        "itemType": "Luxurious Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Luxurious Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A bow carved from pale ashwood, light but surprisingly strong.",
+      "title": "Ashwood Bow",
+      "itemType": {
+        "itemType": "Usable Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A scroll written in a script that slithers away when you try to focus on it.",
+      "title": "Unreadable Scroll",
+      "itemType": {
+        "itemType": "Magical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Broken Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "An egg that’s too warm and pulses like a heartbeat.",
+      "title": "Strange Egg",
+      "itemType": {
+        "itemType": "Curious Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Historical Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A shield snapped almost in half, its emblem obscured by scorch marks.",
+      "title": "Broken Shield",
+      "itemType": {
+        "itemType": "Broken Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Historical Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A pair of gloves with the fingertips worn through.",
+      "title": "Frayed Gloves",
+      "itemType": {
+        "itemType": "Broken Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Magical Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A small shard that glows brighter in the dark.",
+      "title": "Glowstone Fragment",
+      "itemType": {
+        "itemType": "Magical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Broken Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A letter sealed with dark red wax bearing an unfamiliar sigil.",
+      "title": "Wax-Sealed Letter",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Curious Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A map scrap showing sea routes and a circled island labeled \u0027Home?\u0027.",
+      "title": "Map Fragment (East)",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A broken fragment of some larger idol, its chipped features still unsettling.",
+      "title": "Idol Fragment",
+      "itemType": {
+        "itemType": "Curious Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [
+        {
+          "title": "Cursed Idol Awakens",
+          "description": "Sorting the Cursed Wooden Idol incorrectly seems to stir something dark.",
+          "options": [
+            "Resist the curse",
+            "Ignore it",
+            "Touch the idol"
+          ],
+          "correctOption": "Resist the curse",
+          "start": 0,
+          "end": 0,
+          "maxTime": 3000,
+          "solvedInTime": false,
+          "eventSolvedCorrectly": false,
+          "itemsAffected": [],
+          "happened": false
+        }
+      ],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A coin that feels heavier than it should and is always cold.",
+      "title": "Eldritch Coin",
+      "itemType": {
+        "itemType": "Magical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A bracelet etched with looping patterns that almost form words.",
+      "title": "Silver Bracelet",
+      "itemType": {
+        "itemType": "Luxurious Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A solid mace with a weighted head, built for breaking bones and doors alike.",
+      "title": "Steel Mace",
+      "itemType": {
+        "itemType": "Usable Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A potion that burns green whenever it touches the air.",
+      "title": "Greenfire Potion",
+      "itemType": {
+        "itemType": "Magical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A thick ledger recording jobs, payments, and mysterious \u0027bonuses\u0027.",
+      "title": "Expedition Ledger",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A wide-brimmed hat with a feather tucked into the band.",
+      "title": "Grandpa’s Hat",
+      "itemType": {
+        "itemType": "Usable Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A page where Grandpa wonders if the crew should walk away while they still can.",
+      "title": "Journal Page #4",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Broken Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A pebble that leaves faint starlight trails when tossed.",
+      "title": "Fallen Star Pebble",
+      "itemType": {
+        "itemType": "Curious Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A wolf-shaped totem worn smooth from being held.",
+      "title": "Carved Wolf Totem",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Historical Treasure",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A simple cloth mask that smells of dust and sweat.",
+      "title": "Bandit’s Mask",
+      "itemType": {
+        "itemType": "Usable Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A pickaxe with a split handle and chipped head.",
+      "title": "Broken Pickaxe",
+      "itemType": {
+        "itemType": "Broken Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A shard that glows warm and golden even in the shade.",
+      "title": "Crystallized Sunlight",
+      "itemType": {
+        "itemType": "Magical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "Matched daggers meant to be used together, their hilts forming a pattern.",
+      "title": "Twin Daggers",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A ribbon once bright red, now darker for too many reasons.",
+      "title": "Blood-Stained Ribbon",
+      "itemType": {
+        "itemType": "Broken Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A tiny statue covered in fragile sheets of gold leaf.",
+      "title": "Gold Leaf Figurine",
+      "itemType": {
+        "itemType": "Luxurious Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A foul-smelling potion that supposedly helps more than it hurts.",
+      "title": "Boiled Healing Draft",
+      "itemType": {
+        "itemType": "Magical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A bundle of metal stakes still tied with fraying rope.",
+      "title": "Expedition Tent Stakes",
+      "itemType": {
+        "itemType": "Usable Junk"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A glass orb that swirls with faint scenes when you tilt it.",
+      "title": "Sealed Memory Orb",
+      "itemType": {
+        "itemType": "Magical Treasure"
+      },
+      "isSold": true,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A map scrap showing western cliffs and a sketched-out ship.",
+      "title": "Map Fragment (West)",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": false,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A list of names and roles, with several crossed out.",
+      "title": "Crew Manifest",
+      "itemType": {
+        "itemType": "Historical Treasure"
+      },
+      "isSold": false,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A chain that rattles softly even when no one is touching it.",
+      "title": "Ghost-Touched Chain",
+      "itemType": {
+        "itemType": "Magical Treasure"
+      },
+      "isSold": false,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A faded photo of four smiling figures, one of them clearly Grandpa.",
+      "title": "Crew Photo (Faded)",
+      "itemType": {
+        "itemType": "Curious Junk"
+      },
+      "isSold": false,
+      "value": 0.0,
+      "events": [
+        {
+          "title": "Grandpa\u0027s Friend Objects",
+          "description": "Rowan steps in as you consider selling a particularly sentimental item.",
+          "options": [
+            "Keep the item",
+            "Sell it anyway"
+          ],
+          "correctOption": "Keep the item",
+          "start": 0,
+          "end": 0,
+          "maxTime": 5000,
+          "solvedInTime": false,
+          "eventSolvedCorrectly": false,
+          "itemsAffected": [],
+          "happened": false
+        }
+      ],
+      "dialogues": []
+    },
+    {
+      "itemSort": "Usable Junk",
+      "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
+      "description": "A pouch of arrowheads gleaming faintly in low light.",
+      "title": "Silver Arrowheads",
+      "itemType": {
+        "itemType": "Usable Junk"
+      },
+      "isSold": false,
+      "value": 0.0,
+      "events": [],
+      "dialogues": []
+    }
+  ],
   "allItems": [
     [
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "An old sword with nicks and rust, but it feels strangely familiar in your hand.",
-        "title": "Grandpa's Rusted Sword",
+        "title": "Grandpa\u0027s Rusted Sword",
         "itemType": {
           "itemType": "Junk"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A blue amulet that glows faintly when you hold it up to the light.",
         "title": "Sapphire Amulet",
@@ -27,59 +1190,64 @@
           "itemType": "Treasure"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "An oil lantern with a cracked glass pane and the scent of smoke.",
         "title": "Cracked Lantern",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A faded map showing mountains and a circled X labeled only 'First Find'.",
+        "description": "A faded map showing mountains and a circled X labeled only \u0027First Find\u0027.",
         "title": "Old Expedition Map",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A travel cloak full of holes, still carrying the smell of rain and campfire.",
         "title": "Moth-Eaten Cloak",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A glass flask with dried residue at the bottom and a faint herbal smell.",
         "title": "Empty Potion Flask",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A jagged fragment of some larger gem, still catching stray light.",
         "title": "Gemstone Shard",
@@ -87,23 +1255,25 @@
           "itemType": "Treasure"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A torn page from Grandpa’s journal, mentioning 'the Last Compass' for the first time.",
+        "description": "A torn page from Grandpa’s journal, mentioning \u0027the Last Compass\u0027 for the first time.",
         "title": "Journal Page #1",
         "itemType": {
           "itemType": "Treasure"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A bronze compass whose needle sometimes points somewhere other than north.",
         "title": "Bronze Compass",
@@ -111,11 +1281,12 @@
           "itemType": "Treasure"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A simple carved idol with worn features and no obvious magic.",
         "title": "Wooden Idol",
@@ -123,23 +1294,25 @@
           "itemType": "Junk"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A wooden pipe, empty now, but stained from years of use.",
-        "title": "Grandpa's Pipe",
+        "title": "Grandpa\u0027s Pipe",
         "itemType": {
           "itemType": "Junk"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A silver ring engraved with the initials of someone you don’t recognize.",
         "title": "Silver Ring with Inscription",
@@ -147,131 +1320,142 @@
           "itemType": "Treasure"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       }
     ],
     [
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A dagger more suited for rituals than battles, its blade engraved with spirals.",
         "title": "Ceremonial Dagger",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A metal badge stamped with the emblem of Grandpa’s old crew.",
         "title": "Expedition Badge",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A warm flask that sends a tingle up your arm when you uncork it.",
         "title": "Ember Potion",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A flattened bedroll that has seen too many cold nights on hard ground.",
         "title": "Worn Bedroll",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A map scrap showing northern cliffs and a scribbled warning: 'Do NOT camp here'.",
+        "description": "A map scrap showing northern cliffs and a scribbled warning: \u0027Do NOT camp here\u0027.",
         "title": "Map Fragment (North)",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "Half of a leather boot, the sole worn thin and patched twice.",
         "title": "Torn Boot",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A small figurine carved from cloudy quartz in the shape of a fox.",
         "title": "Quartz Figurine",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A vial of liquid that glows softly, like morning dew catching sunrise.",
         "title": "Vial of Dewlight",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A charm made of tiny bones strung together with red thread.",
         "title": "Bone Charm",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "An unsent letter addressed to 'L.', full of apologies and half-finished sentences.",
+        "description": "An unsent letter addressed to \u0027L.\u0027, full of apologies and half-finished sentences.",
         "title": "Grandpa’s Love Letter",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [
           {
-            "title": "Grandpa's Friend Objects",
+            "title": "Grandpa\u0027s Friend Objects",
             "description": "Rowan steps in as you consider selling a particularly sentimental item.",
             "options": [
               "Keep the item",
@@ -283,118 +1467,128 @@
             "maxTime": 5000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A single iron gauntlet sized for a large hand, the fingers dented.",
         "title": "Iron Gauntlet",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A necklace strung with bits of smooth green and blue sea-glass.",
         "title": "Sea-Glass Necklace",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A small lockbox that rattles with disappointment—whatever was inside is gone.",
         "title": "Rusted Lockbox (Empty)",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A feather colored in shades you’re not sure exist in nature.",
         "title": "Feather of Unknown Bird",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "Bundles of old folded papers detailing the cost of maintaining an airship.",
         "title": "Old Tax Receipts",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A page describing a friend named Rowan and a job that went 'very wrong'.",
+        "description": "A page describing a friend named Rowan and a job that went \u0027very wrong\u0027.",
         "title": "Journal Page #2",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A coin stamped with an unfamiliar ruler wearing a broken crown.",
         "title": "Copper Coin from Lost Empire",
         "itemType": {
           "itemType": "Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A brass spyglass with cracked lenses, stuck half-extended.",
         "title": "Broken Spyglass",
         "itemType": {
           "itemType": "Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       }
     ],
     [
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Historical Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A more intricate idol whose eyes seem too carefully carved to be comforting.",
         "title": "Cursed Wooden Idol",
         "itemType": {
           "itemType": "Curious Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [
           {
             "title": "Cursed Idol Awakens",
@@ -410,226 +1604,245 @@
             "maxTime": 3000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Historical Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A map scrap showing a jungle valley and the note 'We weren’t welcome here'.",
+        "description": "A map scrap showing a jungle valley and the note \u0027We weren’t welcome here\u0027.",
         "title": "Map Fragment (South)",
         "itemType": {
           "itemType": "Historical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Curious Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A gold-plated chalice inlaid with glass gems, stained at the rim.",
         "title": "Ornate Chalice",
         "itemType": {
           "itemType": "Luxurious Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Luxurious Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A small shard of something that looks like solidified poison.",
         "title": "Crystallized Venom",
         "itemType": {
           "itemType": "Magical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Magical Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A sturdy leather bracer embossed with a faded crest.",
         "title": "Leather Bracer",
         "itemType": {
           "itemType": "Usable Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A coil of rope that still smells faintly of saltwater.",
         "title": "Expedition Rope",
         "itemType": {
           "itemType": "Usable Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Historical Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A pebble that hums quietly when you hold it to your ear.",
         "title": "Singing Pebble",
         "itemType": {
           "itemType": "Curious Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A shaken entry about a 'deal we should never have taken'.",
+        "description": "A shaken entry about a \u0027deal we should never have taken\u0027.",
         "title": "Journal Page #3",
         "itemType": {
           "itemType": "Historical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Curious Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A coin punched out of a signet, the crest deliberately scratched away.",
         "title": "Royal Signet Coin",
         "itemType": {
           "itemType": "Historical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Historical Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A locket that refuses to open, no matter how you pry.",
         "title": "Golden Locket (Locked)",
         "itemType": {
           "itemType": "Luxurious Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Luxurious Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A bow carved from pale ashwood, light but surprisingly strong.",
         "title": "Ashwood Bow",
         "itemType": {
           "itemType": "Usable Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A scroll written in a script that slithers away when you try to focus on it.",
         "title": "Unreadable Scroll",
         "itemType": {
           "itemType": "Magical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Broken Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "An egg that’s too warm and pulses like a heartbeat.",
         "title": "Strange Egg",
         "itemType": {
           "itemType": "Curious Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Historical Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A shield snapped almost in half, its emblem obscured by scorch marks.",
         "title": "Broken Shield",
         "itemType": {
           "itemType": "Broken Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Historical Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A pair of gloves with the fingertips worn through.",
         "title": "Frayed Gloves",
         "itemType": {
           "itemType": "Broken Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Magical Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A small shard that glows brighter in the dark.",
         "title": "Glowstone Fragment",
         "itemType": {
           "itemType": "Magical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Broken Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A letter sealed with dark red wax bearing an unfamiliar sigil.",
         "title": "Wax-Sealed Letter",
         "itemType": {
           "itemType": "Historical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Curious Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A map scrap showing sea routes and a circled island labeled 'Home?'.",
+        "description": "A map scrap showing sea routes and a circled island labeled \u0027Home?\u0027.",
         "title": "Map Fragment (East)",
         "itemType": {
           "itemType": "Historical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       }
     ],
     [
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A broken fragment of some larger idol, its chipped features still unsettling.",
         "title": "Idol Fragment",
         "itemType": {
           "itemType": "Curious Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [
           {
             "title": "Cursed Idol Awakens",
@@ -645,229 +1858,248 @@
             "maxTime": 3000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A coin that feels heavier than it should and is always cold.",
         "title": "Eldritch Coin",
         "itemType": {
           "itemType": "Magical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A bracelet etched with looping patterns that almost form words.",
         "title": "Silver Bracelet",
         "itemType": {
           "itemType": "Luxurious Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A solid mace with a weighted head, built for breaking bones and doors alike.",
         "title": "Steel Mace",
         "itemType": {
           "itemType": "Usable Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A potion that burns green whenever it touches the air.",
         "title": "Greenfire Potion",
         "itemType": {
           "itemType": "Magical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A thick ledger recording jobs, payments, and mysterious 'bonuses'.",
+        "description": "A thick ledger recording jobs, payments, and mysterious \u0027bonuses\u0027.",
         "title": "Expedition Ledger",
         "itemType": {
           "itemType": "Historical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A wide-brimmed hat with a feather tucked into the band.",
         "title": "Grandpa’s Hat",
         "itemType": {
           "itemType": "Usable Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A page where Grandpa wonders if the crew should walk away while they still can.",
         "title": "Journal Page #4",
         "itemType": {
           "itemType": "Historical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Broken Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A pebble that leaves faint starlight trails when tossed.",
         "title": "Fallen Star Pebble",
         "itemType": {
           "itemType": "Curious Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A wolf-shaped totem worn smooth from being held.",
         "title": "Carved Wolf Totem",
         "itemType": {
           "itemType": "Historical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Historical Treasure",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A simple cloth mask that smells of dust and sweat.",
         "title": "Bandit’s Mask",
         "itemType": {
           "itemType": "Usable Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A pickaxe with a split handle and chipped head.",
         "title": "Broken Pickaxe",
         "itemType": {
           "itemType": "Broken Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A shard that glows warm and golden even in the shade.",
         "title": "Crystallized Sunlight",
         "itemType": {
           "itemType": "Magical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "Matched daggers meant to be used together, their hilts forming a pattern.",
         "title": "Twin Daggers",
         "itemType": {
           "itemType": "Historical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A ribbon once bright red, now darker for too many reasons.",
         "title": "Blood-Stained Ribbon",
         "itemType": {
           "itemType": "Broken Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A tiny statue covered in fragile sheets of gold leaf.",
         "title": "Gold Leaf Figurine",
         "itemType": {
           "itemType": "Luxurious Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A foul-smelling potion that supposedly helps more than it hurts.",
         "title": "Boiled Healing Draft",
         "itemType": {
           "itemType": "Magical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A bundle of metal stakes still tied with fraying rope.",
         "title": "Expedition Tent Stakes",
         "itemType": {
           "itemType": "Usable Junk"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A glass orb that swirls with faint scenes when you tilt it.",
         "title": "Sealed Memory Orb",
         "itemType": {
           "itemType": "Magical Treasure"
         },
-        "isSold": false,
+        "isSold": true,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A map scrap showing western cliffs and a sketched-out ship.",
         "title": "Map Fragment (West)",
@@ -875,11 +2107,12 @@
           "itemType": "Historical Treasure"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A list of names and roles, with several crossed out.",
         "title": "Crew Manifest",
@@ -887,11 +2120,12 @@
           "itemType": "Historical Treasure"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A chain that rattles softly even when no one is touching it.",
         "title": "Ghost-Touched Chain",
@@ -899,11 +2133,12 @@
           "itemType": "Magical Treasure"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A faded photo of four smiling figures, one of them clearly Grandpa.",
         "title": "Crew Photo (Faded)",
@@ -911,9 +2146,10 @@
           "itemType": "Curious Junk"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
-            "title": "Grandpa's Friend Objects",
+            "title": "Grandpa\u0027s Friend Objects",
             "description": "Rowan steps in as you consider selling a particularly sentimental item.",
             "options": [
               "Keep the item",
@@ -925,13 +2161,14 @@
             "maxTime": 5000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
       },
       {
-        "itemSort": "UNSORTED",
+        "itemSort": "Usable Junk",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A pouch of arrowheads gleaming faintly in low light.",
         "title": "Silver Arrowheads",
@@ -939,6 +2176,7 @@
           "itemType": "Usable Junk"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       }
@@ -953,6 +2191,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -965,9 +2204,10 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
-            "title": "Grandpa's Friend Objects",
+            "title": "Grandpa\u0027s Friend Objects",
             "description": "Rowan steps in as you consider selling a particularly sentimental item.",
             "options": [
               "Keep the item",
@@ -979,7 +2219,8 @@
             "maxTime": 5000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
@@ -993,6 +2234,7 @@
           "itemType": "Minor / Utility Magic"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1005,6 +2247,7 @@
           "itemType": "Tools"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1017,6 +2260,7 @@
           "itemType": "Depleted"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1029,6 +2273,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1041,6 +2286,7 @@
           "itemType": "Treasure Hoard"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1053,6 +2299,7 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1065,6 +2312,7 @@
           "itemType": "Miscellaneous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1072,11 +2320,12 @@
         "itemSort": "UNSORTED",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
         "description": "A map leading to a city drawn only in outline, with no roads in or out.",
-        "title": "Map to 'The Hollow City'",
+        "title": "Map to \u0027The Hollow City\u0027",
         "itemType": {
           "itemType": "Documents / Maps"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1089,6 +2338,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1101,6 +2351,7 @@
           "itemType": "Relics"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1113,9 +2364,10 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
-            "title": "Grandpa's Friend Objects",
+            "title": "Grandpa\u0027s Friend Objects",
             "description": "Rowan steps in as you consider selling a particularly sentimental item.",
             "options": [
               "Keep the item",
@@ -1127,7 +2379,8 @@
             "maxTime": 5000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
@@ -1141,6 +2394,7 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1153,6 +2407,7 @@
           "itemType": "Crafting Materials"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1165,6 +2420,7 @@
           "itemType": "Documents / Maps"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1177,6 +2433,7 @@
           "itemType": "Relics"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1189,6 +2446,7 @@
           "itemType": "Rusted / Cracked"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1201,6 +2459,7 @@
           "itemType": "Tools"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1213,18 +2472,20 @@
           "itemType": "Jewelry"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
         "itemSort": "UNSORTED",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A desperate entry about a final job that 'will fix everything or ruin us'.",
+        "description": "A desperate entry about a final job that \u0027will fix everything or ruin us\u0027.",
         "title": "Journal Page #5",
         "itemType": {
           "itemType": "Documents / Maps"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1237,6 +2498,7 @@
           "itemType": "Minor / Utility Magic"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1249,6 +2511,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1261,6 +2524,7 @@
           "itemType": "Documents / Maps"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       }
@@ -1275,6 +2539,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
             "title": "Cursed Idol Awakens",
@@ -1290,7 +2555,8 @@
             "maxTime": 3000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
@@ -1304,6 +2570,7 @@
           "itemType": "Documents / Maps"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1316,6 +2583,7 @@
           "itemType": "Minor / Utility Magic"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1328,6 +2596,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1340,18 +2609,20 @@
           "itemType": "Minor / Utility Magic"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
       {
         "itemSort": "UNSORTED",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
-        "description": "A clear liquid that smells like rain on stone; the label warns 'use sparingly'.",
+        "description": "A clear liquid that smells like rain on stone; the label warns \u0027use sparingly\u0027.",
         "title": "Potion of Truth",
         "itemType": {
           "itemType": "Minor / Utility Magic"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1364,9 +2635,10 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
-            "title": "Grandpa's Friend Objects",
+            "title": "Grandpa\u0027s Friend Objects",
             "description": "Rowan steps in as you consider selling a particularly sentimental item.",
             "options": [
               "Keep the item",
@@ -1378,7 +2650,8 @@
             "maxTime": 5000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
@@ -1392,6 +2665,7 @@
           "itemType": "Documents / Maps"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1404,9 +2678,10 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
-            "title": "Grandpa's Friend Objects",
+            "title": "Grandpa\u0027s Friend Objects",
             "description": "Rowan steps in as you consider selling a particularly sentimental item.",
             "options": [
               "Keep the item",
@@ -1418,7 +2693,8 @@
             "maxTime": 5000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
@@ -1432,6 +2708,7 @@
           "itemType": "Miscellaneous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
             "title": "Cursed Idol Awakens",
@@ -1447,7 +2724,8 @@
             "maxTime": 3000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
@@ -1461,6 +2739,7 @@
           "itemType": "Oddities"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
             "title": "Cursed Idol Awakens",
@@ -1476,7 +2755,8 @@
             "maxTime": 3000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
@@ -1490,6 +2770,7 @@
           "itemType": "Minor / Utility Magic"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1502,6 +2783,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1514,6 +2796,7 @@
           "itemType": "Documents / Maps"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1526,6 +2809,7 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1538,6 +2822,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1550,6 +2835,7 @@
           "itemType": "Relics"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1562,6 +2848,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1574,6 +2861,7 @@
           "itemType": "Relics"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1586,6 +2874,7 @@
           "itemType": "Minor / Utility Magic"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1598,6 +2887,7 @@
           "itemType": "Minor / Utility Magic"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1610,6 +2900,7 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1622,6 +2913,7 @@
           "itemType": "Documents / Maps"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1634,6 +2926,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1646,6 +2939,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1658,9 +2952,10 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
-            "title": "Grandpa's Friend Objects",
+            "title": "Grandpa\u0027s Friend Objects",
             "description": "Rowan steps in as you consider selling a particularly sentimental item.",
             "options": [
               "Keep the item",
@@ -1672,7 +2967,8 @@
             "maxTime": 5000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
@@ -1686,6 +2982,7 @@
           "itemType": "Oddities"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1698,6 +2995,7 @@
           "itemType": "Cursed / Dangerous"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1710,9 +3008,10 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [
           {
-            "title": "Grandpa's Friend Objects",
+            "title": "Grandpa\u0027s Friend Objects",
             "description": "Rowan steps in as you consider selling a particularly sentimental item.",
             "options": [
               "Keep the item",
@@ -1724,7 +3023,8 @@
             "maxTime": 5000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [],
+            "happened": false
           }
         ],
         "dialogues": []
@@ -1738,6 +3038,7 @@
           "itemType": "Relics"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1750,6 +3051,7 @@
           "itemType": "Minor / Utility Magic"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       },
@@ -1762,6 +3064,7 @@
           "itemType": "Treasure Hoard"
         },
         "isSold": false,
+        "value": 0.0,
         "events": [],
         "dialogues": []
       }
@@ -1769,39 +3072,24 @@
   ],
   "allUpgrades": [
     {
-      "ability": "Magnifying Glass - reveals extended descriptions for items.",
+      "ability": "Reveals extended descriptions for items.",
       "cost": 50.0,
-      "isBought": false
+      "isBought": true,
+      "name": "Magnifying Glass"
     },
     {
-      "ability": "Color Wheel - highlights items that belong to the same set.",
+      "ability": "Highlights items that belong to the same set.",
       "cost": 90.0,
-      "isBought": false
+      "isBought": true,
+      "name": "Color Wheel"
     },
     {
-      "ability": "Little Helper - auto-sorts the first item each day.",
+      "ability": "Auto-sorts the first item each day.",
       "cost": 150.0,
-      "isBought": false
+      "isBought": true,
+      "name": "Little Helper"
     }
   ],
-  "unboughtUpgrades": [
-    {
-      "ability": "Magnifying Glass - reveals extended descriptions for items.",
-      "cost": 50.0,
-      "isBought": false
-    },
-    {
-      "ability": "Color Wheel - highlights items that belong to the same set.",
-      "cost": 90.0,
-      "isBought": false
-    },
-    {
-      "ability": "Little Helper - auto-sorts the first item each day.",
-      "cost": 150.0,
-      "isBought": false
-    }
-  ],
-  "boughtUpgrades": [],
   "allEvents": [
     {
       "title": "Cursed Idol Awakens",
@@ -1817,10 +3105,11 @@
       "maxTime": 3000,
       "solvedInTime": false,
       "eventSolvedCorrectly": false,
-      "itemsAffected": []
+      "itemsAffected": [],
+      "happened": false
     },
     {
-      "title": "Grandpa's Friend Objects",
+      "title": "Grandpa\u0027s Friend Objects",
       "description": "Rowan steps in as you consider selling a particularly sentimental item.",
       "options": [
         "Keep the item",
@@ -1832,41 +3121,38 @@
       "maxTime": 5000,
       "solvedInTime": false,
       "eventSolvedCorrectly": false,
-      "itemsAffected": []
+      "itemsAffected": [],
+      "happened": false
     }
   ],
   "allNpcs": [
     {
       "name": "Butler",
       "profilePicturePath": "images/npc_butler.png",
-      "diolaguesAppearing": []
+      "dialoguesAppearing": []
     },
     {
       "name": "Rowan",
       "profilePicturePath": "images/npc_rowan.png",
-      "diolaguesAppearing": []
+      "dialoguesAppearing": []
     }
   ],
   "allDialogues": [
     {
-      "dialogue": "Welcome back to the warehouse, young master. Your grandfather left quite the mess.",
-      "charactersAppearing": []
+      "happened": false
     },
     {
-      "dialogue": "These things aren’t just junk. Every item has a story, if you’re willing to listen.",
-      "charactersAppearing": []
+      "happened": false
     },
     {
-      "dialogue": "Rowan used to say that the Last Compass never took a job they couldn’t walk away from. That stopped being true.",
-      "charactersAppearing": []
+      "happened": false
     },
     {
-      "dialogue": "Some of these items might be better off unsold. Not everything can be priced in gold.",
-      "charactersAppearing": []
+      "happened": false
     },
     {
-      "dialogue": "If you ever finish sorting all this, maybe you’ll finally learn why he stopped coming home on time.",
-      "charactersAppearing": []
+      "happened": false
     }
-  ]
+  ],
+  "gold": 2820.0
 }

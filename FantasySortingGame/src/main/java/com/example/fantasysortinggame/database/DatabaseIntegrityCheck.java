@@ -9,7 +9,7 @@ public class DatabaseIntegrityCheck {
         System.out.println("===== DATABASE DATA INTEGRITY TEST =====");
 
         Database db = new Database();
-        db.LoadFromFile("ignored");
+        db.loadFromFile("ignored", "none");
 
         boolean pass = true;
 

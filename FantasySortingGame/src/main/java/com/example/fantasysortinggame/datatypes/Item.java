@@ -155,10 +155,6 @@ public class Item {
         return dialogues;
     }
 
-    public String getImagePath() {
-        return imageLink;
-    }
-
     public String getName() {
         return title;
     }

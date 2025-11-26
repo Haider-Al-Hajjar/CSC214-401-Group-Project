@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SortPhaseController {
@@ -109,10 +110,10 @@ public class SortPhaseController {
             if (item.isSold()) {
                 continue;
             }
-            if ("Unsorted".equals(item.getItemSort())) allSorted = false;
+            if ("unsorted".equalsIgnoreCase(item.getItemSort())) allSorted = false;
 
             // Apply strict filter
-            if (!"All".equals(currentFilter) && !item.getItemSort().equals(currentFilter)) continue;
+            if (!"all".equalsIgnoreCase(currentFilter) && !item.getItemSort().equalsIgnoreCase(currentFilter)) continue;
 
             HBox row = new HBox(10);
 
@@ -120,7 +121,7 @@ public class SortPhaseController {
             ImageView imageView = new ImageView();
             if (item.getImageLink() != null) {
                 try {
-                    imageView.setImage(new javafx.scene.image.Image(item.getImageLink().toURI().toString()));
+                    imageView.setImage(new javafx.scene.image.Image(item.getImageLink()));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -207,6 +208,7 @@ public class SortPhaseController {
 
     private void finishPhase() {
         if (stage != null) stage.close();
+        database.getUsedItems().addAll(items);
         database.saveToFile();
         GamePhaseManager.runSalePhase(); // moves to the next phase
     }

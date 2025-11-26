@@ -66,7 +66,7 @@ public class Database {
     }
 
     // Return list for that day
-    public ArrayList<Item> getItemsByDayAndSeed(int day, long seed) {
+    public ArrayList<Item> getItemsByDayAndSeed() {
      /*
             returns items based on current day and starting seed
             if day = {a specific day where complications occur}
@@ -130,14 +130,10 @@ public class Database {
 
     }
 
-    public void loadFromFile(String fileName, String gameMode) { // added a parameter but didn't update the code to handle the gameMode accordingly.
-        this.fileName = fileName;
-        File file = new File(fileName);
-        }
     // ================================================================
     //                          LOAD FILE
     // ================================================================
-    void LoadFromFile(String fileName) {
+    public void loadFromFile(String fileName, String gameMode) {
 
         // Always use your real save path (ignore argument)
         this.fileName = "src/main/java/com/example/fantasysortinggame/database/data/saveFile.json";
@@ -147,7 +143,7 @@ public class Database {
         // If file does not exist → create default database
         if (!file.exists()) {
             createDefaultSave();
-            SaveToFile();
+            saveToFile();
             return;
         }
 
@@ -258,7 +254,7 @@ public class Database {
     // ================================================================
     //                          SAVE FILE
     // ================================================================
-    void SaveToFile() {
+    public void saveToFile() {
         if (fileName == null || fileName.isEmpty()) {
             fileName = "saveFile.json";
         }
