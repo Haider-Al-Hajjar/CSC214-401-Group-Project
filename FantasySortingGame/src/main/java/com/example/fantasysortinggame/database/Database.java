@@ -3,6 +3,8 @@ package com.example.fantasysortinggame.database;
 import com.example.fantasysortinggame.datatypes.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileReader;
@@ -10,11 +12,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Database { // might need to be static? I'm not sure. There should only ever be one of these.
+public class Database {
+
     private String fileName;
     private int day;
     private int seed;
     private ArrayList<Item> usedItems;
+
 
     private ArrayList<ArrayList<Item>> allItems;
 
@@ -61,16 +65,8 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.usedItems = usedItems;
     }
 
+    // Return list for that day
     public ArrayList<Item> getItemsByDayAndSeed(int day, long seed) {
-        /*
-            returns items based on current day and starting seed
-            if day = {a specific day where complications occur}
-                return even old items and change their currentSort
-            else
-                select a random batch of items based on the day and the seed
-                add these items to usedItems
-                return these items.
-         */
         return allItems.get(day - 1);
     }
 
@@ -126,95 +122,157 @@ public class Database { // might need to be static? I'm not sure. There should o
         this.allDialogues = allDialogues;
     }
 
+    // ================================================================
+    //                          LOAD FILE
+    // ================================================================
     void LoadFromFile(String fileName) {
 
-
+        // Always use your real save path (ignore argument)
         this.fileName = "src/main/java/com/example/fantasysortinggame/database/data/saveFile.json";
 
         File file = new File(this.fileName);
 
-        // If file does not exist: create new default save
+        // If file does not exist → create default database
         if (!file.exists()) {
-            this.day = 0;
-            this.seed = (int)(Math.random() * Integer.MAX_VALUE);
-
-            this.usedItems = new ArrayList<>();
-
-
-            this.allItems = new ArrayList<>();
-            for (int i = 0; i < 6; i++)
-                this.allItems.add(new ArrayList<>());
-
-            this.allUpgrades = new ArrayList<>();
-            this.unboughtUpgrades = new ArrayList<>();
-            this.boughtUpgrades = new ArrayList<>();
-            this.allEvents = new ArrayList<>();
-            this.allNpcs = new ArrayList<>();
-            this.allDialogues = new ArrayList<>();
-
+            createDefaultSave();
             SaveToFile();
             return;
         }
 
-        // Load existing JSON
         Gson gson = new Gson();
-        try (FileReader reader = new FileReader(file)) {
 
+        try {
+            // First pass: load normally
+            FileReader reader = new FileReader(file);
             Database loaded = gson.fromJson(reader, Database.class);
+            reader.close();
+
             this.day = loaded.day;
             this.seed = loaded.seed;
 
-            this.usedItems = (loaded.usedItems != null) ? loaded.usedItems : new ArrayList<>();
+            if (loaded.usedItems != null) {
+                this.usedItems = loaded.usedItems;
+            } else {
+                this.usedItems = new ArrayList<Item>();
+            }
 
-            //  If file has old JSON format with "day1", "day2", etc. -> auto convert
-            if (loaded.allItems == null || loaded.allItems.size() == 0) {
+            // Detect if "allItems" is missing (old JSON format)
+            boolean hasNewFormat = loaded.allItems != null && loaded.allItems.size() > 0;
 
-                this.allItems = new ArrayList<>();
-                for (int i = 0; i < 6; i++)
-                    this.allItems.add(new ArrayList<>());
+            if (!hasNewFormat) {
 
-                // get raw JSON for day1/day2/day3 keys
+                // Build new empty 6-day structure
+                this.allItems = new ArrayList<ArrayList<Item>>();
+                int i;
+                for (i = 0; i < 6; i++) {
+                    this.allItems.add(new ArrayList<Item>());
+                }
+
+                // Second pass: raw JSON to detect day1/day2/day3
                 FileReader rawReader = new FileReader(file);
-                var jsonObject = gson.fromJson(rawReader, com.google.gson.JsonObject.class);
+                JsonObject jsonObject = gson.fromJson(rawReader, JsonObject.class);
+                rawReader.close();
 
-                for (int i = 0; i < 6; i++) {
-                    String dayKey = "day" + (i + 1);
-                    if (jsonObject.has(dayKey)) {
-                        ArrayList<Item> converted =
-                                gson.fromJson(jsonObject.get(dayKey),
-                                        new com.google.gson.reflect.TypeToken<ArrayList<Item>>() {}.getType());
-                        this.allItems.set(i, converted);
+                if (jsonObject.has("allItems") && jsonObject.get("allItems").isJsonObject()) {
+
+                    JsonObject oldItems = jsonObject.getAsJsonObject("allItems");
+
+                    for (i = 0; i < 6; i++) {
+                        String key = "day" + (i + 1);
+                        if (oldItems.has(key)) {
+                            ArrayList<Item> list = gson.fromJson(
+                                    oldItems.get(key),
+                                    new TypeToken<ArrayList<Item>>() {}.getType()
+                            );
+                            this.allItems.set(i, list);
+                        }
                     }
                 }
 
             } else {
-                // already new format
                 this.allItems = loaded.allItems;
             }
 
-            this.allUpgrades = (loaded.allUpgrades != null) ? loaded.allUpgrades : new ArrayList<>();
-            this.unboughtUpgrades = (loaded.unboughtUpgrades != null) ? loaded.unboughtUpgrades : new ArrayList<>();
-            this.boughtUpgrades = (loaded.boughtUpgrades != null) ? loaded.boughtUpgrades : new ArrayList<>();
-            this.allEvents = (loaded.allEvents != null) ? loaded.allEvents : new ArrayList<>();
-            this.allNpcs = (loaded.allNpcs != null) ? loaded.allNpcs : new ArrayList<>();
-            this.allDialogues = (loaded.allDialogues != null) ? loaded.allDialogues : new ArrayList<>();
+            // Load upgrades, events, npcs, dialogues safely
+            if (loaded.allUpgrades != null) {
+                this.allUpgrades = loaded.allUpgrades;
+            } else {
+                this.allUpgrades = new ArrayList<Upgrade>();
+            }
+
+            if (loaded.unboughtUpgrades != null) {
+                this.unboughtUpgrades = loaded.unboughtUpgrades;
+            } else {
+                this.unboughtUpgrades = new ArrayList<Upgrade>();
+            }
+
+            if (loaded.boughtUpgrades != null) {
+                this.boughtUpgrades = loaded.boughtUpgrades;
+            } else {
+                this.boughtUpgrades = new ArrayList<Upgrade>();
+            }
+
+            if (loaded.allEvents != null) {
+                this.allEvents = loaded.allEvents;
+            } else {
+                this.allEvents = new ArrayList<QuickTimeEvent>();
+            }
+
+            if (loaded.allNpcs != null) {
+                this.allNpcs = loaded.allNpcs;
+            } else {
+                this.allNpcs = new ArrayList<Npc>();
+            }
+
+            if (loaded.allDialogues != null) {
+                this.allDialogues = loaded.allDialogues;
+            } else {
+                this.allDialogues = new ArrayList<Dialogue>();
+            }
 
         } catch (Exception e) {
             System.out.println("Error loading save file: " + e.getMessage());
         }
     }
 
+    // Create default empty database
+    private void createDefaultSave() {
 
+        this.day = 0;
+        this.seed = (int) (Math.random() * Integer.MAX_VALUE);
+
+        this.usedItems = new ArrayList<Item>();
+
+        this.allItems = new ArrayList<ArrayList<Item>>();
+        int i;
+        for (i = 0; i < 6; i++) {
+            this.allItems.add(new ArrayList<Item>());
+        }
+
+        this.allUpgrades = new ArrayList<Upgrade>();
+        this.unboughtUpgrades = new ArrayList<Upgrade>();
+        this.boughtUpgrades = new ArrayList<Upgrade>();
+        this.allEvents = new ArrayList<QuickTimeEvent>();
+        this.allNpcs = new ArrayList<Npc>();
+        this.allDialogues = new ArrayList<Dialogue>();
+    }
+
+    // ================================================================
+    //                          SAVE FILE
+    // ================================================================
     void SaveToFile() {
-        if (fileName == null || fileName.isEmpty()) {
+        if (fileName == null || fileName.length() == 0) {
             fileName = "saveFile.json";
         }
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter(fileName)) {
+
+        try {
+            FileWriter writer = new FileWriter(fileName);
             gson.toJson(this, writer);
+            writer.close();
         } catch (IOException e) {
             System.out.println("error happened");
         }
     }
-
 }

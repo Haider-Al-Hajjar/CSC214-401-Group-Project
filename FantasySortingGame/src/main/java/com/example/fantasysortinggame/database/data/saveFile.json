@@ -4,8 +4,8 @@
   "seed": 123456789,
   "gameMode": "STORY",
   "usedItems": [],
-  "allItems": {
-    "day1": [
+  "allItems": [
+    [
       {
         "itemSort": "UNSORTED",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
@@ -151,7 +151,7 @@
         "dialogues": []
       }
     ],
-    "day2": [
+    [
       {
         "itemSort": "UNSORTED",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
@@ -385,7 +385,7 @@
         "dialogues": []
       }
     ],
-    "day3": [
+    [
       {
         "itemSort": "UNSORTED",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
@@ -620,7 +620,7 @@
         "dialogues": []
       }
     ],
-    "day4": [
+    [
       {
         "itemSort": "UNSORTED",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
@@ -943,7 +943,7 @@
         "dialogues": []
       }
     ],
-    "day5": [
+    [
       {
         "itemSort": "UNSORTED",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
@@ -1265,7 +1265,7 @@
         "dialogues": []
       }
     ],
-    "day6": [
+    [
       {
         "itemSort": "UNSORTED",
         "imageLink": "src/main/java/com/example/fantasysortinggame/database/data/img.png",
@@ -1766,7 +1766,7 @@
         "dialogues": []
       }
     ]
-  },
+  ],
   "allUpgrades": [
     {
       "ability": "Magnifying Glass - reveals extended descriptions for items.",
