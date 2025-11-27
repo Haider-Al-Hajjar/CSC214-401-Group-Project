@@ -22,8 +22,5 @@ public class ItemType {
         return itemType;
     }
 
-    public String getTitle() {
-        return getItemType();
-    }
 
 }
