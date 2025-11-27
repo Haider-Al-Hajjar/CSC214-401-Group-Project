@@ -66,7 +66,7 @@ public class Database {
     }
 
     // Return list for that day
-    public ArrayList<Item> getItemsByDayAndSeed() {
+    public ArrayList<Item> getItems() {
      /*
             returns items based on current day and starting seed
             if day = {a specific day where complications occur}
@@ -76,7 +76,24 @@ public class Database {
                 add these items to usedItems
                 return these items.
          */
-        return allItems.get(day - 1);
+        ArrayList<Item> dayItems = allItems.get(day - 1);
+
+        if (dayItems.isEmpty()) {
+            return new ArrayList<>();
+        }
+        int baseCount = Math.max(1, dayItems.size() / 3);
+        int finalCount = baseCount;
+
+        if (finalCount > dayItems.size()) {
+            finalCount = dayItems.size();
+        }
+        java.util.Random rngRandomizer = new java.util.Random(seed + day);
+        ArrayList<Item> shuffled = new ArrayList<>(dayItems);
+        java.util.Collections.shuffle(shuffled, rngRandomizer);
+        ArrayList<Item> result = new ArrayList<>(shuffled.subList(0, finalCount));
+        usedItems.addAll(result);
+
+        return result;
     }
 
     public void setAllItems(ArrayList<ArrayList<Item>> allItems) {
@@ -117,15 +134,15 @@ public class Database {
     }
 
     //Suyog - added fer more getters and setters
-    public double getGold(){
-        return  gold;
+    public double getGold() {
+        return gold;
     }
 
     public void setGold(double gold) {
         this.gold = gold;
     }
 
-    public void addGold(double amount){
+    public void addGold(double amount) {
         this.gold += amount;
 
     }
@@ -190,7 +207,8 @@ public class Database {
                         if (oldItems.has(key)) {
                             ArrayList<Item> list = gson.fromJson(
                                     oldItems.get(key),
-                                    new TypeToken<ArrayList<Item>>() {}.getType()
+                                    new TypeToken<ArrayList<Item>>() {
+                                    }.getType()
                             );
                             this.allItems.set(i, list);
                         }

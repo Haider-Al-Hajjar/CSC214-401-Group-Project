@@ -78,6 +78,6 @@
 //        Database db = new Database();
 //        db.loadFromFile(TEST_FILE, null);
 //
-//        assertEquals(db.getAllItems(), db.getItemsByDayAndSeed(1, 999));
+//        assertEquals(db.getAllItems(), db.getItems(1, 999));
 //    }
 //}

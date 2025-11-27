@@ -11,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SortPhaseController {
@@ -96,7 +95,7 @@ public class SortPhaseController {
 
     private void loadItems() {
         if (database == null) return;
-        items = database.getItemsByDayAndSeed();
+        items = database.getItems();
         if (items == null) items = new ArrayList<>();
         displayItems();
     }

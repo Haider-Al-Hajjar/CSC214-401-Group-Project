@@ -3072,16 +3072,16 @@
   ],
   "allUpgrades": [
     {
-      "ability": "Reveals extended descriptions for items.",
-      "cost": 50.0,
+      "ability": "Increases the gold received from items sold.",
+      "cost": 250.0,
       "isBought": true,
-      "name": "Magnifying Glass"
+      "name": "Haggler's Hat"
     },
     {
-      "ability": "Highlights items that belong to the same set.",
-      "cost": 90.0,
+      "ability": "Receive extra items at the start of the day.",
+      "cost": 120.0,
       "isBought": true,
-      "name": "Color Wheel"
+      "name": "Bottomless Backpack"
     },
     {
       "ability": "Auto-sorts the first item each day.",
