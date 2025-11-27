@@ -2,7 +2,6 @@ package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Item;
-import com.example.fantasysortinggame.datatypes.Upgrade;
 import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
@@ -12,9 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SortPhaseController {
 
@@ -26,13 +23,11 @@ public class SortPhaseController {
     @FXML
     Label totalGoldLabel;
     @FXML
-    public ToggleButton allFilterButton;
+    private HBox filterButtonContainer;
+
     @FXML
-    private ToggleButton unsortedFilterButton;
-    @FXML
-    private ToggleButton junkFilterButton;
-    @FXML
-    private ToggleButton treasureFilterButton;
+    private HBox viewButtonContainer;
+
     @FXML
     private VBox itemContainer;
     @FXML
@@ -43,57 +38,77 @@ public class SortPhaseController {
     private String currentView = "Complete"; // default
     private ArrayList<Item> items;
     private String currentFilter = "Unsorted"; // default shows unsorted
-    private static final Map<String, Object> CATEGORY_TREE = Map.of(
-            "Junk", Map.of(
-                    "Usable Junk", List.of("Consumable", "Tools", "Everyday"),
-                    "Broken Junk", List.of("Depleted", "Rusted / Cracked", "Miscellaneous"),
-                    "Curious Junk", List.of("Oddities", "Crafting Materials", "Collectibles")
-            ),
-            "Treasure", Map.of(
-                    "Artifacts", List.of("Cursed / Dangerous", "Minor / Utility Magic"),
-                    "Historical Treasure", List.of("Relics", "Keepsakes", "Documents / Maps"),
-                    "Luxurious Treasure", List.of("Jewelry", "Treasure Hoard", "Decorative / Ornamental")
-            )
-    );
+    private FilterNode rootFilterNode;
+
+    private void createFilterButtons(FilterNode root) {
+        filterButtonContainer.getChildren().clear();
+        for (FilterNode child : root.children) {
+            if (child.isLeaf()) {
+                ToggleButton btn = new ToggleButton(child.name);
+                btn.setOnAction(e -> {
+                    currentFilter = child.name;
+                    displayItems();
+                });
+                filterButtonContainer.getChildren().add(btn);
+            } else {
+                MenuButton menuBtn = new MenuButton(child.name);
+                buildSubMenu(menuBtn, child);
+                filterButtonContainer.getChildren().add(menuBtn);
+            }
+        }
+    }
+
+    private void buildSubMenu(MenuButton parent, FilterNode node) {
+        for (FilterNode child : node.children) {
+            if (child.isLeaf()) {
+                MenuItem mi = new MenuItem(child.name);
+                mi.setOnAction(e -> {
+                    currentFilter = child.name;
+                    displayItems();
+                });
+                parent.getItems().add(mi);
+            } else {
+                Menu subMenu = new Menu(child.name);
+                buildSubMenuItems(subMenu, child);
+                parent.getItems().add(subMenu);
+            }
+        }
+    }
+
+    private void buildSubMenuItems(Menu menu, FilterNode node) {
+        for (FilterNode child : node.children) {
+            if (child.isLeaf()) {
+                MenuItem mi = new MenuItem(child.name);
+                mi.setOnAction(e -> {
+                    currentFilter = child.name;
+                    displayItems();
+                });
+                menu.getItems().add(mi);
+            } else {
+                Menu subMenu = new Menu(child.name);
+                buildSubMenuItems(subMenu, child);
+                menu.getItems().add(subMenu);
+            }
+        }
+    }
 
     @FXML
     public void initialize() {
         proceedButton.setVisible(false);
-
-        // Setup filter buttons
-        allFilterButton.setOnAction(e -> {
-            currentFilter = "All";
-            displayItems();
-        });
-
-        unsortedFilterButton.setOnAction(e -> {
-            currentFilter = "Unsorted";
-            displayItems();
-        });
-        junkFilterButton.setOnAction(e -> {
-            currentFilter = "Junk";
-            displayItems();
-        });
-        treasureFilterButton.setOnAction(e -> {
-            currentFilter = "Treasure";
-            displayItems();
-        });
-        completeViewButton.setOnAction(e -> {
-            currentView = "Complete";
-            displayItems();
-        });
-
-        imageViewButton.setOnAction(e -> {
-            currentView = "Image";
-            displayItems();
-        });
-
-        loreViewButton.setOnAction(e -> {
-            currentView = "Lore";
-            displayItems();
-        });
-
         proceedButton.setOnAction(e -> finishPhase());
+    }
+
+    private void createViewButtons(List<String> views) {
+        viewButtonContainer.getChildren().clear();
+
+        for (String viewName : views) {
+            ToggleButton btn = new ToggleButton(viewName);
+            btn.setOnAction(e -> {
+                currentView = btn.getText();
+                displayItems();
+            });
+            viewButtonContainer.getChildren().add(btn);
+        }
     }
 
     private void updateTopBar() {
@@ -101,9 +116,81 @@ public class SortPhaseController {
         if (totalGoldLabel != null) totalGoldLabel.setText("Gold: " + database.getGold());
     }
 
+    private FilterNode getItemSortCategoriesByDay(int day) {
+        FilterNode root = new FilterNode("root"); // dummy root
+        if (day <= 2) {
+            root.children.add(new FilterNode("All"));
+            root.children.add(new FilterNode("Unsorted"));
+            root.children.add(new FilterNode("Junk"));
+            root.children.add(new FilterNode("Treasure"));
+        } else if (day <= 4) {
+            root.children.add(new FilterNode("All"));
+            root.children.add(new FilterNode("Unsorted"));
+            root.children.add(new FilterNode("Junk", Arrays.asList(
+                    new FilterNode("All Junk"),
+                    new FilterNode("Usable Junk"),
+                    new FilterNode("Broken Junk"),
+                    new FilterNode("Curious Junk")
+            )));
+            root.children.add(new FilterNode("Treasure", Arrays.asList(
+                    new FilterNode("All Treasure"),
+                    new FilterNode("Magical Treasure"),
+                    new FilterNode("Historical Treasure"),
+                    new FilterNode("Luxurious Treasure")
+            )));
+        } else {
+            root.children.add(new FilterNode("All"));
+            root.children.add(new FilterNode("Unsorted"));
+            root.children.add(new FilterNode("Junk", Arrays.asList(
+                    new FilterNode("All Junk"),
+                    new FilterNode("Usable Junk", Arrays.asList(
+                            new FilterNode("All Usable Junk"),
+                            new FilterNode("Consumable"),
+                            new FilterNode("Tools"),
+                            new FilterNode("Everyday")
+                    )),new FilterNode("Broken Junk", Arrays.asList(
+                            new FilterNode("All Broken Junk"),
+                            new FilterNode("Depleted"),
+                            new FilterNode("Rusted / Cracked"),
+                            new FilterNode("Miscellaneous")
+                    )),new FilterNode("Curious Junk", Arrays.asList(
+                            new FilterNode("All Curious Junk"),
+                            new FilterNode("Oddities"),
+                            new FilterNode("Crafting Materials"),
+                            new FilterNode("Collectibles")
+                    )))));
+            root.children.add(new FilterNode("Treasure", Arrays.asList(
+                    new FilterNode("All Treasure"),
+                    new FilterNode("Magical Treasure", Arrays.asList(
+                            new FilterNode("All Magical Treasure"),
+                            new FilterNode("Artifacts"),
+                            new FilterNode("Cursed"),
+                            new FilterNode("Minor")
+                    )),
+                    new FilterNode("Historical Treasure", Arrays.asList(
+                            new FilterNode("All Historical Treasure"),
+                            new FilterNode("Relics"),
+                            new FilterNode("Keepsakes"),
+                            new FilterNode("Maps")
+                    )), new FilterNode("Luxurious Treasure", Arrays.asList(
+                            new FilterNode("All Luxurious Treasure"),
+                            new FilterNode("Jewelry"),
+                            new FilterNode("Fungible"),
+                            new FilterNode("Ornament")
+                    ))
+            )));
+        }
+        return root;
+    }
+
     public void setDependencies(Database database, Stage stage) {
         this.database = database;
         this.stage = stage;
+
+        rootFilterNode = getItemSortCategoriesByDay(database.getDay()); // ← initialize here
+        createFilterButtons(rootFilterNode);
+
+        createViewButtons(Arrays.asList("Complete", "Image", "Lore"));
         updateTopBar();
         loadItems();
     }
@@ -118,43 +205,19 @@ public class SortPhaseController {
         displayItems();
     }
 
-    private MenuItem buildMenuTree(String label, Object node, Button button, Item item) {
-        if (node instanceof List<?> list) {
-            // Leaf list → create a submenu with direct menu items
-            Menu menu = new Menu(label);
-            for (Object o : list) {
-                menu.getItems().add(createMenuItem(o.toString(), button, item));
-            }
-            return menu;
-
-        } else if (node instanceof Map<?, ?> map) {
-            // Nested structure → recursive menus
-            Menu menu = new Menu(label);
-            for (var entry : map.entrySet()) {
-                String key = entry.getKey().toString();
-                Object child = entry.getValue();
-                menu.getItems().add(buildMenuTree(key, child, button, item));
-            }
-            return menu;
-        }
-
-        // Unexpected type
-        return createMenuItem(label, button, item);
-    }
-
     private void displayItems() {
         itemContainer.getChildren().clear();
-
         boolean allSorted = true;
 
         for (Item item : items) {
-            if (item.isSold()) {
-                continue;
-            }
+            if (item.isSold()) continue;
             if ("unsorted".equalsIgnoreCase(item.getItemSort())) allSorted = false;
 
-            // Apply strict filter
-            if (!"all".equalsIgnoreCase(currentFilter) && !item.getItemSort().equalsIgnoreCase(currentFilter)) continue;
+            if (!"all".equalsIgnoreCase(currentFilter)) {
+                FilterNode filterNode = findFilterNode(rootFilterNode, currentFilter);
+                if (filterNode == null || !filterNode.matches(item.getItemSort())) continue;
+            }
+
 
             HBox row = new HBox(10);
 
@@ -192,6 +255,7 @@ public class SortPhaseController {
         ContextMenu menu = new ContextMenu();
         int day = database.getDay();
 
+        // Don't include "All" as an option for sorting the item itself
         if (day <= 2) {
             menu.getItems().addAll(
                     createMenuItem("Unsorted", button, item),
@@ -200,18 +264,26 @@ public class SortPhaseController {
             );
         } else if (day <= 4) {
             menu.getItems().addAll(
+                    createMenuItem("Unsorted", button, item),
                     createSubMenu("Junk", new String[]{"Usable Junk", "Broken Junk", "Curious Junk"}, button, item),
-                    createSubMenu("Treasure", new String[]{"Magical Treasure", "Historical Treasure", "Luxurious Treasure"}, button, item),
-                    createMenuItem("Unsorted", button, item)
+                    createSubMenu("Treasure", new String[]{"Magical Treasure", "Historical Treasure", "Luxurious Treasure"}, button, item)
             );
-        } else { // Day 5+
-            for (var entry : CATEGORY_TREE.entrySet()) {
-                menu.getItems().add(
-                        buildMenuTree(entry.getKey(), entry.getValue(), button, item)
-                );
-            }
-
-            menu.getItems().add(createMenuItem("Unsorted", button, item));
+        } else {
+            menu.getItems().addAll(
+                createMenuItem("Unsorted", button, item),
+                createSubSubMenu("Junk",
+                    new String[][]{
+                        {"Usable Junk", "Broken Junk", "Curious Junk"},
+                        {"Consumable", "Tools", "Everyday"},
+                        {"Depleted", "Rusted / Cracked"},
+                        {"Oddities", "Crafting Materials", "Collectibles"}}, button, item),
+                createSubSubMenu("Treasure",
+                    new String[][]{
+                        {"Magical Treasure", "Historical Treasure", "Luxurious Treasure"},
+                        {"Artifacts", "Cursed / Dangerous", "Minor / Utility Magic"},
+                        {"Relics", "Keepsakes", "Documents / Maps"},
+                        {"Jewelry", "Hoardable", "Decorative / Ornamental"}},
+                    button, item));
         }
 
         menu.show(button, Side.BOTTOM, 0, 0);
@@ -241,6 +313,15 @@ public class SortPhaseController {
         return menu;
     }
 
+    private MenuItem createSubSubMenu(String name, String[][] subSubItems, Button button, Item item) {
+        Menu menu = new Menu(name);
+        for (int i = 1; i <= subSubItems[0].length; i ++) {
+            menu.getItems().add(createSubMenu(subSubItems[0][i-1], subSubItems[i], button, item));
+        }
+        return menu;
+    }
+
+
     private void finishPhase() {
         if (stage != null) stage.close();
         database.getUsedItems().addAll(items);
@@ -248,11 +329,18 @@ public class SortPhaseController {
         GamePhaseManager.runSalePhase(); // moves to the next phase
     }
 
+    private FilterNode findFilterNode(FilterNode node, String filterName) {
+        if (node.name.equalsIgnoreCase(filterName)) return node;
+        for (FilterNode child : node.children) {
+            FilterNode result = findFilterNode(child, filterName);
+            if (result != null) return result;
+        }
+        return null;
+    }
+
     public static void showSortPhase(Database db, Stage primaryStage) {
         try {
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
-                    SortPhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/sortPhase.fxml")
-            );
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(SortPhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/sortPhase.fxml"));
             Stage stage = new Stage();
             stage.setScene(new javafx.scene.Scene(loader.load()));
             stage.setTitle("Sort Phase");
@@ -263,6 +351,34 @@ public class SortPhaseController {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    class FilterNode {
+        String name;
+        List<FilterNode> children;
+
+        public FilterNode(String name) {
+            this.name = name;
+            this.children = new ArrayList<>();
+        }
+
+        public FilterNode(String name, List<FilterNode> children) {
+            this.name = name;
+            this.children = children;
+        }
+
+        public boolean isLeaf() {
+            return children.isEmpty();
+        }
+
+        // Recursive check if an item's type matches this filter or any descendant
+        public boolean matches(String itemSort) {
+            if (itemSort.equalsIgnoreCase(name)) return true;
+            for (FilterNode child : children) {
+                if (child.matches(itemSort)) return true;
+            }
+            return false;
         }
     }
 }

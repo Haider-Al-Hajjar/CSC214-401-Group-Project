@@ -1771,19 +1771,19 @@
     {
       "ability": "Increases the gold received from items sold.",
       "cost": 250.0,
-      "isBought": true,
+      "isBought": false,
       "name": "Haggler's Hat"
     },
     {
       "ability": "Receive extra items at the start of the day.",
       "cost": 120.0,
-      "isBought": true,
+      "isBought": false,
       "name": "Bottomless Backpack"
     },
     {
       "ability": "Auto-sorts the first item each day.",
       "cost": 150.0,
-      "isBought": true,
+      "isBought": false,
       "name": "Little Helper"
     }
   ],  "unboughtUpgrades": [

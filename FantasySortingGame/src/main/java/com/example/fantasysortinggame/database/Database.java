@@ -72,21 +72,13 @@ public class Database {
 
     // Return list for that day
     public ArrayList<Item> getItems() {
-     /*
-            returns items based on current day and starting seed
-            if day = {a specific day where complications occur}
-                return even old items and change their currentSort
-            else
-                select a random batch of items based on the day and the seed
-                add these items to usedItems
-                return these items.
-         */
         ArrayList<Item> dayItems = allItems.get(day - 1);
 
         if (dayItems.isEmpty()) {
             return new ArrayList<>();
         }
         int baseCount = Math.max(1, dayItems.size() / 3);
+
         int finalCount = baseCount;
 
         if (finalCount > dayItems.size()) {

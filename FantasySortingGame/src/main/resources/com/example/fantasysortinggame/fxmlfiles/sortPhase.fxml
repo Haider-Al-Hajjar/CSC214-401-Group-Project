@@ -8,53 +8,34 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <BorderPane fx:controller="com.example.fantasysortinggame.phasecontrollers.SortPhaseController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0"
+            prefHeight="600.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <VBox spacing="5" BorderPane.alignment="CENTER">
+            <Label fx:id="dayLabel" text="Day: 0"/>
+            <Label fx:id="totalGoldLabel" text="Gold: 0"/>
+            <HBox fx:id="filterButtonContainer" BorderPane.alignment="CENTER">
+            </HBox>
+            <HBox fx:id="viewButtonContainer" spacing="10">
 
-   <left>
-      <!-- Removed the preview VBox entirely -->
-   </left>
+            </HBox>
 
-   <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-   </right>
+        </VBox>
+    </top>
 
-   <top>
-      <VBox spacing="5" BorderPane.alignment="CENTER">
-         <Label fx:id="dayLabel" text="Day: 0"/>
-         <Label fx:id="totalGoldLabel" text="Gold: 0"/>
-         <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <ToggleButton fx:id="allFilterButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="226.0"
-                          text="All"/>
-            <ToggleButton fx:id="unsortedFilterButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="229.0"
-                          text="Unsorted"/>
-            <ToggleButton fx:id="junkFilterButton" mnemonicParsing="false" prefHeight="70.0" prefWidth="226.0"
-                          text="Junk"/>
-            <ToggleButton fx:id="treasureFilterButton" mnemonicParsing="false" prefHeight="71.0" prefWidth="212.0"
-                          text="Treasure"/>
-         </HBox>
-         <HBox spacing="10">
-            <Label text="View:"/>
-            <ToggleButton fx:id="completeViewButton" text="Complete"/>
-            <ToggleButton fx:id="imageViewButton" text="Image"/>
-            <ToggleButton fx:id="loreViewButton" text="Lore"/>
-         </HBox>
+    <center>
+        <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
+            <VBox fx:id="itemContainer" spacing="5"/>
+        </ScrollPane>
+    </center>
 
-      </VBox>
-   </top>
-
-
-   <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <Button fx:id="proceedButton" mnemonicParsing="false" prefHeight="79.0" prefWidth="92.0" text="End Phase"/>
-      </HBox>
-   </bottom>
-
-   <center>
-      <VBox fx:id="itemContainer" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-   </center>
-
+    <bottom>
+        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Button fx:id="proceedButton" mnemonicParsing="false" prefHeight="79.0" prefWidth="92.0" text="End Phase"/>
+        </HBox>
+    </bottom>
 </BorderPane>

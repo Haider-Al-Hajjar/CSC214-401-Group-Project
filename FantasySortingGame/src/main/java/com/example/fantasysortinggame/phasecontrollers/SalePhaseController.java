@@ -128,11 +128,12 @@ public class SalePhaseController {
         updateTopBar();
     }
     private double estimateItemValue(Item item) {
-        return 15.0; // base value
+        return 1.0; // base value
     }
 
     private double calculateCorrectSortBonus(Item item) {
         if (item.getItemSort().equalsIgnoreCase(item.getItemTypeValue())) {
+
             return estimateItemValue(item) * 0.5; // 50% bonus
         }
         return 0;
