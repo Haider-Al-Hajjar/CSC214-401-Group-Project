@@ -2,6 +2,7 @@ package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Item;
+import com.example.fantasysortinggame.datatypes.Upgrade;
 import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
@@ -12,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class SortPhaseController {
 
@@ -40,6 +43,18 @@ public class SortPhaseController {
     private String currentView = "Complete"; // default
     private ArrayList<Item> items;
     private String currentFilter = "Unsorted"; // default shows unsorted
+    private static final Map<String, Object> CATEGORY_TREE = Map.of(
+            "Junk", Map.of(
+                    "Usable Junk", List.of("Consumable", "Tools", "Everyday"),
+                    "Broken Junk", List.of("Depleted", "Rusted / Cracked", "Miscellaneous"),
+                    "Curious Junk", List.of("Oddities", "Crafting Materials", "Collectibles")
+            ),
+            "Treasure", Map.of(
+                    "Artifacts", List.of("Cursed / Dangerous", "Minor / Utility Magic"),
+                    "Historical Treasure", List.of("Relics", "Keepsakes", "Documents / Maps"),
+                    "Luxurious Treasure", List.of("Jewelry", "Treasure Hoard", "Decorative / Ornamental")
+            )
+    );
 
     @FXML
     public void initialize() {
@@ -97,7 +112,34 @@ public class SortPhaseController {
         if (database == null) return;
         items = database.getItems();
         if (items == null) items = new ArrayList<>();
+        if (database.upgradeIsBought("Little Helper")) {
+            items.getFirst().setItemSort(items.getFirst().getItemTypeValue());
+        }
         displayItems();
+    }
+
+    private MenuItem buildMenuTree(String label, Object node, Button button, Item item) {
+        if (node instanceof List<?> list) {
+            // Leaf list → create a submenu with direct menu items
+            Menu menu = new Menu(label);
+            for (Object o : list) {
+                menu.getItems().add(createMenuItem(o.toString(), button, item));
+            }
+            return menu;
+
+        } else if (node instanceof Map<?, ?> map) {
+            // Nested structure → recursive menus
+            Menu menu = new Menu(label);
+            for (var entry : map.entrySet()) {
+                String key = entry.getKey().toString();
+                Object child = entry.getValue();
+                menu.getItems().add(buildMenuTree(key, child, button, item));
+            }
+            return menu;
+        }
+
+        // Unexpected type
+        return createMenuItem(label, button, item);
     }
 
     private void displayItems() {
@@ -162,20 +204,14 @@ public class SortPhaseController {
                     createSubMenu("Treasure", new String[]{"Magical Treasure", "Historical Treasure", "Luxurious Treasure"}, button, item),
                     createMenuItem("Unsorted", button, item)
             );
-        } else {
-            menu.getItems().addAll(
-                    createSubMenu("Junk", new String[]{
-                            "Usable Junk", "Consumable", "Tools", "Everyday",
-                            "Broken Junk", "Depleted", "Rusted / Cracked",
-                            "Curious Junk", "Oddities", "Crafting Materials", "Collectibles"
-                    }, button, item),
-                    createSubMenu("Treasure", new String[]{
-                            "Artifacts: Cursed / Dangerous", "Artifacts: Minor / Utility Magic",
-                            "Historical Treasure: Relics", "Historical Treasure: Keepsakes", "Historical Treasure: Documents / Maps",
-                            "Luxurious Treasure: Jewelry", "Luxurious Treasure: Treasure Hoard", "Luxurious Treasure: Decorative / Ornamental"
-                    }, button, item),
-                    createMenuItem("Unsorted", button, item)
-            );
+        } else { // Day 5+
+            for (var entry : CATEGORY_TREE.entrySet()) {
+                menu.getItems().add(
+                        buildMenuTree(entry.getKey(), entry.getValue(), button, item)
+                );
+            }
+
+            menu.getItems().add(createMenuItem("Unsorted", button, item));
         }
 
         menu.show(button, Side.BOTTOM, 0, 0);

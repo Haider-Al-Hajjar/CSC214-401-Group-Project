@@ -106,6 +106,10 @@ public class Item {
         return itemType;
     }
 
+    public String getItemTypeValue() {
+        return itemType.getItemType();
+    }
+
     public void setItemType(ItemType itemType) {
         this.itemType = itemType;
     }
@@ -140,11 +144,6 @@ public class Item {
 
     public void setValue(double value) {
         this.value = value;
-    }
-
-    // Convenience helpers
-    public String getCurrentSort() {
-        return itemSort;
     }
 
     public ArrayList<QuickTimeEvent> getEvents() {
