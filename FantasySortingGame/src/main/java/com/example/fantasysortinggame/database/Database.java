@@ -86,19 +86,25 @@ public class Database {
         if (dayItems.isEmpty()) {
             return new ArrayList<>();
         }
+
         int baseCount = Math.max(1, dayItems.size() / 3);
         int finalCount = baseCount;
-
+        if (upgradeIsBought("Bottomless Backpack")) {
+            finalCount += (int) Math.ceil(baseCount * 0.20);
+        }
         if (finalCount > dayItems.size()) {
             finalCount = dayItems.size();
         }
+
         java.util.Random rngRandomizer = new java.util.Random(seed + day);
         ArrayList<Item> shuffled = new ArrayList<>(dayItems);
         java.util.Collections.shuffle(shuffled, rngRandomizer);
+
         ArrayList<Item> result = new ArrayList<>(shuffled.subList(0, finalCount));
         usedItems.addAll(result);
 
         return result;
+
     }
 
     public void setAllItems(ArrayList<ArrayList<Item>> allItems) {
