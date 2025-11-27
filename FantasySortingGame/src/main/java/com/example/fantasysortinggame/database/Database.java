@@ -10,9 +10,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 public class Database {
+    final String SAVE_DIR = "savedfiles";
     private String fileName;
     private int day;
     private int seed;
@@ -76,7 +81,7 @@ public class Database {
                 add these items to usedItems
                 return these items.
          */
-        return allItems.get(day - 1);
+        return allItems.get(day);
     }
 
     public void setAllItems(ArrayList<ArrayList<Item>> allItems) {
@@ -117,15 +122,15 @@ public class Database {
     }
 
     //Suyog - added fer more getters and setters
-    public double getGold(){
-        return  gold;
+    public double getGold() {
+        return gold;
     }
 
     public void setGold(double gold) {
         this.gold = gold;
     }
 
-    public void addGold(double amount){
+    public void addGold(double amount) {
         this.gold += amount;
 
     }
@@ -143,26 +148,19 @@ public class Database {
     //                          LOAD FILE
     // ================================================================
     public void loadFromFile(String fileName, String gameMode) {
-
-        // Always use your real save path (ignore argument)
-        this.fileName = "src/main/java/com/example/fantasysortinggame/database/data/saveFile.json";
-
-        File file = new File(this.fileName);
+        this.fileName = fileName; // store the filename first
+        File file = getSaveFile(); // now it points to savedfiles/
 
         // If file does not exist → create default database
         if (!file.exists()) {
             createDefaultSave();
-            saveToFile();
-            return;
         }
 
         Gson gson = new Gson();
 
-        try {
+        try (FileReader reader = new FileReader(file);) {
             // First pass: load normally
-            FileReader reader = new FileReader(file);
             Database loaded = gson.fromJson(reader, Database.class);
-            reader.close();
 
             this.day = loaded.day;
             this.seed = loaded.seed;
@@ -199,7 +197,8 @@ public class Database {
                         if (oldItems.has(key)) {
                             ArrayList<Item> list = gson.fromJson(
                                     oldItems.get(key),
-                                    new TypeToken<ArrayList<Item>>() {}.getType()
+                                    new TypeToken<ArrayList<Item>>() {
+                                    }.getType()
                             );
                             this.allItems.set(i, list);
                         }
@@ -240,25 +239,24 @@ public class Database {
         }
     }
 
-    // Create default empty database
-    private void createDefaultSave() {
-
-        this.day = 0;
-        this.seed = (int) (Math.random() * Integer.MAX_VALUE);
-
-        this.usedItems = new ArrayList<Item>();
-
-        this.allItems = new ArrayList<ArrayList<Item>>();
-        int i;
-        for (i = 0; i < 6; i++) {
-            this.allItems.add(new ArrayList<Item>());
-        }
-
-        this.allUpgrades = new ArrayList<Upgrade>();
-        this.allEvents = new ArrayList<QuickTimeEvent>();
-        this.allNpcs = new ArrayList<Npc>();
-        this.allDialogues = new ArrayList<Dialogue>();
+    private File getSaveFile() {
+        File dir = new File(SAVE_DIR);
+        if (!dir.exists()) dir.mkdirs(); // create folder if it doesn't exist
+        return new File(dir, fileName);
     }
+
+    // Copy masterFile into a new save file
+    private void createDefaultSave() {
+        Path source = Paths.get("src/main/java/com/example/fantasysortinggame/database/data/masterFile.json");
+        Path target = getSaveFile().toPath(); // use helper
+        try {
+            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("File copied successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // ================================================================
     //                          SAVE FILE
@@ -267,17 +265,16 @@ public class Database {
         if (fileName == null || fileName.isEmpty()) {
             fileName = "saveFile.json";
         }
-        final String SAVE_DIR = "src/main/java/com/example/fantasysortinggame/database/data/";
-        File file = new File(SAVE_DIR + fileName);
+
+        File file = getSaveFile();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        try {
-            FileWriter writer = new FileWriter(fileName);
+        try (FileWriter writer = new FileWriter(file)) {
             gson.toJson(this, writer);
-            writer.close();
+            System.out.println("Saved file: " + file.getAbsolutePath());
         } catch (IOException e) {
-            System.out.println("error happened");
+            e.printStackTrace();
         }
     }
+
 }

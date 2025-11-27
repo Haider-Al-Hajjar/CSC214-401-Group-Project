@@ -120,7 +120,7 @@ public class SalePhaseController {
     private void sellItem(Item item) {
         item.setSold(true);
         if (database.upgradeIsBought("Haggler's Hat")) {
-            database.addGold((estimateItemValue(item) * 1.15));
+            database.addGold(((estimateItemValue(item)+calculateCorrectSortBonus(item)) * 1.15));
         } else {
             database.addGold(estimateItemValue(item));
         }
