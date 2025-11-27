@@ -77,8 +77,8 @@ public class DatabaseIntegrityCheck {
             System.out.println("Title: " + sample.getTitle());
             System.out.println("Sort: " + sample.getItemSort());
             System.out.println("Description: " + sample.getDescription());
-            if (sample.getItemType() != null)
-                System.out.println("ItemType: " + sample.getItemType().toString());
+            if (sample.getItemTypeValue() != null)
+                System.out.println("ItemType: " + sample.getItemTypeValue().toString());
             else
                 System.out.println("ItemType: NULL");
         } else {

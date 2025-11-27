@@ -130,6 +130,15 @@ public class Database {
 
     }
 
+    public boolean upgradeIsBought(String upgradeName) {
+        for (Upgrade u : allUpgrades) {
+            if (u.getName().equalsIgnoreCase(upgradeName)) {
+                return u.isBought();
+            }
+        }
+        return false;
+    }
+
     // ================================================================
     //                          LOAD FILE
     // ================================================================

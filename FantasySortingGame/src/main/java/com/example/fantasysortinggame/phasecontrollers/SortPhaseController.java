@@ -2,6 +2,7 @@ package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Item;
+import com.example.fantasysortinggame.datatypes.Upgrade;
 import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
@@ -11,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SortPhaseController {
@@ -98,6 +98,9 @@ public class SortPhaseController {
         if (database == null) return;
         items = database.getItemsByDayAndSeed();
         if (items == null) items = new ArrayList<>();
+        if (database.upgradeIsBought("Little Helper")) {
+            items.getFirst().setItemSort(items.getFirst().getItemTypeValue());
+        }
         displayItems();
     }
 

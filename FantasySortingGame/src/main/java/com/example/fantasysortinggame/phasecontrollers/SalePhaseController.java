@@ -101,7 +101,14 @@ public class SalePhaseController {
             Label descLabel = new Label(item.getDescription());
             Label valueLabel = new Label("Value: " + estimateItemValue(item) + " gold");
 
-            Button sellButton = new Button("Sell for " + estimateItemValue(item) + " gold");
+            double baseValue = estimateItemValue(item);
+            double bonus = calculateCorrectSortBonus(item);
+            double totalValue = baseValue + bonus;
+
+            Button sellButton = new Button(
+                    "Sell for " + totalValue + " gold" +
+                            (bonus > 0 ? " (Correct Sort Bonus: +" + bonus + ")" : "")
+            );
             sellButton.setOnAction(e -> sellItem(item));
 
             infoBox.getChildren().addAll(titleLabel, descLabel, valueLabel, sellButton);
@@ -112,16 +119,25 @@ public class SalePhaseController {
 
     private void sellItem(Item item) {
         item.setSold(true);
-        database.addGold(estimateItemValue(item));
+        if (database.upgradeIsBought("Haggler's Hat")) {
+            database.addGold((estimateItemValue(item) * 1.15));
+        } else {
+            database.addGold(estimateItemValue(item));
+        }
         displayItems();
         updateTopBar();
     }
-
     private double estimateItemValue(Item item) {
-        double base = 30.0;
-        if (!item.getItemSort().equalsIgnoreCase("Unsorted")) base *= 1.5;
-        return base;
+        return 15.0; // base value
     }
+
+    private double calculateCorrectSortBonus(Item item) {
+        if (item.getItemSort().equalsIgnoreCase(item.getItemTypeValue())) {
+            return estimateItemValue(item) * 0.5; // 50% bonus
+        }
+        return 0;
+    }
+
 
     private void updateTopBar() {
         if (dayLabel != null) dayLabel.setText("Day: " + database.getDay());
