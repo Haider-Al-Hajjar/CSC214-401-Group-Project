@@ -107,6 +107,7 @@ public class Database {
 
     }
 
+
     public void setAllItems(ArrayList<ArrayList<Item>> allItems) {
         this.allItems = allItems;
     }
@@ -166,6 +167,8 @@ public class Database {
         }
         return false;
     }
+
+
 
     // ================================================================
     //                          LOAD FILE
@@ -299,5 +302,14 @@ public class Database {
             e.printStackTrace();
         }
     }
+    public Dialogue getTriggeredDialogue() {
+        if (allDialogues == null) return null;
 
+        for (Dialogue d : allDialogues) {
+            if (!d.hasHappened() && d.shouldTrigger(this)) {
+                return d;
+            }
+        }
+        return null;
+    }
 }

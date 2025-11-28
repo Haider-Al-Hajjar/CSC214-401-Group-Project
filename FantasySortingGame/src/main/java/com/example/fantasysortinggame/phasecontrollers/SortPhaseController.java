@@ -2,7 +2,6 @@ package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Item;
-import com.example.fantasysortinggame.datatypes.Upgrade;
 import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
@@ -104,8 +103,16 @@ public class SortPhaseController {
     public void setDependencies(Database database, Stage stage) {
         this.database = database;
         this.stage = stage;
-        updateTopBar();
         loadItems();
+        updateTopBar();
+
+        com.example.fantasysortinggame.datatypes.Dialogue triggered =
+                database.getTriggeredDialogue();
+        if (triggered != null) {
+            com.example.fantasysortinggame.storyhandlers.DialogueBoxController
+                    .showDialogueWindow(database, triggered);
+        }
+
     }
 
     private void loadItems() {
@@ -137,6 +144,7 @@ public class SortPhaseController {
             }
             return menu;
         }
+
 
         // Unexpected type
         return createMenuItem(label, button, item);

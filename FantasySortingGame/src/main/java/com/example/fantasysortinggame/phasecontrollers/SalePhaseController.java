@@ -60,7 +60,16 @@ public class SalePhaseController {
         this.stage = stage;
         loadItems();
         updateTopBar();
+
+        com.example.fantasysortinggame.datatypes.Dialogue triggered =
+                database.getTriggeredDialogue();
+        if (triggered != null) {
+            com.example.fantasysortinggame.storyhandlers.DialogueBoxController
+                    .showDialogueWindow(database, triggered);
+        }
+
     }
+
 
     private void finishPhase() {
         if (stage != null) stage.close();

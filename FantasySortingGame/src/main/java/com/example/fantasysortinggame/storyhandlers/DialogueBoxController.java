@@ -64,8 +64,8 @@ public class DialogueBoxController {
      * @param database Database reference for this dialogue
      * @param dialogue Dialogue sequence to display
      */
-    public static void showDialogueWindow(Database database, Dialogue dialogue) {
-        try {
+  /*  public static void showDialogueWindow(Database database, Dialogue dialogue) {
+       try {
             FXMLLoader loader = new FXMLLoader(
                     DialogueBoxController.class.getResource("/path/to/DialogueBox.fxml")
             );
@@ -85,6 +85,17 @@ public class DialogueBoxController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }*/
+    public static void showDialogueWindow(Database db, Dialogue dialogue) {
+        System.out.println("=== DIALOGUE TRIGGERED ===");
+
+        for (DialogueEntry entry : dialogue.getDialogueEntries()) {
+            System.out.println(entry.getSpeaker().getName() + ": " + entry.getText());
+        }
+
+        dialogue.setHappened(true);
+        System.out.println("=== END OF DIALOGUE ===");
     }
 
     /**

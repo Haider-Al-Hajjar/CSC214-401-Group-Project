@@ -1851,24 +1851,99 @@
   ],
   "allDialogues": [
     {
-      "dialogue": "Welcome back to the warehouse, young master. Your grandfather left quite the mess.",
-      "charactersAppearing": []
+      "entries": [
+        {
+          "speaker": {
+            "name": "Narrator",
+            "profilePicturePath": "file:default.png"
+          },
+          "text": "Welcome back to the warehouse, young master. Your grandfather left quite the mess."
+        }
+      ],
+      "happened": false,
+      "storyEventTriggers": [
+        {
+          "requiredDay": 1,
+          "requiredSort": "",
+          "requiredItemIsSoldValue": false
+        }
+      ]
     },
     {
-      "dialogue": "These things aren’t just junk. Every item has a story, if you’re willing to listen.",
-      "charactersAppearing": []
+      "entries": [
+        {
+          "speaker": {
+            "name": "Narrator",
+            "profilePicturePath": "file:default.png"
+          },
+          "text": "These things aren’t just junk. Every item has a story, if you’re willing to listen."
+        }
+      ],
+      "happened": false,
+      "storyEventTriggers": [
+        {
+          "requiredDay": 2,
+          "requiredSort": "",
+          "requiredItemIsSoldValue": false
+        }
+      ]
     },
     {
-      "dialogue": "Rowan used to say that the Last Compass never took a job they couldn’t walk away from. That stopped being true.",
-      "charactersAppearing": []
+      "entries": [
+        {
+          "speaker": {
+            "name": "Narrator",
+            "profilePicturePath": "file:default.png"
+          },
+          "text": "Rowan used to say that the Last Compass never took a job they couldn’t walk away from. That stopped being true."
+        }
+      ],
+      "happened": false,
+      "storyEventTriggers": [
+        {
+          "requiredDay": 3,
+          "requiredSort": "",
+          "requiredItemIsSoldValue": false
+        }
+      ]
     },
     {
-      "dialogue": "Some of these items might be better off unsold. Not everything can be priced in gold.",
-      "charactersAppearing": []
+      "entries": [
+        {
+          "speaker": {
+            "name": "Narrator",
+            "profilePicturePath": "file:default.png"
+          },
+          "text": "Some of these items might be better off unsold. Not everything can be priced in gold."
+        }
+      ],
+      "happened": false,
+      "storyEventTriggers": [
+        {
+          "requiredDay": 4,
+          "requiredSort": "",
+          "requiredItemIsSoldValue": false
+        }
+      ]
     },
     {
-      "dialogue": "If you ever finish sorting all this, maybe you’ll finally learn why he stopped coming home on time.",
-      "charactersAppearing": []
+      "entries": [
+        {
+          "speaker": {
+            "name": "Narrator",
+            "profilePicturePath": "file:default.png"
+          },
+          "text": "If you ever finish sorting all this, maybe you’ll finally learn why he stopped coming home on time."
+        }
+      ],
+      "happened": false,
+      "storyEventTriggers": [
+        {
+          "requiredDay": 5,
+          "requiredSort": "",
+          "requiredItemIsSoldValue": false
+        }
+      ]
     }
   ]
 }
