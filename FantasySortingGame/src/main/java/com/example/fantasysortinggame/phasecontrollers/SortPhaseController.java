@@ -1,8 +1,10 @@
 package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
+import com.example.fantasysortinggame.datatypes.Dialogue;
 import com.example.fantasysortinggame.datatypes.Item;
 import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
+import com.example.fantasysortinggame.storyhandlers.DialogueBoxController;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
@@ -174,6 +176,30 @@ public class SortPhaseController {
         displayItems();
     }
 
+    private MenuItem buildMenuTree(String label, Object node, Button button, Item item) {
+        if (node instanceof List<?> list) {
+            // Leaf list → create a submenu with direct menu items
+            Menu menu = new Menu(label);
+            for (Object o : list) {
+                menu.getItems().add(createMenuItem(o.toString(), button, item));
+            }
+            return menu;
+
+        } else if (node instanceof Map<?, ?> map) {
+            // Nested structure → recursive menus
+            Menu menu = new Menu(label);
+            for (var entry : map.entrySet()) {
+                String key = entry.getKey().toString();
+                Object child = entry.getValue();
+                menu.getItems().add(buildMenuTree(key, child, button, item));
+            }
+            return menu;
+        }
+
+
+        // Unexpected type
+        return createMenuItem(label, button, item);
+    }
 
     private void displayItems() {
         itemContainer.getChildren().clear();

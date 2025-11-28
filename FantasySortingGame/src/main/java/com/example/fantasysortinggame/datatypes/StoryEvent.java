@@ -8,8 +8,8 @@ import java.util.ArrayList;
  */
 public class StoryEvent {
 
-    private boolean happened;
-    private ArrayList<StoryEventTrigger> storyEventTriggers;
+    protected boolean happened;
+    protected  ArrayList<StoryEventTrigger> storyEventTriggers;
 
     public StoryEvent(boolean happened, ArrayList<StoryEventTrigger> storyEventTriggers) {
         this.happened = happened;

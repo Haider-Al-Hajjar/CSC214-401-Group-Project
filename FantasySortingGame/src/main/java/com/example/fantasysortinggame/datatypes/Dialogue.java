@@ -1,4 +1,6 @@
 package com.example.fantasysortinggame.datatypes;
+import com.example.fantasysortinggame.database.Database;
+import com.example.fantasysortinggame.datatypes.StoryEventTrigger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,4 +49,16 @@ public class Dialogue extends StoryEvent {
         return "";
     }
 
+    public boolean shouldTrigger(Database db) {
+        if (storyEventTriggers == null || storyEventTriggers.isEmpty())
+            return true; // no conditions means auto-trigger
+
+        for (StoryEventTrigger trigger : storyEventTriggers) {
+            if (!trigger.isTriggered(db)) {
+                return false;
+            }
+        }
+
+        return true; // all triggers passed
+    }
 }
