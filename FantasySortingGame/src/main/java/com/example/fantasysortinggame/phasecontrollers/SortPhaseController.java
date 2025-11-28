@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -126,59 +127,13 @@ public class SortPhaseController {
         } else if (day <= 4) {
             root.children.add(new FilterNode("All"));
             root.children.add(new FilterNode("Unsorted"));
-            root.children.add(new FilterNode("Junk", Arrays.asList(
-                    new FilterNode("All Junk"),
-                    new FilterNode("Usable Junk"),
-                    new FilterNode("Broken Junk"),
-                    new FilterNode("Curious Junk")
-            )));
-            root.children.add(new FilterNode("Treasure", Arrays.asList(
-                    new FilterNode("All Treasure"),
-                    new FilterNode("Magical Treasure"),
-                    new FilterNode("Historical Treasure"),
-                    new FilterNode("Luxurious Treasure")
-            )));
+            root.children.add(new FilterNode("Junk", Arrays.asList(new FilterNode("All Junk"), new FilterNode("Usable Junk"), new FilterNode("Broken Junk"), new FilterNode("Curious Junk"))));
+            root.children.add(new FilterNode("Treasure", Arrays.asList(new FilterNode("All Treasure"), new FilterNode("Magical Treasure"), new FilterNode("Historical Treasure"), new FilterNode("Luxurious Treasure"))));
         } else {
             root.children.add(new FilterNode("All"));
             root.children.add(new FilterNode("Unsorted"));
-            root.children.add(new FilterNode("Junk", Arrays.asList(
-                    new FilterNode("All Junk"),
-                    new FilterNode("Usable Junk", Arrays.asList(
-                            new FilterNode("All Usable Junk"),
-                            new FilterNode("Consumable"),
-                            new FilterNode("Tools"),
-                            new FilterNode("Everyday")
-                    )),new FilterNode("Broken Junk", Arrays.asList(
-                            new FilterNode("All Broken Junk"),
-                            new FilterNode("Depleted"),
-                            new FilterNode("Rusted / Cracked"),
-                            new FilterNode("Miscellaneous")
-                    )),new FilterNode("Curious Junk", Arrays.asList(
-                            new FilterNode("All Curious Junk"),
-                            new FilterNode("Oddities"),
-                            new FilterNode("Crafting Materials"),
-                            new FilterNode("Collectibles")
-                    )))));
-            root.children.add(new FilterNode("Treasure", Arrays.asList(
-                    new FilterNode("All Treasure"),
-                    new FilterNode("Magical Treasure", Arrays.asList(
-                            new FilterNode("All Magical Treasure"),
-                            new FilterNode("Artifacts"),
-                            new FilterNode("Cursed"),
-                            new FilterNode("Minor")
-                    )),
-                    new FilterNode("Historical Treasure", Arrays.asList(
-                            new FilterNode("All Historical Treasure"),
-                            new FilterNode("Relics"),
-                            new FilterNode("Keepsakes"),
-                            new FilterNode("Maps")
-                    )), new FilterNode("Luxurious Treasure", Arrays.asList(
-                            new FilterNode("All Luxurious Treasure"),
-                            new FilterNode("Jewelry"),
-                            new FilterNode("Fungible"),
-                            new FilterNode("Ornament")
-                    ))
-            )));
+            root.children.add(new FilterNode("Junk", Arrays.asList(new FilterNode("All Junk"), new FilterNode("Usable Junk", Arrays.asList(new FilterNode("All Usable Junk"), new FilterNode("Consumable"), new FilterNode("Tools"), new FilterNode("Everyday"))), new FilterNode("Broken Junk", Arrays.asList(new FilterNode("All Broken Junk"), new FilterNode("Depleted"), new FilterNode("Rusted / Cracked"))), new FilterNode("Curious Junk", Arrays.asList(new FilterNode("All Curious Junk"), new FilterNode("Oddities"), new FilterNode("Crafting Materials"), new FilterNode("Collectibles"))))));
+            root.children.add(new FilterNode("Treasure", Arrays.asList(new FilterNode("All Treasure"), new FilterNode("Magical Treasure", Arrays.asList(new FilterNode("All Magical Treasure"), new FilterNode("Artifacts"), new FilterNode("Cursed"), new FilterNode("Minor"))), new FilterNode("Historical Treasure", Arrays.asList(new FilterNode("All Historical Treasure"), new FilterNode("Relics"), new FilterNode("Keepsakes"), new FilterNode("Maps"))), new FilterNode("Luxurious Treasure", Arrays.asList(new FilterNode("All Luxurious Treasure"), new FilterNode("Jewelry"), new FilterNode("Fungible"), new FilterNode("Ornament"))))));
         }
         return root;
     }
@@ -187,7 +142,7 @@ public class SortPhaseController {
         this.database = database;
         this.stage = stage;
 
-        rootFilterNode = getItemSortCategoriesByDay(database.getDay()); // ← initialize here
+        rootFilterNode = getItemSortCategoriesByDay(database.getDay());
         createFilterButtons(rootFilterNode);
 
         createViewButtons(Arrays.asList("Complete", "Image", "Lore"));
@@ -197,13 +152,28 @@ public class SortPhaseController {
 
     private void loadItems() {
         if (database == null) return;
-        items = database.getItems();
-        if (items == null) items = new ArrayList<>();
-        if (database.upgradeIsBought("Little Helper")) {
-            items.getFirst().setItemSort(items.getFirst().getItemTypeValue());
+
+        ArrayList<Item> dayItems = database.getItems();
+        if (dayItems == null) dayItems = new ArrayList<>();
+
+        // Start with previously used items
+        items = new ArrayList<>(database.getUsedItems());
+
+        // Add new items if they aren’t already in 'items'
+        for (Item newItem : dayItems) {
+            boolean exists = false;
+            for (Item oldItem : items) {
+                if (oldItem.getName().equals(newItem.getName())) { // or some unique ID
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) items.add(newItem);
         }
+
         displayItems();
     }
+
 
     private void displayItems() {
         itemContainer.getChildren().clear();
@@ -221,31 +191,61 @@ public class SortPhaseController {
 
             HBox row = new HBox(10);
 
-            // Image
-            ImageView imageView = new ImageView();
-            if (item.getImageLink() != null) {
-                try {
-                    imageView.setImage(new javafx.scene.image.Image(item.getImageLink()));
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+            if (currentView.equalsIgnoreCase("Complete")) {            // Image
+                ImageView imageView = new ImageView();
+                if (item.getImageLink() != null) {
+                    try {
+                        imageView.setImage(new javafx.scene.image.Image(item.getImageLink()));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
+                imageView.setFitHeight(50);
+                imageView.setFitWidth(50);
+
+                // Info box
+                VBox infoBox = new VBox(5);
+                Label titleLabel = new Label(item.getTitle());
+                Text descText = new Text(item.getDescription());
+
+                Button sortButton = new Button(item.getItemSort());
+                sortButton.setOnAction(ev -> showSortMenu(sortButton, item));
+
+                infoBox.getChildren().addAll(titleLabel, descText, sortButton);
+                row.getChildren().addAll(imageView, infoBox);
+                itemContainer.getChildren().add(row);
+            } else if (currentView.equalsIgnoreCase("Lore")) {
+                // Info box
+                VBox infoBox = new VBox(5);
+                Label titleLabel = new Label(item.getTitle());
+                Text descText = new Text(item.getDescription());
+
+                Button sortButton = new Button(item.getItemSort());
+                sortButton.setOnAction(ev -> showSortMenu(sortButton, item));
+
+                infoBox.getChildren().addAll(titleLabel, descText, sortButton);
+                row.getChildren().addAll(infoBox);
+                itemContainer.getChildren().add(row);
+            } else if (currentView.equalsIgnoreCase("Image")) {
+                ImageView imageView = new ImageView();
+                if (item.getImageLink() != null) {
+                    try {
+                        imageView.setImage(new javafx.scene.image.Image(item.getImageLink()));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+                Label titleLabel = new Label(item.getTitle());
+                Button sortButton = new Button(item.getItemSort());
+                VBox infoBox = new VBox(5);
+                sortButton.setOnAction(ev -> showSortMenu(sortButton, item));
+
+                infoBox.getChildren().addAll(titleLabel, imageView, sortButton);
+                row.getChildren().addAll(infoBox);
+                itemContainer.getChildren().add(row);
             }
-            imageView.setFitHeight(50);
-            imageView.setFitWidth(50);
-
-            // Info box
-            VBox infoBox = new VBox(5);
-            TextField titleField = new TextField(item.getTitle());
-            titleField.setEditable(false);
-            TextField descField = new TextField(item.getDescription());
-            descField.setEditable(false);
-
-            Button sortButton = new Button(item.getItemSort());
-            sortButton.setOnAction(ev -> showSortMenu(sortButton, item));
-
-            infoBox.getChildren().addAll(titleField, descField, sortButton);
-            row.getChildren().addAll(imageView, infoBox);
-            itemContainer.getChildren().add(row);
         }
 
         proceedButton.setVisible(allSorted);
@@ -257,33 +257,11 @@ public class SortPhaseController {
 
         // Don't include "All" as an option for sorting the item itself
         if (day <= 2) {
-            menu.getItems().addAll(
-                    createMenuItem("Unsorted", button, item),
-                    createMenuItem("Junk", button, item),
-                    createMenuItem("Treasure", button, item)
-            );
+            menu.getItems().addAll(createMenuItem("Unsorted", button, item), createMenuItem("Junk", button, item), createMenuItem("Treasure", button, item));
         } else if (day <= 4) {
-            menu.getItems().addAll(
-                    createMenuItem("Unsorted", button, item),
-                    createSubMenu("Junk", new String[]{"Usable Junk", "Broken Junk", "Curious Junk"}, button, item),
-                    createSubMenu("Treasure", new String[]{"Magical Treasure", "Historical Treasure", "Luxurious Treasure"}, button, item)
-            );
+            menu.getItems().addAll(createMenuItem("Unsorted", button, item), createSubMenu("Junk", new String[]{"Usable Junk", "Broken Junk", "Curious Junk"}, button, item), createSubMenu("Treasure", new String[]{"Magical Treasure", "Historical Treasure", "Luxurious Treasure"}, button, item));
         } else {
-            menu.getItems().addAll(
-                createMenuItem("Unsorted", button, item),
-                createSubSubMenu("Junk",
-                    new String[][]{
-                        {"Usable Junk", "Broken Junk", "Curious Junk"},
-                        {"Consumable", "Tools", "Everyday"},
-                        {"Depleted", "Rusted / Cracked"},
-                        {"Oddities", "Crafting Materials", "Collectibles"}}, button, item),
-                createSubSubMenu("Treasure",
-                    new String[][]{
-                        {"Magical Treasure", "Historical Treasure", "Luxurious Treasure"},
-                        {"Artifacts", "Cursed / Dangerous", "Minor / Utility Magic"},
-                        {"Relics", "Keepsakes", "Documents / Maps"},
-                        {"Jewelry", "Hoardable", "Decorative / Ornamental"}},
-                    button, item));
+            menu.getItems().addAll(createMenuItem("Unsorted", button, item), createSubSubMenu("Junk", new String[][]{{"Usable Junk", "Broken Junk", "Curious Junk"}, {"Consumable", "Tools", "Everyday"}, {"Depleted", "Rusted / Cracked"}, {"Oddities", "Crafting Materials", "Collectibles"}}, button, item), createSubSubMenu("Treasure", new String[][]{{"Magical Treasure", "Historical Treasure", "Luxurious Treasure"}, {"Artifacts", "Cursed / Dangerous", "Minor / Utility Magic"}, {"Relics", "Keepsakes", "Documents / Maps"}, {"Jewelry", "Hoardable", "Decorative / Ornamental"}}, button, item));
         }
 
         menu.show(button, Side.BOTTOM, 0, 0);
@@ -315,8 +293,8 @@ public class SortPhaseController {
 
     private MenuItem createSubSubMenu(String name, String[][] subSubItems, Button button, Item item) {
         Menu menu = new Menu(name);
-        for (int i = 1; i <= subSubItems[0].length; i ++) {
-            menu.getItems().add(createSubMenu(subSubItems[0][i-1], subSubItems[i], button, item));
+        for (int i = 1; i <= subSubItems[0].length; i++) {
+            menu.getItems().add(createSubMenu(subSubItems[0][i - 1], subSubItems[i], button, item));
         }
         return menu;
     }
@@ -324,9 +302,8 @@ public class SortPhaseController {
 
     private void finishPhase() {
         if (stage != null) stage.close();
-        database.getUsedItems().addAll(items);
-        database.saveToFile();
-        GamePhaseManager.runSalePhase(); // moves to the next phase
+        database.saveToFile();          // usedItems already contains all items
+        GamePhaseManager.runSalePhase();
     }
 
     private FilterNode findFilterNode(FilterNode node, String filterName) {
@@ -365,20 +342,60 @@ public class SortPhaseController {
 
         public FilterNode(String name, List<FilterNode> children) {
             this.name = name;
-            this.children = children;
+            this.children = children == null ? new ArrayList<>() : children;
         }
 
         public boolean isLeaf() {
             return children.isEmpty();
         }
 
-        // Recursive check if an item's type matches this filter or any descendant
+        /**
+         * Main matching entry.
+         * - exact name match (case-insensitive)
+         * - "All" at root -> match everything
+         * - "All X" -> find node named X in the master tree and match anything in X's subtree
+         * - otherwise: check descendants normally
+         */
         public boolean matches(String itemSort) {
-            if (itemSort.equalsIgnoreCase(name)) return true;
+            if (itemSort == null) return false;
+
+            // Exact match
+            if (itemSort.equalsIgnoreCase(this.name)) return true;
+
+            String lowerName = name == null ? "" : name.toLowerCase();
+
+            // Root-level "All" (treat as global wildcard)
+            if (lowerName.equals("all")) return true;
+
+            // "All X" case: locate the node named X in the main tree and test that subtree
+            if (lowerName.startsWith("all ")) {
+                String target = name.substring(4).trim(); // "All Junk" -> "Junk"
+                if (target.isEmpty()) return false;
+
+                // Find the canonical node for target under the root of the whole tree
+                FilterNode canonical = SortPhaseController.this.findFilterNode(SortPhaseController.this.rootFilterNode, target);
+                if (canonical == null) return false;
+
+                return subtreeMatch(canonical, itemSort);
+            }
+
+            // Normal recursive check through descendants
             for (FilterNode child : children) {
                 if (child.matches(itemSort)) return true;
+            }
+
+            return false;
+        }
+
+        // Recursively search a node's subtree for a match (case-insensitive)
+        private boolean subtreeMatch(FilterNode node, String itemSort) {
+            if (node == null || itemSort == null) return false;
+            if (itemSort.equalsIgnoreCase(node.name)) return true;
+            for (FilterNode child : node.children) {
+                if (subtreeMatch(child, itemSort)) return true;
             }
             return false;
         }
     }
+
 }

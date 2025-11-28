@@ -67,7 +67,7 @@ public class DialogueBoxController {
     public static void showDialogueWindow(Database database, Dialogue dialogue) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    DialogueBoxController.class.getResource("/path/to/DialogueBox.fxml")
+                    DialogueBoxController.class.getResource("com/example/fantasysortinggame/fxmlfiles/dialogueBox.fxml")
             );
             loader.setControllerFactory(param -> new DialogueBoxController(database));
             Parent root = loader.load();
