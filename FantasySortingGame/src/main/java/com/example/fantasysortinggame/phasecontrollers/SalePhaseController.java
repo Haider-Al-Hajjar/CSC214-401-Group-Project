@@ -1,8 +1,10 @@
 package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
+import com.example.fantasysortinggame.datatypes.Dialogue;
 import com.example.fantasysortinggame.datatypes.Item;
 import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
+import com.example.fantasysortinggame.storyhandlers.DialogueBoxController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -61,11 +63,10 @@ public class SalePhaseController {
         loadItems();
         updateTopBar();
 
-        com.example.fantasysortinggame.datatypes.Dialogue triggered =
+        Dialogue triggered =
                 database.getTriggeredDialogue();
         if (triggered != null) {
-            com.example.fantasysortinggame.storyhandlers.DialogueBoxController
-                    .showDialogueWindow(database, triggered);
+            DialogueBoxController.showDialogueWindow(database, triggered);
         }
 
     }

@@ -1,8 +1,10 @@
 package com.example.fantasysortinggame.phasecontrollers;
 
 import com.example.fantasysortinggame.database.Database;
+import com.example.fantasysortinggame.datatypes.Dialogue;
 import com.example.fantasysortinggame.datatypes.Item;
 import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
+import com.example.fantasysortinggame.storyhandlers.DialogueBoxController;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
@@ -106,11 +108,10 @@ public class SortPhaseController {
         loadItems();
         updateTopBar();
 
-        com.example.fantasysortinggame.datatypes.Dialogue triggered =
+        Dialogue triggered =
                 database.getTriggeredDialogue();
         if (triggered != null) {
-            com.example.fantasysortinggame.storyhandlers.DialogueBoxController
-                    .showDialogueWindow(database, triggered);
+            DialogueBoxController.showDialogueWindow(database, triggered);
         }
 
     }
