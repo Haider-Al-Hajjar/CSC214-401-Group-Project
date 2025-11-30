@@ -1,8 +1,7 @@
 package com.example.fantasysortinggame.mainmenu;
 
 import com.example.fantasysortinggame.database.Database;
-import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
-import com.example.fantasysortinggame.mainmenu.StartMenuController;
+import com.example.fantasysortinggame.gamephasemanager.GameEngine;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +13,6 @@ public class FantasySortingGameApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Database database = new Database();
-        GamePhaseManager.initialize(database, stage);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/fantasysortinggame/fxmlfiles/startMenu.fxml"));
         loader.setControllerFactory(param -> new StartMenuController(database));

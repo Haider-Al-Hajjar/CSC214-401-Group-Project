@@ -5,119 +5,56 @@ import com.example.fantasysortinggame.datatypes.Dialogue;
 import com.example.fantasysortinggame.datatypes.DialogueEntry;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.function.Consumer;
 
-/**
- * Controller for displaying dialogue to the player.
- * <p>
- * Each dialogue sequence opens in its own Stage. Dialogue entries are
- * queued and displayed in order. The stage closes automatically when
- * the dialogue finishes.
- * </p>
- */
 public class DialogueBoxController {
 
-    @FXML private TextField nameField;
+    @FXML private Label nameLabel;
     @FXML private ImageView imageView;
-    @FXML private TextField dialogueField;
+    @FXML private Label dialogueLabel;
     @FXML private Button continueButton;
-
-    /** Root pane of the FXML (used to hide/close UI) */
     @FXML private AnchorPane rootPane;
 
-    /** Stage showing this dialogue */
-    private Stage stage;
-
-    /** Dialogue being displayed */
     private Dialogue currentDialogue;
-
-    /** Queue of dialogue entries to display */
-    private final Queue<DialogueEntry> dialogueQueue;
-
-    /** Database reference (optional, in case needed for NPCs etc.) */
+    private final Queue<DialogueEntry> dialogueQueue = new LinkedList<>();
     private final Database database;
 
-    /** Constructor */
+    // Callback for when the dialogue ends
+    private Runnable onDialogueEnd;
+
     public DialogueBoxController(Database database) {
         this.database = database;
-        this.dialogueQueue = new LinkedList<>();
-    }
-
-    /** Assigns the Stage to this controller */
-    public void setStage(Stage stage) {
-        this.stage = stage;
     }
 
     /**
-     * Launches a new dialogue window with a stage.
-     *
-     * @param database Database reference for this dialogue
-     * @param dialogue Dialogue sequence to display
+     * Set a callback to run when the dialogue ends
      */
-  /*  public static void showDialogueWindow(Database database, Dialogue dialogue) {
-       try {
-            FXMLLoader loader = new FXMLLoader(
-                    DialogueBoxController.class.getResource("com/example/fantasysortinggame/fxmlfiles/dialogueBox.fxml")
-            );
-            loader.setControllerFactory(param -> new DialogueBoxController(database));
-            Parent root = loader.load();
-
-            DialogueBoxController controller = loader.getController();
-
-            Stage stage = new Stage();
-            stage.setTitle("Dialogue");
-            stage.setScene(new Scene(root));
-            stage.show();
-
-            controller.setStage(stage);
-            controller.runDialogue(dialogue);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }*/
-    public static void showDialogueWindow(Database db, Dialogue dialogue) {
-        System.out.println("=== DIALOGUE TRIGGERED ===");
-
-        for (DialogueEntry entry : dialogue.getDialogueEntries()) {
-            System.out.println(entry.getSpeaker().getName() + ": " + entry.getText());
-        }
-
-        dialogue.setHappened(true);
-        System.out.println("=== END OF DIALOGUE ===");
+    public void setOnDialogueEnd(Runnable callback) {
+        this.onDialogueEnd = callback;
     }
 
     /**
-     * Starts the dialogue sequence.
-     *
-     * @param dialogue The Dialogue to display
+     * Start displaying the dialogue
      */
     public void runDialogue(Dialogue dialogue) {
         this.currentDialogue = dialogue;
         dialogueQueue.clear();
         dialogueQueue.addAll(dialogue.getDialogueEntries());
 
-        // Wire the Continue button to advance dialogue
+        // Continue button advances dialogue
         continueButton.setOnAction(e -> displayNextDialogueEntry());
-
         displayNextDialogueEntry();
     }
 
-    /**
-     * Displays the next dialogue entry in the queue.
-     * Closes the stage if no entries remain.
-     */
     private void displayNextDialogueEntry() {
         if (dialogueQueue.isEmpty()) {
             closeDialogue();
@@ -125,30 +62,52 @@ public class DialogueBoxController {
         }
 
         DialogueEntry entry = dialogueQueue.poll();
-        nameField.setText(entry.getSpeaker().getName());
+        nameLabel.setText(entry.getSpeaker().getName());
 
-        // Load profile image
-        Image pfp = new Image(String.valueOf(entry.getSpeaker().getProfilePicturePath()));
-        imageView.setImage(pfp);
+        try {
+            Image pfp = new Image(
+                    getClass().getResourceAsStream("/" + entry.getSpeaker().getProfilePicturePath())
+            );
+            imageView.setImage(pfp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            imageView.setImage(null); // fallback
+        }
 
-        dialogueField.setText(entry.getText());
+        dialogueLabel.setText(entry.getText());
+    }
+
+    private void closeDialogue() {
+        if (currentDialogue != null) currentDialogue.setHappened(true);
+
+        // Hide UI
+        rootPane.setVisible(false);
+
+        // Run callback if set
+        if (onDialogueEnd != null) {
+            onDialogueEnd.run();
+        }
     }
 
     /**
-     * Closes the dialogue window.
-     * Marks the dialogue as completed.
+     * Load the FXML for inline embedding
      */
-    private void closeDialogue() {
-        if (currentDialogue != null) {
-            currentDialogue.setHappened(true);
-        }
+    public static AnchorPane loadDialogue(Database db, Dialogue dialogue) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    DialogueBoxController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/dialogueBox.fxml")
+            );
+            loader.setControllerFactory(param -> new DialogueBoxController(db));
 
-        if (stage != null) {
-            stage.close();
-        } else {
-            rootPane.setVisible(false); // fallback
-        }
+            AnchorPane dialogueUI = loader.load();
+            DialogueBoxController controller = loader.getController();
+            controller.runDialogue(dialogue);
 
-        System.out.println("Dialogue closed.");
+            return dialogueUI;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new AnchorPane();
+        }
     }
 }

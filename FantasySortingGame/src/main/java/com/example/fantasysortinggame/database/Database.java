@@ -1,6 +1,7 @@
 package com.example.fantasysortinggame.database;
 
 import com.example.fantasysortinggame.datatypes.*;
+import com.example.fantasysortinggame.gamemodes.GameModeNames;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -17,7 +18,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 public class Database {
+    private static final int MAX_DAY = 5;
     final String SAVE_DIR = "savedfiles";
+    private GameModeNames gameMode;
     private String fileName;
     private int day;
     private int seed;
@@ -31,7 +34,6 @@ public class Database {
     private ArrayList<QuickTimeEvent> allEvents;
     private ArrayList<Npc> allNpcs;
     private ArrayList<Dialogue> allDialogues;
-    private String gameMode;
     private double gold = 0.0;
 
     public String getFileName() {
@@ -78,11 +80,13 @@ public class Database {
             return new ArrayList<>();
         }
 
-        int baseCount = Math.max(1, dayItems.size() / 3);
+        int dayItemFraction = 6;
+        int baseCount = Math.max(1, dayItems.size() / dayItemFraction);
 
         int finalCount = baseCount;
         if (upgradeIsBought("Bottomless Backpack")) {
-            finalCount += (int) Math.ceil(baseCount * 0.20);
+            double bottomlessBackpackSizeIncreasePercent = 0.20;
+            finalCount += (int) Math.ceil(baseCount * bottomlessBackpackSizeIncreasePercent);
         }
         if (finalCount > dayItems.size()) {
             finalCount = dayItems.size();
@@ -161,17 +165,18 @@ public class Database {
     }
 
 
-
     // ================================================================
     //                          LOAD FILE
     // ================================================================
-    public void loadFromFile(String fileName, String gameMode) {
+    public void loadFromFile(String fileName, GameModeNames gameMode) {
         this.fileName = fileName; // store the filename first
         File file = getSaveFile(); // now it points to savedfiles/
 
         // If file does not exist → create default database
         if (!file.exists()) {
             createDefaultSave();
+            this.gameMode = gameMode;
+            this.seed = (int) (Math.random() * 1000);
         }
 
         Gson gson = new Gson();
@@ -181,8 +186,12 @@ public class Database {
             Database loaded = gson.fromJson(reader, Database.class);
 
             this.day = loaded.day;
-            this.seed = loaded.seed;
-
+            if (this.seed == 0) {
+                this.seed = loaded.seed;
+            }
+            if (this.gameMode == null) {
+                this.gameMode = loaded.gameMode;
+            }
             if (loaded.usedItems != null) {
                 this.usedItems = loaded.usedItems;
             } else {
@@ -294,6 +303,7 @@ public class Database {
             e.printStackTrace();
         }
     }
+
     public Dialogue getTriggeredDialogue() {
         if (allDialogues == null) return null;
 
@@ -303,5 +313,17 @@ public class Database {
             }
         }
         return null;
+    }
+
+    public GameModeNames getGameMode() {
+        return (this.gameMode == null ? GameModeNames.valueOf("Story") : this.gameMode);
+    }
+
+    public void setGameMode(GameModeNames gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public int getMaxDay() {
+        return MAX_DAY;
     }
 }

@@ -15,34 +15,16 @@
 
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <TextField fx:id="gameNameField" prefHeight="97.0" prefWidth="601.0" promptText="Enter Game Name" />
-         </children>
+         <TextField fx:id="gameNameField" prefHeight="97.0" prefWidth="601.0" promptText="Enter Game Name"/>
       </HBox>
    </top>
 
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" spacing="10">
-         <children>
-            <ToggleButton fx:id="startNewGameButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="200.0" text="Start New Game" />
-            <ToggleButton fx:id="loadSavedGameButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="200.0" text="Load Saved Game" />
-         </children>
+         <ToggleButton fx:id="startNewGameButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="200.0"
+                       text="Start New Game"/>
+         <ToggleButton fx:id="gameModeButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="200.0"
+                       text="Select Game Mode"/>
       </HBox>
    </bottom>
-
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="menuImageView" fitHeight="213.0" fitWidth="448.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </VBox>
-   </center>
-
-   <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-   </left>
-
-   <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>

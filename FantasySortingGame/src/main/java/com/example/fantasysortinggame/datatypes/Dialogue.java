@@ -48,17 +48,4 @@ public class Dialogue extends StoryEvent {
         }
         return "";
     }
-
-    public boolean shouldTrigger(Database db) {
-        if (storyEventTriggers == null || storyEventTriggers.isEmpty())
-            return true; // no conditions means auto-trigger
-
-        for (StoryEventTrigger trigger : storyEventTriggers) {
-            if (!trigger.isTriggered(db)) {
-                return false;
-            }
-        }
-
-        return true; // all triggers passed
-    }
 }

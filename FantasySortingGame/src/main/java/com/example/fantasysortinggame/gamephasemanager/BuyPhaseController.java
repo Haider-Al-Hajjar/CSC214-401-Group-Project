@@ -1,8 +1,7 @@
-package com.example.fantasysortinggame.phasecontrollers;
+package com.example.fantasysortinggame.gamephasemanager;
 
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Upgrade;
-import com.example.fantasysortinggame.gamephasemanager.GamePhaseManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -47,13 +46,12 @@ public class BuyPhaseController {
         try {
             FXMLLoader loader = new FXMLLoader(BuyPhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/BuyPhase.fxml"));
             loader.setControllerFactory(param -> new BuyPhaseController(db));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Buy Phase");
-            stage.show();
+            parentStage.setScene(new Scene(loader.load()));
+            parentStage.setTitle("Buy Phase");
+            parentStage.show();
 
             BuyPhaseController controller = loader.getController();
-            controller.setOnPhaseComplete(onPhaseComplete, stage);
+            controller.setOnPhaseComplete(onPhaseComplete, parentStage);
             controller.loadUpgrades();
             controller.updateTopBar();
 
@@ -62,23 +60,14 @@ public class BuyPhaseController {
         }
     }
 
-    public void setDependencies(Database database, Stage stage) {
-        updateTopBar();
-    }
-
-    /**
-     * Set the callback to be run when player clicks Proceed.
-     */
-
-
-    public void setOnPhaseComplete(Runnable callback, Stage stage) {
+    public void setOnPhaseComplete(Runnable onComplete, Stage stage) {
         this.stage = stage; // assign the stage
         this.onPhaseComplete = () -> {
             if (this.stage != null) this.stage.close();
-            if (callback != null) callback.run();
+            if (onComplete != null) onComplete.run();
             database.setDay(database.getDay() + 1);
             database.saveToFile();
-            GamePhaseManager.runSortPhase(); // next phase after buying
+            GameEngine.runSortPhase(); // next phase after buying
         };
 
         proceedButton.setOnAction(e -> {
@@ -91,8 +80,7 @@ public class BuyPhaseController {
      * Load all unbought upgrades from the database.
      */
     public void loadUpgrades() {
-        ArrayList<Upgrade> allUpgrades = database.getAllUpgrades();
-        unboughtUpgrades = (ArrayList<Upgrade>) database.getAllUpgrades().stream().filter(u -> !u.isBought()).collect(Collectors.toList());
+        unboughtUpgrades = database.getAllUpgrades().stream().filter(u -> !u.isBought()).collect(Collectors.toCollection(ArrayList::new));
         displayBuyMenu();
     }
 
@@ -105,7 +93,6 @@ public class BuyPhaseController {
             upgrade.setBought(true);
         }
         updateTopBar();
-        loadUpgrades();
         displayBuyMenu();
     }
 
@@ -114,7 +101,6 @@ public class BuyPhaseController {
      */
     public void displayBuyMenu() {
         shopContainer.getChildren().clear();
-
         for (Upgrade upgrade : unboughtUpgrades) {
             if (!upgrade.isBought()) {
                 displayUpgrade(upgrade);
@@ -135,7 +121,9 @@ public class BuyPhaseController {
 
         Button buyButton = new Button("Buy");
         buyButton.setOnAction(e -> onBuyUpgradeClickHandler(upgrade));
-
+        if (database.getGold() < upgrade.getCost()) {
+            buyButton.setDisable(true);
+        }
         box.getChildren().addAll(title, ability, buyButton);
         shopContainer.getChildren().add(box);
     }

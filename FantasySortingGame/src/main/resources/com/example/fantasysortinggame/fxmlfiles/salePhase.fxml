@@ -6,7 +6,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane fx:controller="com.example.fantasysortinggame.phasecontrollers.SalePhaseController"
+<?import javafx.scene.layout.AnchorPane?>
+<BorderPane fx:controller="com.example.fantasysortinggame.gamephasemanager.SalePhaseController"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             prefWidth="600" prefHeight="400">
@@ -30,9 +31,15 @@
 
     <!-- BOTTOM: Proceed Button -->
     <bottom>
-        <HBox alignment="CENTER" spacing="10">
-            <Button fx:id="proceedButton" text="End Phase."/>
-        </HBox>
+        <VBox spacing="5" alignment="CENTER">
+            <!-- Dialogue placeholder -->
+            <AnchorPane fx:id="dialogueContainer" prefHeight="200"/>
+
+            <!-- End Phase button -->
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="proceedButton" text="End Phase"/>
+            </HBox>
+        </VBox>
     </bottom>
 
 </BorderPane>

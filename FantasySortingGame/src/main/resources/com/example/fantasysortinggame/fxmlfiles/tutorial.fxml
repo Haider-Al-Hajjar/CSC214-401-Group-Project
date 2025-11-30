@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.fantasysortinggame.mainmenu.TutorialController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.control.Label?>
+<VBox fx:id="root" spacing="10" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.fantasysortinggame.mainmenu.TutorialController">
 
-    <!-- Tutorial Image -->
     <ImageView fx:id="tutorialImageView"
-               layoutX="50" layoutY="50"
-               fitWidth="500" fitHeight="300"
-               preserveRatio="true" pickOnBounds="true" />
-
-    <!-- Next Button -->
-    <Button fx:id="nextButton"
-            layoutX="250" layoutY="360"
-            prefWidth="100" prefHeight="30"
-            text="Next" />
-</AnchorPane>
+               fitWidth="600"
+               preserveRatio="true"
+               styleClass="item-slot"/>
+    <Label fx:id="tutorialTextBox"/>
+    <Button fx:id="nextButton" text="Next"/>
+</VBox>

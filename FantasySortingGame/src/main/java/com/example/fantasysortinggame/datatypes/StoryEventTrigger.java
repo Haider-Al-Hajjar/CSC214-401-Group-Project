@@ -4,39 +4,64 @@ import com.example.fantasysortinggame.database.Database;
 
 /**
  * Defines conditions for triggering a StoryEvent.
+ *
+ * Fields that are "empty" (0, null, false) are ignored.
+ * A trigger only fires if **all active conditions are satisfied**.
  */
 public class StoryEventTrigger {
 
-    private int requiredDay;
-    private String requiredSort;
-    private boolean requiredItemIsSoldValue;
+    // --- Conditions ---
+    private int requiredDay;                // 0 = ignore, >0 = only trigger on this day or later
+    private String requiredSort;            // null or "" = ignore, non-empty = must match sort string
+    private boolean happensOnSale;          // false = ignore, true = must have any sold item
 
+    // --- Getters / Setters ---
     public int getRequiredDay() { return requiredDay; }
     public void setRequiredDay(int requiredDay) { this.requiredDay = requiredDay; }
+
     public String getRequiredSort() { return requiredSort; }
     public void setRequiredSort(String requiredSort) { this.requiredSort = requiredSort; }
-    public boolean isRequiredItemIsSoldValue() { return requiredItemIsSoldValue; }
-    public void setRequiredItemIsSoldValue(boolean requiredItemIsSoldValue) { this.requiredItemIsSoldValue = requiredItemIsSoldValue; }
+
+    public boolean happensOnSale() { return happensOnSale; }
+    public void setHappensOnSale (boolean happensOnSale) { this.happensOnSale = happensOnSale; }
+
+    /**
+     * Generic trigger check.
+     * @param db Database reference.
+     * @param currentSort Optional: current sort string if called during sorting. Can be null for day-start or sale triggers.
+     * @return true if all active conditions are satisfied.
+     */
+    public boolean isTriggered(Database db, String currentSort, boolean isBeingSold) {
+        boolean returnBoolean = false;
+        // --- DAY CONDITION ---
+        if (requiredDay <= db.getDay()) { // if we've reached an acceptable day.
+            returnBoolean = true; // active day condition met
+        }
+                // --- SORT CONDITION ---
+        if (!requiredSort.isEmpty()) { // if this is an event that triggers on sort.
+            if (!requiredSort.equalsIgnoreCase(currentSort)) {
+                // but it isn't being sorted or isn't being sorted in a way that we care about
+                // (equalsignorecase() handles null)
+                return false; // return false
+            }
+            else { // and it DOES match
+                returnBoolean = true; // active sort condition met
+            }
+        }
+
+        // --- ITEM SOLD CONDITION ---
+        if (happensOnSale && isBeingSold) { // if the event only happens on sale, check
+            returnBoolean = true;
+        }
+
+        // All active conditions passed
+        return returnBoolean;
+    }
+
+    /**
+     * Convenience overload for calls where sort and sale are not relevant.
+     */
     public boolean isTriggered(Database db) {
-
-        // DAY TRIGGER
-        if (requiredDay > 0 && db.getDay() < requiredDay) {
-            return false;
-        }
-
-        // SORT TRIGGER (requires your SortPhase to pass the matched sort string)
-        if (requiredSort != null && !requiredSort.isEmpty()) {
-            // Sort triggers must be activated from SortPhase manually
-            return false;
-        }
-
-        // ITEM SOLD TRIGGER (true means: trigger only if ANY item is sold)
-        if (requiredItemIsSoldValue) {
-            if (db.getUsedItems() == null) return false;
-            boolean anySold = db.getUsedItems().stream().anyMatch(item -> item.isSold());
-            if (!anySold) return false;
-        }
-
-        return true;
+        return isTriggered(db, null, false);
     }
 }

@@ -1,34 +1,36 @@
 package com.example.fantasysortinggame.mainmenu;
 
-import java.io.File;
+import javax.sound.sampled.*;
+import java.io.IOException;
+import java.net.URL;
 
 public class SoundEffectController {
-    /*
-        Once we finish the rest of the classes, we should have onButtonClickedHandlers call the sound effect controller to play a sound.
-     */
-    protected File buttonClickSound = new File("com/example/fantasysortinggame/soundfiles/PLACEHOLDERButtonClickSoundFile");
+
+    private static SoundEffectController instance;
+    private Clip buttonClickClip;
+
+    private SoundEffectController() {
+        try {
+            URL soundURL = getClass().getResource("/com/example/fantasysortinggame/soundfiles/button_click.wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundURL);
+            buttonClickClip = AudioSystem.getClip();
+            buttonClickClip.open(audioIn);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static SoundEffectController getInstance() {
-        return null;
-    }
-
-    protected void playSound(File soundFile) {
-
-    }
-
-    public void playPhaseEnd() {
-
-    }
-
-    public void playSellSuccess() {
-    }
-
-    public void playError() {
+        if (instance == null) {
+            instance = new SoundEffectController();
+        }
+        return instance;
     }
 
     public void playButtonClick() {
-    }
-
-    public void playPhaseStart() {
+        if (buttonClickClip == null) return;
+        if (buttonClickClip.isRunning()) buttonClickClip.stop();
+        buttonClickClip.setFramePosition(0);
+        buttonClickClip.start();
     }
 }
