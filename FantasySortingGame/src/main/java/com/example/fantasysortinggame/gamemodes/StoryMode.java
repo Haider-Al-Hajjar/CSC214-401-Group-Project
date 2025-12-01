@@ -42,10 +42,15 @@ public class StoryMode implements GameMode {
         return false;
     }
 
+    @Override
+    public String getMistakeMessage(Database db) {
+        return null;
+    }
+
 
     @Override
     public Optional<EndingResult> checkEnding(Database db) {
-        if (db.getDay() <= db.getMaxDay()) {
+        if (db.getDay() < db.getMaxDay()) {
             return Optional.empty();
         }
         double percentSold = calcPercentSold(db);

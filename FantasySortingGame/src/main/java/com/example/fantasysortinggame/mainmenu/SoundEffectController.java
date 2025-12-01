@@ -6,12 +6,12 @@ import java.net.URL;
 
 public class SoundEffectController {
 
-    private static SoundEffectController instance;
+    public static SoundEffectController instance;
     private Clip buttonClickClip;
 
-    private SoundEffectController() {
+    public SoundEffectController() {
         try {
-            URL soundURL = getClass().getResource("/com/example/fantasysortinggame/soundfiles/button_click.wav");
+            URL soundURL = getClass().getResource("/com/example/fantasysortinggame/soundfiles/Button Click Sound.wav");
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundURL);
             buttonClickClip = AudioSystem.getClip();
             buttonClickClip.open(audioIn);

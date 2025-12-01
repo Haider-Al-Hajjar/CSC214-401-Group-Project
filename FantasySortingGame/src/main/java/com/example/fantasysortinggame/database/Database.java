@@ -18,19 +18,16 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 public class Database {
-    private static final int MAX_DAY = 5;
     final String SAVE_DIR = "savedfiles";
     private GameModeNames gameMode;
     private String fileName;
+    private static final int MAX_DAY = 6;
     private int day;
     private int seed;
+    private int mistakes = 0;
     private ArrayList<Item> usedItems;
-
-
     private ArrayList<ArrayList<Item>> allItems;
-
     private ArrayList<Upgrade> allUpgrades;
-
     private ArrayList<QuickTimeEvent> allEvents;
     private ArrayList<Npc> allNpcs;
     private ArrayList<Dialogue> allDialogues;
@@ -60,8 +57,20 @@ public class Database {
         return day;
     }
 
+    public int getDayInBound() {
+        return Math.max(day%(MAX_DAY + 1), 1);
+    }
+
     public void setDay(int day) {
         this.day = day;
+    }
+
+    public int getMistakes() {
+        return mistakes;
+    }
+
+    public void setMistakes(int mistakes) {
+        this.mistakes = mistakes;
     }
 
     public ArrayList<Item> getUsedItems() {
@@ -74,13 +83,13 @@ public class Database {
 
     // Return list for that day
     public ArrayList<Item> getItems() {
-        ArrayList<Item> dayItems = allItems.get(day - 1);
+        ArrayList<Item> dayItems = allItems.get(getDayInBound()-1);
 
         if (dayItems.isEmpty()) {
             return new ArrayList<>();
         }
 
-        int dayItemFraction = 6;
+        int dayItemFraction = 8;
         int baseCount = Math.max(1, dayItems.size() / dayItemFraction);
 
         int finalCount = baseCount;
@@ -168,12 +177,13 @@ public class Database {
     // ================================================================
     //                          LOAD FILE
     // ================================================================
-    public void loadFromFile(String fileName, GameModeNames gameMode) {
+    public boolean loadFromFile(String fileName, GameModeNames gameMode) {
+        boolean previousFileExists = true;
         this.fileName = fileName; // store the filename first
         File file = getSaveFile(); // now it points to savedfiles/
-
         // If file does not exist → create default database
         if (!file.exists()) {
+            previousFileExists = false;
             createDefaultSave();
             this.gameMode = gameMode;
             this.seed = (int) (Math.random() * 1000);
@@ -264,6 +274,7 @@ public class Database {
         } catch (Exception e) {
             System.out.println("Error loading save file: " + e.getMessage());
         }
+        return previousFileExists;
     }
 
     private File getSaveFile() {
@@ -325,5 +336,9 @@ public class Database {
 
     public int getMaxDay() {
         return MAX_DAY;
+    }
+
+    public void setItems(ArrayList<ArrayList<Item>> items) {
+        this.allItems = items;
     }
 }

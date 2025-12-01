@@ -3,6 +3,7 @@ package com.example.fantasysortinggame.storyhandlers;
 import com.example.fantasysortinggame.database.Database;
 import com.example.fantasysortinggame.datatypes.Dialogue;
 import com.example.fantasysortinggame.datatypes.DialogueEntry;
+import com.example.fantasysortinggame.gamephasemanager.GameEngine;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -14,15 +15,19 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.function.Consumer;
 
 public class DialogueBoxController {
 
-    @FXML private Label nameLabel;
-    @FXML private ImageView imageView;
-    @FXML private Label dialogueLabel;
-    @FXML private Button continueButton;
-    @FXML private AnchorPane rootPane;
+    @FXML
+    Label nameLabel;
+    @FXML
+    ImageView imageView;
+    @FXML
+    Label dialogueLabel;
+    @FXML
+    Button continueButton;
+    @FXML
+    AnchorPane rootPane;
 
     private Dialogue currentDialogue;
     private final Queue<DialogueEntry> dialogueQueue = new LinkedList<>();
@@ -45,13 +50,16 @@ public class DialogueBoxController {
     /**
      * Start displaying the dialogue
      */
-    public void runDialogue(Dialogue dialogue) {
+    public void runDialogue(Dialogue dialogue ) {
         this.currentDialogue = dialogue;
         dialogueQueue.clear();
         dialogueQueue.addAll(dialogue.getDialogueEntries());
 
         // Continue button advances dialogue
-        continueButton.setOnAction(e -> displayNextDialogueEntry());
+        continueButton.setOnAction(e -> {
+            GameEngine.getSoundController().playButtonClick();
+            displayNextDialogueEntry();
+        });
         displayNextDialogueEntry();
     }
 

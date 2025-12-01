@@ -20,31 +20,30 @@ import java.util.List;
 public class SalePhaseController {
 
     @FXML
-    private Label dayLabel;
+    Label dayLabel;
     @FXML
-    private Label totalGoldLabel;
+    Label totalGoldLabel;
     @FXML
-    private HBox filterButtonContainer;
+    HBox filterButtonContainer;
     @FXML
-    private VBox itemContainer;
+    VBox itemContainer;
     @FXML
-    private Button proceedButton;
+    Button proceedButton;
     @FXML
     private AnchorPane dialogueContainer;
 
     private Database database;
     private Stage stage;
     private ArrayList<Item> items;
-    private String currentFilter = "All";
-    private FilterNode rootFilterNode;
+    String currentFilter = "All";
+    FilterNode rootFilterNode;
     private Runnable onPhaseComplete;
-    private final double MIN_ITEM_VALUE = 10;
-
+    final double MIN_ITEM_VALUE = 10;
     public static void showSalePhase(Database db, Stage parentStage, Runnable onComplete) {
         try {
             FXMLLoader loader = new FXMLLoader(SalePhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/SalePhase.fxml"));
             parentStage.setScene(new Scene(loader.load()));
-            parentStage.setTitle("Sale Phase");
+            parentStage.setTitle("Sale Phase: " + db.getGameMode());
 
             SalePhaseController controller = loader.getController();
             controller.setDependencies(db, parentStage, onComplete);
@@ -71,15 +70,18 @@ public class SalePhaseController {
             items = new ArrayList<>();
         }
 
-        rootFilterNode = getItemSortCategoriesByDay(database.getDay());
+        rootFilterNode = getItemSortCategoriesByDay(database.getDayInBound());
         createFilterButtons(rootFilterNode);
         // Ensure proceed button works
-        proceedButton.setOnAction(e -> finishPhase());
+        proceedButton.setOnAction(e -> {
+            GameEngine.getSoundController().playButtonClick();
+            finishPhase();
+        });
         updateTopBar();
         displayItems();
     }
 
-    private FilterNode getItemSortCategoriesByDay(int day) {
+    FilterNode getItemSortCategoriesByDay(int day) {
         FilterNode root = new FilterNode("root");
         if (day <= 2) {
             root.children.add(new FilterNode("All"));
@@ -104,6 +106,7 @@ public class SalePhaseController {
             if (child.isLeaf()) {
                 ToggleButton btn = new ToggleButton(child.name);
                 btn.setOnAction(e -> {
+                    GameEngine.getSoundController().playButtonClick();
                     currentFilter = child.name;
                     displayItems();
                 });
@@ -121,6 +124,7 @@ public class SalePhaseController {
             if (child.isLeaf()) {
                 MenuItem mi = new MenuItem(child.name);
                 mi.setOnAction(e -> {
+                    GameEngine.getSoundController().playButtonClick();
                     currentFilter = child.name;
                     displayItems();
                 });
@@ -138,6 +142,7 @@ public class SalePhaseController {
             if (child.isLeaf()) {
                 MenuItem mi = new MenuItem(child.name);
                 mi.setOnAction(e -> {
+                    GameEngine.getSoundController().playButtonClick();
                     currentFilter = child.name;
                     displayItems();
                 });
@@ -150,7 +155,7 @@ public class SalePhaseController {
         }
     }
 
-    private void updateTopBar() {
+    void updateTopBar() {
         if (dayLabel != null) {
             dayLabel.setText("Day: " + database.getDay());
         }
@@ -159,7 +164,7 @@ public class SalePhaseController {
         }
     }
 
-    private void displayItems() {
+    void displayItems() {
         itemContainer.getChildren().clear();
 
         for (Item item : items) {
@@ -183,7 +188,10 @@ public class SalePhaseController {
 
             Label valueLabel = new Label("Value: " + totalValue + " gold" + (bonus > 0 ? " (Correct Sort Bonus: +" + bonus + ")" : ""));
             Button sellButton = new Button("Sell for " + totalValue + " gold");
-            sellButton.setOnAction(e -> sellItem(item));
+            sellButton.setOnAction(e -> {
+                GameEngine.getSoundController().playButtonClick();
+                sellItem(item);
+            });
             infoBox.getChildren().addAll(titleLabel, descLabel, valueLabel, sellButton);
             row.getChildren().add(infoBox);
             itemContainer.getChildren().add(row);
@@ -201,7 +209,7 @@ public class SalePhaseController {
         return null;
     }
 
-    private void sellItem(Item item) {
+    void sellItem(Item item) {
         if (item.getEvents() != null && !item.getEvents().isEmpty()) {
             for (StoryEvent event : item.getEvents()) {
                 if (event.hasHappened()) continue;
@@ -235,7 +243,7 @@ public class SalePhaseController {
         return (Math.max(item.getValue(), MIN_ITEM_VALUE));
     }
 
-    private double calculateCorrectSortBonus(Item item) {
+    double calculateCorrectSortBonus(Item item) {
         if (item.getItemSort().equalsIgnoreCase(item.getItemTypeValue())) {
             return estimateItemValue(item) * 0.5;
         }

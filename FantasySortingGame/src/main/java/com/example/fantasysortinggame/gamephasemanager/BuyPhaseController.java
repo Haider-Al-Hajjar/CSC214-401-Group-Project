@@ -23,11 +23,11 @@ public class BuyPhaseController {
 
     private Stage stage;
     @FXML
-    private VBox shopContainer;
+    public VBox shopContainer;
     @FXML
-    private Button proceedButton;
+    public Button proceedButton;
     @FXML
-    private Label dayLabel;
+    public Label dayLabel;
 
     public BuyPhaseController(Database database) {
         this.database = database;
@@ -47,7 +47,7 @@ public class BuyPhaseController {
             FXMLLoader loader = new FXMLLoader(BuyPhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/BuyPhase.fxml"));
             loader.setControllerFactory(param -> new BuyPhaseController(db));
             parentStage.setScene(new Scene(loader.load()));
-            parentStage.setTitle("Buy Phase");
+            parentStage.setTitle("Buy Phase: " + db.getGameMode());
             parentStage.show();
 
             BuyPhaseController controller = loader.getController();
@@ -65,12 +65,13 @@ public class BuyPhaseController {
         this.onPhaseComplete = () -> {
             if (this.stage != null) this.stage.close();
             if (onComplete != null) onComplete.run();
-            database.setDay(database.getDay() + 1);
+            database.setDay(database.getDay()+1); // wrap day around to 1 if it exceeds the bounds of the max day.
             database.saveToFile();
             GameEngine.runSortPhase(); // next phase after buying
         };
 
         proceedButton.setOnAction(e -> {
+            GameEngine.getSoundController().playButtonClick();
             if (onPhaseComplete != null) onPhaseComplete.run();
         });
     }
@@ -120,7 +121,10 @@ public class BuyPhaseController {
         Label ability = new Label("Ability: " + upgrade.getAbility());
 
         Button buyButton = new Button("Buy");
-        buyButton.setOnAction(e -> onBuyUpgradeClickHandler(upgrade));
+        buyButton.setOnAction(e -> {
+            GameEngine.getSoundController().playButtonClick();
+            onBuyUpgradeClickHandler(upgrade);
+        });
         if (database.getGold() < upgrade.getCost()) {
             buyButton.setDisable(true);
         }

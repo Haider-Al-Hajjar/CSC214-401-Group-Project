@@ -11,13 +11,11 @@ module com.example.fantasysortinggame {
     opens com.example.fantasysortinggame.datatypes to javafx.fxml, com.google.gson;
     opens com.example.fantasysortinggame.storyhandlers to javafx.fxml;
 
-    // Gson
-    opens com.example.fantasysortinggame.database to com.google.gson;
-
     // Exports
     exports com.example.fantasysortinggame.mainmenu;
     exports com.example.fantasysortinggame.datatypes;
-    exports com.example.fantasysortinggame.database;
     exports com.example.fantasysortinggame.gamemodes;
     exports com.example.fantasysortinggame.gamephasemanager;
+    exports com.example.fantasysortinggame.database;
+    opens com.example.fantasysortinggame.database to com.google.gson;
 }

@@ -46,7 +46,10 @@ public class SortPhaseController {
     @FXML
     public void initialize() {
         proceedButton.setVisible(false);
-        proceedButton.setOnAction(e -> finishPhase());
+        proceedButton.setOnAction(e -> {
+            GameEngine.getSoundController().playButtonClick();
+            finishPhase();
+        });
     }
 
 
@@ -56,7 +59,7 @@ public class SortPhaseController {
         this.stage = stage;
         this.onPhaseComplete = onPhaseComplete;
 
-        rootFilterNode = getItemSortCategoriesByDay(database.getDay());
+        rootFilterNode = getItemSortCategoriesByDay(database.getDayInBound());
         createFilterButtons(rootFilterNode);
         createViewButtons(Arrays.asList("Complete", "Image", "Lore"));
 
@@ -64,7 +67,7 @@ public class SortPhaseController {
         loadItems();
     }
 
-    private FilterNode getItemSortCategoriesByDay(int day) {
+    FilterNode getItemSortCategoriesByDay(int day) {
         FilterNode root = new FilterNode("root"); // dummy root
         if (day <= 2) { // before day 3 (index 2), categoris are undivided
             root.children.add(new FilterNode("All"));
@@ -91,6 +94,7 @@ public class SortPhaseController {
             if (child.isLeaf()) {
                 ToggleButton btn = new ToggleButton(child.name);
                 btn.setOnAction(e -> {
+                    GameEngine.getSoundController().playButtonClick();
                     currentFilter = child.name;
                     displayItems();
                 });
@@ -108,6 +112,7 @@ public class SortPhaseController {
             if (child.isLeaf()) {
                 MenuItem mi = new MenuItem(child.name);
                 mi.setOnAction(e -> {
+                    GameEngine.getSoundController().playButtonClick();
                     currentFilter = child.name;
                     displayItems();
                 });
@@ -125,6 +130,7 @@ public class SortPhaseController {
             if (child.isLeaf()) {
                 MenuItem mi = new MenuItem(child.name);
                 mi.setOnAction(e -> {
+                    GameEngine.getSoundController().playButtonClick();
                     currentFilter = child.name;
                     displayItems();
                 });
@@ -143,6 +149,8 @@ public class SortPhaseController {
         for (String viewName : views) {
             ToggleButton btn = new ToggleButton(viewName);
             btn.setOnAction(e -> {
+                GameEngine.getSoundController().playButtonClick();
+
                 currentView = btn.getText();
                 displayItems();
             });
@@ -192,7 +200,10 @@ public class SortPhaseController {
                 Text descText = new Text(item.getDescription());
 
                 Button sortButton = new Button(item.getItemSort());
-                sortButton.setOnAction(ev -> showSortMenu(sortButton, item));
+                sortButton.setOnAction(ev -> {
+                    GameEngine.getSoundController().playButtonClick();
+                    showSortMenu(sortButton, item);
+                });
 
                 infoBox.getChildren().addAll(titleLabel, descText, sortButton);
                 row.getChildren().addAll(imageView, infoBox);
@@ -204,7 +215,10 @@ public class SortPhaseController {
                 Text descText = new Text(item.getDescription());
 
                 Button sortButton = new Button(item.getItemSort());
-                sortButton.setOnAction(ev -> showSortMenu(sortButton, item));
+                sortButton.setOnAction(ev -> {
+                    GameEngine.getSoundController().playButtonClick();
+                    showSortMenu(sortButton, item);
+                });
 
                 infoBox.getChildren().addAll(titleLabel, descText, sortButton);
                 row.getChildren().addAll(infoBox);
@@ -223,7 +237,10 @@ public class SortPhaseController {
                 Label titleLabel = new Label(item.getTitle());
                 Button sortButton = new Button(item.getItemSort());
                 VBox infoBox = new VBox(5);
-                sortButton.setOnAction(ev -> showSortMenu(sortButton, item));
+                sortButton.setOnAction(ev -> {
+                    GameEngine.getSoundController().playButtonClick();
+                    showSortMenu(sortButton, item);
+                });
 
                 infoBox.getChildren().addAll(titleLabel, imageView, sortButton);
                 row.getChildren().addAll(infoBox);
@@ -310,7 +327,7 @@ public class SortPhaseController {
 
     private void showSortMenu(Button button, Item item) {
         ContextMenu menu = new ContextMenu();
-        int day = database.getDay();
+        int day = database.getDayInBound();
 
         // Don't include "All" as an option for sorting the item itself
         if (day <= 2) {
@@ -367,7 +384,10 @@ public class SortPhaseController {
 
     private MenuItem createMenuItem(String name, Button button, Item item) {
         MenuItem mi = new MenuItem(name);
-        mi.setOnAction(e -> handleSortSelection(item, button, name));
+        mi.setOnAction(e -> {
+            GameEngine.getSoundController().playButtonClick();
+            handleSortSelection(item, button, name);
+        });
         return mi;
     }
 
@@ -387,7 +407,7 @@ public class SortPhaseController {
         return menu;
     }
 
-    private void handleSortSelection(Item item, Button button, String newSort) {
+    void handleSortSelection(Item item, Button button, String newSort) {
 
         if (item.getEvents() != null) {
             for (StoryEvent event : item.getEvents()) {
@@ -410,7 +430,7 @@ public class SortPhaseController {
             }
         }
         item.setItemSort(newSort);
-        if (newSort.equalsIgnoreCase(item.getItemTypeValue())) {
+        if (newSort.equalsIgnoreCase(item.getItemTypeValue()) || newSort.equalsIgnoreCase("Unsorted")) {
             GameEngine.onCorrectSort(item);
         }
         else {
@@ -444,7 +464,7 @@ public class SortPhaseController {
         try {
             javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(SortPhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/sortPhase.fxml"));
             parentStage.setScene(new javafx.scene.Scene(loader.load()));
-            parentStage.setTitle("Sort Phase");
+            parentStage.setTitle("Sort Phase: " + db.getGameMode());
 
             SortPhaseController controller = loader.getController();
             controller.setDependencies(db, parentStage, onPhaseComplete);

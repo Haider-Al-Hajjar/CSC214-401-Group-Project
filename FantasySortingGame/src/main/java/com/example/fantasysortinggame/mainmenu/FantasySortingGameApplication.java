@@ -1,7 +1,6 @@
 package com.example.fantasysortinggame.mainmenu;
 
 import com.example.fantasysortinggame.database.Database;
-import com.example.fantasysortinggame.gamephasemanager.GameEngine;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

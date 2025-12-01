@@ -7,8 +7,8 @@ public class GameModeFactory {
             case Story -> new StoryMode();
             case Endless -> new EndlessMode();
             case Zen -> new ZenMode();
-            case Timed -> new TimeTrialMode();
-            case Scored -> new ScoreAttackMode();
+            case Timed -> new TimedMode();
+            case Scored -> new ScoredMode();
         };
     }
 }

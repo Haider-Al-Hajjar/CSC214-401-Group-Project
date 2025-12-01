@@ -1,6 +1,4 @@
 package com.example.fantasysortinggame.datatypes;
-import com.example.fantasysortinggame.database.Database;
-import com.example.fantasysortinggame.datatypes.StoryEventTrigger;
 
 import java.util.ArrayList;
 import java.util.List;

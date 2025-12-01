@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public class EndlessMode implements GameMode {
     private final int MAX_MISTAKES = 3;
-    private int mistakes = 0;
 
     @Override
     public boolean shouldDayStart(Database db) {
@@ -21,7 +20,7 @@ public class EndlessMode implements GameMode {
 
     @Override
     public void onMistake(Database db) {
-        mistakes++;
+        db.setMistakes(db.getMistakes()+1);
     }
 
 
@@ -42,7 +41,15 @@ public class EndlessMode implements GameMode {
 
     @Override
     public boolean hasLost(Database db) {
-        return mistakes >= MAX_MISTAKES;
+        return db.getMistakes() >= MAX_MISTAKES;
+    }
+
+    @Override
+    public String getMistakeMessage(Database db) {
+        String returnString = "You made a mistake!\n You have " + (MAX_MISTAKES - db.getMistakes()) + " ";
+        returnString += MAX_MISTAKES - db.getMistakes() == 1 ? "mistake " : "mistakes ";
+        returnString += "remaining.";
+        return returnString;
     }
 
     @Override

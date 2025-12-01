@@ -1,7 +1,6 @@
 package com.example.fantasysortinggame.mainmenu;
 
 import com.example.fantasysortinggame.database.Database;
-import com.example.fantasysortinggame.gamemodes.GameMode;
 import com.example.fantasysortinggame.gamemodes.GameModeNames;
 import com.example.fantasysortinggame.gamephasemanager.GameEngine;
 import javafx.fxml.FXML;
@@ -21,11 +20,12 @@ public class StartMenuController {
     @FXML
     public TextField gameNameField;
     @FXML
-    private ToggleButton startNewGameButton;
+    ToggleButton startNewGameButton;
     private final Database database;
-
+    SoundEffectController soundEffectController;
     public StartMenuController(Database db) {
         this.database = db;
+        this.soundEffectController = new SoundEffectController();
     }
 
     @FXML
@@ -39,16 +39,21 @@ public class StartMenuController {
 
         // Show popup on click
         gameModeButton.setOnAction(e -> {
+            soundEffectController.playButtonClick();
             modeMenu.show(startNewGameButton,
                     javafx.geometry.Side.BOTTOM, 0, 0);
         });
 
         // Handle selection
         for (MenuItem gameMode : modeMenu.getItems()) {
-            gameMode.setOnAction(e -> database.setGameMode(GameModeNames.valueOf(gameMode.getText().split(" ")[0])));
+            gameMode.setOnAction(e -> {
+                soundEffectController.playButtonClick();
+                database.setGameMode(GameModeNames.valueOf(gameMode.getText().split(" ")[0]));
+            });
         }
 
         startNewGameButton.setOnAction(e-> {
+            soundEffectController.playButtonClick();
             startGame();
         });
     }
@@ -58,19 +63,22 @@ public class StartMenuController {
             case "Story Mode" -> "STORY_MODE";
             case "Endless Mode" -> "ENDLESS_MODE";
             case "Zen Mode" -> "ZEN_MODE";
-            case "Time Trial Mode" -> "TIME_TRIAL_MODE";
-            case "Score Attack Mode" -> "SCORE_ATTACK_MODE";
+            case "Timed Mode" -> "TIME_TRIAL_MODE";
+            case "Scored Mode" -> "SCORE_ATTACK_MODE";
             default -> throw new IllegalArgumentException("Unknown game mode: " + menuText);
         };
     }
 
     private void startGame() {
-        database.loadFromFile(gameNameField.getText(), database.getGameMode() == null ? GameModeNames.valueOf("Story") : database.getGameMode());
-
-        GameEngine.initialize(database, new Stage());
+        boolean fileExists = database.loadFromFile(gameNameField.getText(), database.getGameMode() == null ? GameModeNames.valueOf("Story") : database.getGameMode());
+        GameEngine.initialize(database, new Stage(), soundEffectController);
         GameEngine.setGameMode(database.getGameMode()); // add this in your GameEngine
-        GameEngine.startDayCycle();
-
+        if (fileExists) {
+            GameEngine.startDayCycle();
+        }
+        else {
+            TutorialController.showTutorial(database);
+        }
         // Close start menu window
         ((Stage) startNewGameButton.getScene().getWindow()).close();
     }

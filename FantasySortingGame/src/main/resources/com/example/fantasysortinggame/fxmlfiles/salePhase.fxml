@@ -33,7 +33,7 @@
     <bottom>
         <VBox spacing="5" alignment="CENTER">
             <!-- Dialogue placeholder -->
-            <AnchorPane fx:id="dialogueContainer" prefHeight="200"/>
+            <AnchorPane fx:id="dialogueContainer" prefHeight="100"/>
 
             <!-- End Phase button -->
             <HBox alignment="CENTER" spacing="10">

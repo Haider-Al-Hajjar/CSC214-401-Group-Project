@@ -28,5 +28,7 @@ public interface GameMode {
 
     // Whether the player has lost
     boolean hasLost(Database db);
+
+    String getMistakeMessage(Database db);
 }
 

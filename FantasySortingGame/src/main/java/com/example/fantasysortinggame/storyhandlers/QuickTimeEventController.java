@@ -2,6 +2,7 @@ package com.example.fantasysortinggame.storyhandlers;
 
 import com.example.fantasysortinggame.datatypes.Item;
 import com.example.fantasysortinggame.datatypes.QuickTimeEvent;
+import com.example.fantasysortinggame.gamephasemanager.GameEngine;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -21,13 +22,17 @@ import java.util.ArrayList;
 public class QuickTimeEventController {
 
     public AnchorPane rootPane;
-    @FXML private TextField timeLeftField;
-    @FXML private TextField titleField;
-    @FXML private TextField descriptionField;
+    @FXML
+    TextField timeLeftField;
+    @FXML
+    TextField titleField;
+    @FXML
+    TextField descriptionField;
     @FXML private Button option1Field;
     @FXML
     private Button option2Field;
-    @FXML private VBox optionsContainer;
+    @FXML
+    VBox optionsContainer;
 
     private Stage stage;
     private QuickTimeEvent currentEvent;
@@ -65,7 +70,6 @@ public class QuickTimeEventController {
 
         this.currentEvent = event;
         this.allItems = (ArrayList<Item>) allItems;   // store all items
-
         currentEvent.setStart(System.currentTimeMillis());
         currentEvent.setSolvedInTime(false);
         currentEvent.setEventSolvedCorrectly(false);
@@ -104,6 +108,7 @@ public class QuickTimeEventController {
     }
 
     private void onOptionClick(String option) {
+        GameEngine.getSoundController().playButtonClick();
         if (!eventActive) return;
         if (timer != null) timer.stop();
 

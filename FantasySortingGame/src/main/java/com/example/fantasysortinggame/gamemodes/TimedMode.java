@@ -8,10 +8,12 @@ import javafx.util.Duration;
 
 import java.util.Optional;
 
-public class TimeTrialMode implements GameMode {
-    private final int MAX_TIME = 600;
+public class TimedMode implements GameMode {
+    private static final int CORRECT_SORT_TIME_BONUS = 5;
+    private final int MAX_TIME = 200;
     private int remainingSeconds = MAX_TIME;
     private Timeline timer;
+    private int MISTAKE_TIME_PENALTY = -5;
 
     public int getRemainingSeconds() {
         return remainingSeconds;
@@ -47,12 +49,12 @@ public class TimeTrialMode implements GameMode {
 
     @Override
     public void onCorrectSort(Database db, Item item) {
-        remainingSeconds += 5; // Correctly sorting an item adds time.
+        remainingSeconds += CORRECT_SORT_TIME_BONUS; // Correctly sorting an item adds time.
     }
 
     @Override
     public void onMistake(Database db) {
-        remainingSeconds -= 5; // Mistakes subtract time
+        remainingSeconds += MISTAKE_TIME_PENALTY; // Mistakes subtract time
     }
 
     @Override
@@ -75,8 +77,13 @@ public class TimeTrialMode implements GameMode {
         return remainingSeconds <= 0;
     }
 
+    @Override
+    public String getMistakeMessage(Database db) {
+        return "You made a mistake!\n Your time penalized by " + (MISTAKE_TIME_PENALTY*-1) + " seconds!";
+    }
+
     private boolean hasWon(Database db) {
-        return (remainingSeconds > 0 && db.getDay() > db.getMaxDay());
+        return (remainingSeconds > 0 && db.getDay() >= db.getMaxDay());
     }
 
     @Override

@@ -5,11 +5,10 @@ import com.example.fantasysortinggame.datatypes.Item;
 
 import java.util.Optional;
 
-public class ScoreAttackMode implements GameMode {
+public class ScoredMode implements GameMode {
     private int score = 0;
     private final int CORRECT_SORT_SCORE_BONUS = 10;
     private final int MISTAKE_SCORE_PENALTY = -20;
-    private int mistakes = 0;
 
     @Override
     public boolean shouldDayStart(Database db) {
@@ -26,7 +25,7 @@ public class ScoreAttackMode implements GameMode {
     @Override
     public void onMistake(Database db) {
         score += MISTAKE_SCORE_PENALTY;
-        mistakes++;
+        db.setMistakes(db.getMistakes()+1);
     }
 
     @Override
@@ -50,15 +49,20 @@ public class ScoreAttackMode implements GameMode {
         return false;
     }
 
+    @Override
+    public String getMistakeMessage(Database db) {
+        return "You made a mistake!\nYour score is decreased by " + (MISTAKE_SCORE_PENALTY*-1) + " points.\nYou have made " + db.getMistakes() + " mistakes. Your current score is " + score + " points.";
+    }
+
     private boolean hasWon(Database db) {
-        return (db.getDay() > db.getMaxDay());
+        return (db.getDay() >= db.getMaxDay());
     }
 
     @Override
     public Optional<EndingResult> checkEnding(Database db) {
         if (hasWon(db)) {
             return Optional.of(
-                    new EndingResult("score_attack_win","Completed " + db.getDay() + " days. Score: " + score + ". Mistakes " + mistakes +".")
+                    new EndingResult("score_attack_win","Completed " + db.getDay() + " days. Score: " + score + ". Mistakes " + db.getMistakes() +".")
             );
         }
         return Optional.empty();

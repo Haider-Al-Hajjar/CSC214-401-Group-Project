@@ -43,6 +43,11 @@ public class ZenMode implements GameMode {
     }
 
     @Override
+    public String getMistakeMessage(Database db) {
+        return null;
+    }
+
+    @Override
     public Optional<EndingResult> checkEnding(Database db) {
         return Optional.empty();
     }
