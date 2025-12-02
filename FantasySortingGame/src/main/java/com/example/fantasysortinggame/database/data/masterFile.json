@@ -196,7 +196,7 @@
                 "requiredDay": 1,
                 "requiredItem": "Ceremonial Dagger",
                 "requiredSort": "Junk",
-                "requiredItemIsSoldValue": false
+                "happensOnSale": false
               }
             ]
           }
@@ -248,7 +248,7 @@
                 "requiredDay": 1,
                 "requiredItem": "Expedition Badge",
                 "requiredSort": "Junk",
-                "requiredItemIsSoldValue": false
+                "happensOnSale": false
               }
             ]
           }
@@ -384,7 +384,7 @@
                 "requiredDay": 1,
                 "requiredItem": "Grandpa’s Love Letter",
                 "requiredSort": "Junk",
-                "requiredItemIsSoldValue": false
+                "happensOnSale": false
               }
             ]
           }
@@ -522,7 +522,7 @@
                 "requiredDay": 1,
                 "requiredItem": "Grandpa's Love Letter",
                 "requiredSort": "Junk",
-                "requiredItemIsSoldValue": false
+                "happensOnSale": false
               }
             ],
             "dialogues": []
@@ -1045,7 +1045,7 @@
                 "requiredDay": 1,
                 "requiredItem": "Grandpa's Love Letter",
                 "requiredSort": "Junk",
-                "requiredItemIsSoldValue": false
+                "happensOnSale": false
               }
             ]
           }
@@ -1087,23 +1087,7 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
-        "events": [
-          {
-            "title": "Grandpa's Friend Objects",
-            "description": "Rowan steps in as you consider selling a particularly sentimental item.",
-            "options": [
-              "Keep the item",
-              "Sell it anyway"
-            ],
-            "correctOption": "Keep the item",
-            "start": 0,
-            "end": 0,
-            "maxTime": 5000,
-            "solvedInTime": false,
-            "eventSolvedCorrectly": false,
-            "itemsAffected": []
-          }
-        ],
+        "events": [],
         "dialogues": []
       },
       {
@@ -1237,11 +1221,11 @@
         "isSold": false,
         "events": [
           {
-            "title": "Grandpa's Friend Objects",
-            "description": "Rowan steps in as you consider selling a particularly sentimental item.",
+            "title": "Selling the old crew's memories",
+            "description": "Rowan, Grandpa's old friend, steps in as you consider selling a particularly sentimental item.",
             "options": [
-              "Keep the item",
-              "Sell it anyway"
+              "Keep the item instead",
+              "Fight him off"
             ],
             "correctOption": "Keep the item",
             "start": 0,
@@ -1249,10 +1233,33 @@
             "maxTime": 5000,
             "solvedInTime": false,
             "eventSolvedCorrectly": false,
-            "itemsAffected": []
+            "itemsAffected": [
+              "Necklace of the Fallen"
+            ],
+            "successName": "Necklace of the Last Compass",
+            "successDescription": "A necklace bearing heartwarming charms from Grandpa's old party.",
+            "successSort": "Keepsakes",
+            "successType": {
+              "itemType": "Keepsakes"
+            },
+            "successValue": 0,
+            "failureName": "Shattered necklaces",
+            "failureDescription": "The necklace broke when you fought Rowan over selling it.",
+            "failureSort": "Broken Junk",
+            "failureType": {
+              "itemType": "Broken Junk"
+            },
+            "failureValue": 0,
+            "storyEventTriggers": [
+              {
+                "requiredDay": 5,
+                "requiredItem": "Necklace of the Last Compass",
+                "requiredSort": "",
+                "happensOnSale": true
+              }
+            ]
           }
-        ],
-        "dialogues": []
+        ]
       },
       {
         "itemSort": "Unsorted",
@@ -1385,9 +1392,7 @@
         "isSold": false,
         "events": [],
         "dialogues": []
-      }
-    ],
-    [
+      },
       {
         "itemSort": "Unsorted",
         "imageLink": "/com/example/fantasysortinggame/images/itemimages/img.png",
@@ -1458,7 +1463,9 @@
         "isSold": false,
         "events": [],
         "dialogues": []
-      },
+      }
+    ],
+    [
       {
         "itemSort": "Unsorted",
         "imageLink": "/com/example/fantasysortinggame/images/itemimages/img.png",
@@ -1469,21 +1476,6 @@
         },
         "isSold": false,
         "events": [
-          {
-            "title": "Grandpa's Friend Objects",
-            "description": "Rowan steps in as you consider selling a particularly sentimental item.",
-            "options": [
-              "Keep the item",
-              "Sell it anyway"
-            ],
-            "correctOption": "Keep the item",
-            "start": 0,
-            "end": 0,
-            "maxTime": 5000,
-            "solvedInTime": false,
-            "eventSolvedCorrectly": false,
-            "itemsAffected": []
-          }
         ],
         "dialogues": []
       },
@@ -1508,23 +1500,7 @@
           "itemType": "Keepsakes"
         },
         "isSold": false,
-        "events": [
-          {
-            "title": "Grandpa's Friend Objects",
-            "description": "Rowan steps in as you consider selling a particularly sentimental item.",
-            "options": [
-              "Keep the item",
-              "Sell it anyway"
-            ],
-            "correctOption": "Keep the item",
-            "start": 0,
-            "end": 0,
-            "maxTime": 5000,
-            "solvedInTime": false,
-            "eventSolvedCorrectly": false,
-            "itemsAffected": []
-          }
-        ],
+        "events": [],
         "dialogues": []
       },
       {
@@ -1730,21 +1706,6 @@
         },
         "isSold": false,
         "events": [
-          {
-            "title": "Grandpa's Friend Objects",
-            "description": "Rowan steps in as you consider selling a particularly sentimental item.",
-            "options": [
-              "Keep the item",
-              "Sell it anyway"
-            ],
-            "correctOption": "Keep the item",
-            "start": 0,
-            "end": 0,
-            "maxTime": 5000,
-            "solvedInTime": false,
-            "eventSolvedCorrectly": false,
-            "itemsAffected": []
-          }
         ],
         "dialogues": []
       },
@@ -1782,23 +1743,6 @@
         },
         "isSold": false,
         "events": [
-          {
-            "title": "Grandpa's Friend Objects",
-            "description": "Rowan steps in as you consider selling a particularly sentimental item.",
-            "options": [
-              "Keep the item",
-              "Sell it anyway"
-            ],
-            "correctOption": "Keep the item",
-            "start": 0,
-            "end": 0,
-            "maxTime": 5000,
-            "solvedInTime": false,
-            "eventSolvedCorrectly": false,
-            "itemsAffected": [
-              "Grandpa's Love Letter"
-            ]
-          }
         ],
         "dialogues": []
       },
@@ -1833,6 +1777,66 @@
         "title": "Silver Chain (Broken)",
         "itemType": {
           "itemType": "Treasure Hoard"
+        },
+        "isSold": false,
+        "events": [],
+        "dialogues": []
+      },
+      {
+        "itemSort": "Unsorted",
+        "imageLink": "/com/example/fantasysortinggame/images/itemimages/img.png",
+        "description": "An empty vial once filled with a potion strong enough to melt stone.",
+        "title": "Stone-Melter Vial (Empty)",
+        "itemType": {
+          "itemType": "Depleted"
+        },
+        "isSold": false,
+        "events": [],
+        "dialogues": []
+      },
+      {
+        "itemSort": "Unsorted",
+        "imageLink": "/com/example/fantasysortinggame/images/itemimages/img.png",
+        "description": "A bundle of tangled string, feathers, beads, and two unidentifiable scraps.",
+        "title": "Traveler’s Scrap Bundle",
+        "itemType": {
+          "itemType": "Miscellaneous"
+        },
+        "isSold": false,
+        "events": [],
+        "dialogues": []
+      },
+      {
+        "itemSort": "Unsorted",
+        "imageLink": "/com/example/fantasysortinggame/images/itemimages/img.png",
+        "description": "A stamped brass medal commemorating an expedition you can’t find in any record.",
+        "title": "Lost Expedition Medal",
+        "itemType": {
+          "itemType": "Collectibles"
+        },
+        "isSold": false,
+        "events": [],
+        "dialogues": []
+      },
+      {
+        "itemSort": "Unsorted",
+        "imageLink": "/com/example/fantasysortinggame/images/itemimages/img.png",
+        "description": "A small pile of mixed gold pieces, foreign mintings, and a single gemstone shard.",
+        "title": "Assorted Hoard Fragments",
+        "itemType": {
+          "itemType": "Treasure Hoard"
+        },
+        "isSold": false,
+        "events": [],
+        "dialogues": []
+      },
+      {
+        "itemSort": "Unsorted",
+        "imageLink": "/com/example/fantasysortinggame/images/itemimages/img.png",
+        "description": "A delicately carved wooden bird meant to hang from a festival banner.",
+        "title": "Festival Banner Ornament",
+        "itemType": {
+          "itemType": "Decorative / Ornamental"
         },
         "isSold": false,
         "events": [],
@@ -1947,7 +1951,7 @@
           "requiredDay": 1,
           "requiredItem": "Ceremonial Dagger",
           "requiredSort": "Junk",
-          "requiredItemIsSoldValue": false
+          "happensOnSale": false
         }
       ]
     },
@@ -1986,7 +1990,7 @@
           "requiredDay": 1,
           "requiredItem": "Expedition Badge",
           "requiredSort": "Junk",
-          "requiredItemIsSoldValue": false
+          "happensOnSale": false
         }
       ]
     },
@@ -2008,7 +2012,7 @@
           "requiredDay": 1,
           "requiredItem": "Grandpa's Love Letter",
           "requiredSort": "Junk",
-          "requiredItemIsSoldValue": false
+          "happensOnSale": false
         }
       ]
     }
@@ -2041,7 +2045,7 @@
         {
           "requiredDay": 1,
           "requiredSort": "",
-          "requiredItemIsSoldValue": false
+          "happensOnSale": false
         }
       ]
     },
@@ -2060,7 +2064,7 @@
         {
           "requiredDay": 2,
           "requiredSort": "",
-          "requiredItemIsSoldValue": false
+          "happensOnSale": false
         }
       ]
     },
@@ -2079,7 +2083,7 @@
         {
           "requiredDay": 3,
           "requiredSort": "",
-          "requiredItemIsSoldValue": false
+          "happensOnSale": false
         }
       ]
     },
@@ -2098,7 +2102,7 @@
         {
           "requiredDay": 4,
           "requiredSort": "",
-          "requiredItemIsSoldValue": false
+          "happensOnSale": false
         }
       ]
     },
@@ -2117,7 +2121,7 @@
         {
           "requiredDay": 5,
           "requiredSort": "",
-          "requiredItemIsSoldValue": false
+          "happensOnSale": false
         }
       ]
     }

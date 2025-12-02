@@ -89,7 +89,7 @@ public class Database {
             return new ArrayList<>();
         }
 
-        int dayItemFraction = 8;
+        int dayItemFraction = 3;
         int baseCount = Math.max(1, dayItems.size() / dayItemFraction);
 
         int finalCount = baseCount;

@@ -225,6 +225,7 @@ public class SalePhaseController {
                         } else if (event instanceof Dialogue dialogue) {
                             showDialogue(dialogue);
                         }
+                        displayItems();
                         return; // Only trigger one event per sale, and do not complete sale if it happens.
                     }
                 }
