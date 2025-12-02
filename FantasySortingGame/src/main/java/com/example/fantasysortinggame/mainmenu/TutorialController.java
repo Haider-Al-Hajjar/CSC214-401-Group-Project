@@ -21,7 +21,37 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Handles displaying the tutorial images to the player.
+ * Controls and displays the full in-game tutorial sequence for the Fantasy Sorting Game.
+ * <p>
+ * This controller manages:
+ * <ul>
+ *     <li>Loading tutorial images dynamically from the resources folder.</li>
+ *     <li>Displaying tutorial text slides.</li>
+ *     <li>Advancing through slides via a “Next” button.</li>
+ *     <li>Skipping the tutorial entirely.</li>
+ *     <li>Closing the tutorial window once completed.</li>
+ *     <li>Starting the game immediately after the tutorial ends.</li>
+ * </ul>
+ * The tutorial consists of a series of explanatory text slides paired with images.
+ * The images are dynamically loaded from
+ * <code>/com/example/fantasysortinggame/tutorialinformation</code> inside the JAR or IDE
+ * environment.
+ * </p>
+ *
+ * <h3>Usage:</h3>
+ * <pre>
+ *     TutorialController.showTutorial(database);
+ * </pre>
+ *
+ * <p>
+ * The controller expects an FXML layout file named <code>Tutorial.fxml</code> containing:
+ * <ul>
+ *     <li>An ImageView for slide images</li>
+ *     <li>A Label for slide text</li>
+ *     <li>A "Next" button</li>
+ *     <li>An optional "Skip" button</li>
+ * </ul>
+ * </p>
  */
 public class TutorialController {
     @FXML
@@ -41,7 +71,21 @@ public class TutorialController {
 
     @FXML
     private Button skipButton; // add this in FXML and link
-
+    /**
+     * Initializes the tutorial UI once the FXML has loaded.
+     * <p>
+     * This method:
+     * <ul>
+     *     <li>Creates lists for images and text slides.</li>
+     *     <li>Populates all tutorial text entries.</li>
+     *     <li>Loads tutorial images from the resource folder.</li>
+     *     <li>Displays the first image/text slide (if available).</li>
+     *     <li>Binds button actions for advancing and skipping.</li>
+     * </ul>
+     * <p>
+     * This is automatically called by JavaFX after FXML injection.
+     * </p>
+     */
     @FXML
     void initialize() {
         tutorialImages = new ArrayList<>();
@@ -64,7 +108,12 @@ public class TutorialController {
         }
 
     }
-
+    /**
+     * Skips the entire tutorial and immediately starts the game.
+     * <p>
+     * Closes the tutorial window and triggers {@link GameEngine#startDayCycle()}.
+     * </p>
+     */
     private void onSkipTutorial() {
         if (stage != null) stage.close();
         GameEngine.startDayCycle(); // immediately start the game
@@ -75,9 +124,14 @@ public class TutorialController {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-
     /**
-     * Launches the tutorial in a new Stage
+     * Opens the tutorial window in a new JavaFX stage.
+     * <p>
+     * Loads the {@code Tutorial.fxml}, injects the database, attaches the stage,
+     * and displays the UI.
+     * </p>
+     *
+     * @param database shared game database to inject into the controller
      */
     public static void showTutorial(Database database) {
         try {
@@ -100,10 +154,29 @@ public class TutorialController {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Stores a reference to the game’s database.
+     *
+     * @param database the database instance used by the game
+     */
     private void setDatabase(Database database) {
         this.database = database;
     }
+    /**
+     * Dynamically loads all tutorial images from the
+     * <code>com/example/fantasysortinggame/tutorialinformation</code> folder.
+     * <p>
+     * Supports both IDE “file” mode and packaged JAR “jar” mode by detecting
+     * the resource protocol.
+     * </p>
+     *
+     * <h3>Behavior:</h3>
+     * <ul>
+     *     <li>Finds all PNG/JPG files in the tutorial image directory.</li>
+     *     <li>Adds them to {@link #tutorialImages} in alphabetical order.</li>
+     *     <li>Prints errors when resources cannot be loaded.</li>
+     * </ul>
+     */
     private void loadTutorialImages() {
         tutorialImages = new ArrayList<>();
         try {
@@ -140,6 +213,18 @@ public class TutorialController {
             e.printStackTrace();
         }
     }
+    /**
+     * Advances to the next tutorial slide.
+     * <p>
+     * When the player reaches the final slide:
+     * <ul>
+     *     <li>The tutorial window closes</li>
+     *     <li>The day cycle of the game begins</li>
+     * </ul>
+     *
+     * <h3>Image Cycling:</h3>
+     * If there are fewer images than text slides, images loop using modulo.
+     */
     public void onNextButtonHandler() {
         currentIndex++;
         if (currentIndex >= tutorialTexts.size()) {
@@ -156,7 +241,29 @@ public class TutorialController {
     }
 
     /**
-     * Displays the first tutorial image
+     * Displays the first slide of the tutorial sequence.
+     * <p>
+     * This method resets the tutorial index, verifies that tutorial images
+     * are available, and updates the UI to show the first image and text.
+     * It also reassigns the "Next" button handler to ensure slide navigation
+     * functions correctly even if this method is called more than once.
+     * </p>
+     *
+     * <h3>Behavior:</h3>
+     * <ul>
+     *     <li>Does nothing if no tutorial images are loaded.</li>
+     *     <li>Resets the internal slide index to the first slide.</li>
+     *     <li>Warns if the ImageView was not injected properly from FXML.</li>
+     *     <li>Displays the first tutorial image (with modulo safety).</li>
+     *     <li>Displays the corresponding tutorial text.</li>
+     *     <li>Rebinds the "Next" button to {@link #onNextButtonHandler()}.</li>
+     * </ul>
+     *
+     * <h3>Usage Notes:</h3>
+     * <ul>
+     *     <li>Typically called at startup when showing the tutorial window.</li>
+     *     <li>May also be used to restart the tutorial from the beginning.</li>
+     * </ul>
      */
     public void displayTutorial() {
         if (tutorialImages == null || tutorialImages.isEmpty()) return;
