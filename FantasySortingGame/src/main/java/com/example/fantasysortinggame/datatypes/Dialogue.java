@@ -33,13 +33,22 @@ public class Dialogue extends StoryEvent {
         return entries;
     }
 
+    /**
+     * Returns the speaker name of the first dialogue entry.
+     * If no entries or no speaker is present, returns "Unknown".
+     *
+     * @return the speaker's name, or "Unknown" if unavailable
+     */
     public String getSpeaker() {
         if (entries != null && entries.size() > 0 && entries.get(0).getSpeaker() != null) {
             return entries.get(0).getSpeaker().getName();
         }
         return "Unknown";
     }
-
+    /**
+     * Returns the text of the first dialogue entry. * If no entries exist, returns an empty string.
+     *
+     * @return the dialogue text, or an empty string if unavailable */
     public String getText() {
         if (entries != null && entries.size() > 0) {
             return entries.get(0).getText();

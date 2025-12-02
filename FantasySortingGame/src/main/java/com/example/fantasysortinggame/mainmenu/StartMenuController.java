@@ -23,11 +23,20 @@ public class StartMenuController {
     ToggleButton startNewGameButton;
     private final Database database;
     SoundEffectController soundEffectController;
+
+    /**
+     * Constructs the StartMenuController with the provided database.
+     *
+     * @param db Database instance.
+     */
     public StartMenuController(Database db) {
         this.database = db;
         this.soundEffectController = new SoundEffectController();
     }
 
+    /**
+     * Initializes UI elements and sets up event handlers.
+     */
     @FXML
     public void initialize() {
 
@@ -52,12 +61,18 @@ public class StartMenuController {
             });
         }
 
-        startNewGameButton.setOnAction(e-> {
+        startNewGameButton.setOnAction(e -> {
             soundEffectController.playButtonClick();
             startGame();
         });
     }
 
+    /**
+     * Converts a menu display string to a GameMode enum.
+     *
+     * @param menuText Menu display string.
+     * @return Corresponding GameMode enum name.
+     */
     private String convertToEnum(String menuText) {
         return switch (menuText) {
             case "Story Mode" -> "STORY_MODE";
@@ -69,14 +84,18 @@ public class StartMenuController {
         };
     }
 
+    /**
+     * Starts the game using the current database state.
+     * <p>
+     * Loads existing game or starts tutorial if new.
+     */
     private void startGame() {
         boolean fileExists = database.loadFromFile(gameNameField.getText(), database.getGameMode() == null ? GameModeNames.valueOf("Story") : database.getGameMode());
         GameEngine.initialize(database, new Stage(), soundEffectController);
         GameEngine.setGameMode(database.getGameMode()); // add this in your GameEngine
         if (fileExists) {
             GameEngine.startDayCycle();
-        }
-        else {
+        } else {
             TutorialController.showTutorial(database);
         }
         // Close start menu window

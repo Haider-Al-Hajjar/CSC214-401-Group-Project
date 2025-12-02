@@ -17,6 +17,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
+/**
+ * Represents the main game database for Fantasy Sorting Game.
+ * Handles saving, loading, and managing in-game data including items, upgrades, events, NPCs, dialogues, and gold.
+ * Supports multiple game modes and tracks player progress over days.
+ */
 public class Database {
     final String SAVE_DIR = "savedfiles";
     private GameModeNames gameMode;
@@ -33,57 +38,101 @@ public class Database {
     private ArrayList<Dialogue> allDialogues;
     private double gold = 0.0;
 
+    /**
+     * Returns the current save file name. * @return the name of the save file
+     */
     public String getFileName() {
         return fileName;
     }
 
+    /**
+     * Sets the save file name. * @param fileName the name of the save file to use
+     */
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
+    /**
+     * Returns all items in the game database. * @return list of all items organized by day
+     */
     public ArrayList<ArrayList<Item>> getAllItems() {
         return allItems;
     }
 
+    /**
+     * Returns the current seed used for randomization. * @return the seed value
+     */
     public int getSeed() {
         return seed;
     }
 
+    /**
+     * Sets the seed used for randomization. * @param seed the seed value
+     */
     public void setSeed(int seed) {
         this.seed = seed;
     }
 
+    /**
+     * Returns the current day of the game. * @return the current day
+     */
     public int getDay() {
         return day;
     }
 
+    /**
+     * Returns the day value wrapped within bounds (1 to MAX_DAY). * @return the day in bound
+     */
     public int getDayInBound() {
-        return Math.max(day%(MAX_DAY + 1), 1);
+        return Math.max(day % (MAX_DAY + 1), 1);
     }
 
+    /**
+     * Sets the current day of the game. * @param day the day to set
+     */
     public void setDay(int day) {
         this.day = day;
     }
 
+    /**
+     * Returns the number of mistakes made by the player. * @return number of mistakes
+     */
     public int getMistakes() {
         return mistakes;
     }
 
+    /**
+     * Sets the number of mistakes made by the player. * @param mistakes number of mistakes
+     */
     public void setMistakes(int mistakes) {
         this.mistakes = mistakes;
     }
 
+    /**
+     * Returns the list of items the player has already used.
+     *
+     * @return list of used items
+     */
     public ArrayList<Item> getUsedItems() {
         return usedItems;
     }
 
+    /**
+     * Sets the list of items the player has already used.
+     *
+     * @param usedItems list of used items
+     */
     public void setUsedItems(ArrayList<Item> usedItems) {
         this.usedItems = usedItems;
     }
 
-    // Return list for that day
+    /**
+     * Returns the items available for the current day, factoring in upgrades and randomization.
+     *
+     * @return list of items for the day
+     */
     public ArrayList<Item> getItems() {
-        ArrayList<Item> dayItems = allItems.get(getDayInBound()-1);
+        ArrayList<Item> dayItems = allItems.get(getDayInBound() - 1);
 
         if (dayItems.isEmpty()) {
             return new ArrayList<>();
@@ -112,58 +161,118 @@ public class Database {
 
     }
 
-
+    /**
+     * Sets all items in the game database.
+     *
+     * @param allItems list of all items organized by day
+     */
     public void setAllItems(ArrayList<ArrayList<Item>> allItems) {
         this.allItems = allItems;
     }
 
+    /**
+     * Returns all upgrades available in the game.
+     *
+     * @return list of all upgrades
+     */
     public ArrayList<Upgrade> getAllUpgrades() {
         return allUpgrades;
     }
 
+    /**
+     * Sets all upgrades available in the game.
+     *
+     * @param allUpgrades list of all upgrades
+     */
     public void setAllUpgrades(ArrayList<Upgrade> allUpgrades) {
         this.allUpgrades = allUpgrades;
     }
 
-
+    /**
+     * Returns all Quick Time Events (QTEs) in the game.
+     *
+     * @return list of all QTEs
+     */
     public ArrayList<QuickTimeEvent> getAllEvents() {
         return allEvents;
     }
 
+    /**
+     * Sets all Quick Time Events (QTEs) in the game.
+     *
+     * @param allEvents list of all QTEs
+     */
     public void setAllEvents(ArrayList<QuickTimeEvent> allEvents) {
         this.allEvents = allEvents;
     }
 
+    /**
+     * Returns all NPCs in the game.
+     *
+     * @return list of all NPCs
+     */
     public ArrayList<Npc> getAllNpcs() {
         return allNpcs;
     }
 
+    /**
+     * Sets all NPCs in the game.
+     *
+     * @param allNpcs list of all NPCs
+     */
     public void setAllNpcs(ArrayList<Npc> allNpcs) {
         this.allNpcs = allNpcs;
     }
 
+    /**
+     * Returns all dialogues in the game.
+     *
+     * @return list of all dialogues
+     */
     public ArrayList<Dialogue> getAllDialogues() {
         return allDialogues;
     }
 
+    /**
+     * Sets all dialogues in the game.
+     *
+     * @param allDialogues list of all dialogues
+     */
     public void setAllDialogues(ArrayList<Dialogue> allDialogues) {
         this.allDialogues = allDialogues;
     }
 
-    //Suyog - added fer more getters and setters
+    /**
+     * Returns the current amount of gold the player has.
+     *
+     * @return current gold amount
+     */
     public double getGold() {
         return gold;
     }
 
+    /**
+     * Sets the player's gold amount.
+     *
+     * @param gold amount of gold to set
+     */
     public void setGold(double gold) {
         this.gold = gold;
     }
 
+    /**
+     * Adds gold to the player's current total.
+     *
+     * @param amount amount of gold to add
+     */
     public void addGold(double amount) {
         this.gold += amount;
 
     }
 
+    /**
+     * Checks if a specific upgrade has been purchased. * @param upgradeName name of the upgrade to check * @return true if the upgrade has been bought, false otherwise
+     */
     public boolean upgradeIsBought(String upgradeName) {
         for (Upgrade u : allUpgrades) {
             if (u.getName().equalsIgnoreCase(upgradeName)) {
@@ -174,9 +283,14 @@ public class Database {
     }
 
 
-    // ================================================================
-    //                          LOAD FILE
-    // ================================================================
+    /**
+     * Loads game data from a save file. If the file does not exist, a default save is created.
+     * Handles backward-compatibility with old save formats.
+     *
+     * @param fileName the save file name
+     * @param gameMode the game mode being loaded
+     * @return true if a previous file existed, false if a new save was created
+     */
     public boolean loadFromFile(String fileName, GameModeNames gameMode) {
         boolean previousFileExists = true;
         this.fileName = fileName; // store the filename first
@@ -277,13 +391,22 @@ public class Database {
         return previousFileExists;
     }
 
+    /**
+     * Returns the File object representing the current save file path.
+     * Ensures the save directory exists.
+     *
+     * @return the save file
+     */
     private File getSaveFile() {
         File dir = new File(SAVE_DIR);
         if (!dir.exists()) dir.mkdirs(); // create folder if it doesn't exist
         return new File(dir, fileName);
     }
 
-    // Copy masterFile into a new save file
+    /**
+     * Creates a new default save file by copying the master file.
+     * Used when no previous save exists.
+     */
     private void createDefaultSave() {
         Path source = Paths.get("src/main/java/com/example/fantasysortinggame/database/data/masterFile.json");
         Path target = getSaveFile().toPath(); // use helper
@@ -295,10 +418,10 @@ public class Database {
         }
     }
 
-
-    // ================================================================
-    //                          SAVE FILE
-    // ================================================================
+    /**
+     * Saves the current database state to disk as JSON.
+     * Creates the save file if it does not already exist.
+     */
     public void saveToFile() {
         if (fileName == null || fileName.isEmpty()) {
             fileName = "saveFile.json";
@@ -315,6 +438,12 @@ public class Database {
         }
     }
 
+    /**
+     * Retrieves the next dialogue that should trigger based on game state.
+     * Only returns dialogues that have not happened yet and whose conditions are met.
+     *
+     * @return the dialogue to trigger, or null if none apply
+     */
     public Dialogue getTriggeredDialogue() {
         if (allDialogues == null) return null;
 
@@ -326,18 +455,38 @@ public class Database {
         return null;
     }
 
+    /**
+     * Returns the current game mode. Defaults to Story mode if unset.
+     *
+     * @return the current game mode
+     */
     public GameModeNames getGameMode() {
         return (this.gameMode == null ? GameModeNames.valueOf("Story") : this.gameMode);
     }
 
+    /**
+     * Sets the current game mode.
+     *
+     * @param gameMode the game mode to apply
+     */
     public void setGameMode(GameModeNames gameMode) {
         this.gameMode = gameMode;
     }
 
+    /**
+     * Returns the maximum number of days supported by the game.
+     *
+     * @return max day value
+     */
     public int getMaxDay() {
         return MAX_DAY;
     }
-
+    /**
+     *  Sets all items in the game database.
+     *  Replaces the entire day-organized item structure.
+     *
+     *  @param items list of items organized by day
+     */
     public void setItems(ArrayList<ArrayList<Item>> items) {
         this.allItems = items;
     }

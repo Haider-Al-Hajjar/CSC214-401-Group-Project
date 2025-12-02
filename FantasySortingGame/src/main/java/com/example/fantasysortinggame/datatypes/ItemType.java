@@ -11,6 +11,11 @@ public class ItemType {
         this.itemType = "";
     }
 
+    /**
+     * Sets the item type string.
+     *
+     * @param itemType the item type label to assign
+     */
     public ItemType(String itemType) {
         this.itemType = itemType;
     }

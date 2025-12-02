@@ -29,10 +29,18 @@ public class BuyPhaseController {
     @FXML
     public Label dayLabel;
 
+    /**
+     * Controller for the Buy Phase of the game.
+     * <p>
+     * Handles displaying available upgrades, processing purchases, and advancing to the next phase.
+     */
     public BuyPhaseController(Database database) {
         this.database = database;
     }
 
+    /**
+     * Updates the top bar labels showing the current day and player's gold.
+     */
     private void updateTopBar() {
         if (dayLabel != null) dayLabel.setText("Day: " + database.getDay());
         if (totalGoldLabel != null) totalGoldLabel.setText("Gold: " + database.getGold());
@@ -40,7 +48,11 @@ public class BuyPhaseController {
 
 
     /**
-     * Static helper to show the Buy Phase window and chain to next phase.
+     * Shows the Buy Phase window as a modal and sets up the callback to the next phase.
+     *
+     * @param db              Reference to the game database
+     * @param parentStage     The main application stage
+     * @param onPhaseComplete Runnable to execute after the buy phase completes
      */
     public static void showBuyPhase(Database db, Stage parentStage, Runnable onPhaseComplete) {
         try {
@@ -60,12 +72,18 @@ public class BuyPhaseController {
         }
     }
 
+    /**
+     * Sets the callback to run after the buy phase ends and links the proceed button to it.
+     *
+     * @param onComplete Callback to run after phase completion
+     * @param stage      Stage representing this Buy Phase
+     */
     public void setOnPhaseComplete(Runnable onComplete, Stage stage) {
         this.stage = stage; // assign the stage
         this.onPhaseComplete = () -> {
             if (this.stage != null) this.stage.close();
             if (onComplete != null) onComplete.run();
-            database.setDay(database.getDay()+1); // wrap day around to 1 if it exceeds the bounds of the max day.
+            database.setDay(database.getDay() + 1); // wrap day around to 1 if it exceeds the bounds of the max day.
             database.saveToFile();
             GameEngine.runSortPhase(); // next phase after buying
         };
@@ -78,7 +96,7 @@ public class BuyPhaseController {
 
 
     /**
-     * Load all unbought upgrades from the database.
+     * Loads all upgrades from the database that have not been purchased yet.
      */
     public void loadUpgrades() {
         unboughtUpgrades = database.getAllUpgrades().stream().filter(u -> !u.isBought()).collect(Collectors.toCollection(ArrayList::new));
@@ -86,7 +104,9 @@ public class BuyPhaseController {
     }
 
     /**
-     * Handle a player clicking to buy an upgrade.
+     * Handles a player clicking to buy a specific upgrade.
+     *
+     * @param upgrade The upgrade being purchased
      */
     public void onBuyUpgradeClickHandler(Upgrade upgrade) {
         if (database.getGold() >= upgrade.getCost()) {
@@ -98,7 +118,7 @@ public class BuyPhaseController {
     }
 
     /**
-     * Display the upgrades that are still available to buy.
+     * Displays all currently available (unbought) upgrades in the UI.
      */
     public void displayBuyMenu() {
         shopContainer.getChildren().clear();
@@ -110,7 +130,9 @@ public class BuyPhaseController {
     }
 
     /**
-     * Populate the display for a single upgrade.
+     * Displays a single upgrade in the shop UI with its title, ability, and Buy button.
+     *
+     * @param upgrade The upgrade to display
      */
     public void displayUpgrade(Upgrade upgrade) {
         VBox box = new VBox();

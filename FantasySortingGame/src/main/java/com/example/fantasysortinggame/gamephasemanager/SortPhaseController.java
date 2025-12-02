@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import java.io.InputStream;
 import java.util.*;
 
@@ -43,6 +44,11 @@ public class SortPhaseController {
     private FilterNode rootFilterNode;
     private Runnable onPhaseComplete;
 
+
+    /**
+     * Initializes the controller after FXML loading.
+     * Sets up the proceed button visibility and action.
+     */
     @FXML
     public void initialize() {
         proceedButton.setVisible(false);
@@ -52,7 +58,15 @@ public class SortPhaseController {
         });
     }
 
-
+    /**
+     * Sets dependencies for the Sort Phase, including database, stage, and
+     * callback for phase completion. Initializes filters, views, top bar,
+     * and loads items.
+     *
+     * @param database        Database instance for game state access.
+     * @param stage           Primary stage to show the phase.
+     * @param onPhaseComplete Runnable to execute when phase finishes.
+     */
     public void setDependencies(Database database, Stage stage, Runnable onPhaseComplete) {
         System.out.println(getClass().getClassLoader().getResource("com/example/fantasysortinggame/images/itemimages/img.png"));
         this.database = database;
@@ -67,6 +81,13 @@ public class SortPhaseController {
         loadItems();
     }
 
+    /**
+     * Returns a FilterNode tree representing item sort categories based on
+     * the current day in the game.
+     *
+     * @param day Current in-bound day of the game.
+     * @return Root FilterNode with all category children.
+     */
     FilterNode getItemSortCategoriesByDay(int day) {
         FilterNode root = new FilterNode("root"); // dummy root
         if (day <= 2) { // before day 3 (index 2), categoris are undivided
@@ -88,6 +109,21 @@ public class SortPhaseController {
         return root;
     }
 
+    /**
+     * Creates filter buttons from the given FilterNode tree and adds them to the filterButtonContainer.
+     * <p>
+     * <p>
+     * <p>
+     * <p>
+     * Leaf nodes are represented as ToggleButtons.
+     * <p>
+     * <p>
+     * <p>
+     * <p>
+     * Nodes with children are represented as MenuButtons with recursive submenus.
+     *
+     * @param root Root FilterNode of the filter tree.
+     */
     private void createFilterButtons(FilterNode root) {
         filterButtonContainer.getChildren().clear();
         for (FilterNode child : root.children) {
@@ -107,6 +143,12 @@ public class SortPhaseController {
         }
     }
 
+    /**
+     * Recursively builds submenu items for a MenuButton.
+     *
+     * @param parent Parent MenuButton to attach submenu items to.
+     * @param node   FilterNode to build from.
+     */
     private void buildSubMenu(MenuButton parent, FilterNode node) {
         for (FilterNode child : node.children) {
             if (child.isLeaf()) {
@@ -125,6 +167,12 @@ public class SortPhaseController {
         }
     }
 
+    /**
+     * Recursively builds submenu items for a Menu.
+     *
+     * @param menu Parent Menu to attach items to.
+     * @param node FilterNode to build from.
+     */
     private void buildSubMenuItems(Menu menu, FilterNode node) {
         for (FilterNode child : node.children) {
             if (child.isLeaf()) {
@@ -143,6 +191,12 @@ public class SortPhaseController {
         }
     }
 
+    /**
+     * Creates toggle buttons for each view type (Complete, Image, Lore)
+     * and sets their actions.
+     *
+     * @param views List of view names.
+     */
     private void createViewButtons(List<String> views) {
         viewButtonContainer.getChildren().clear();
 
@@ -158,6 +212,12 @@ public class SortPhaseController {
         }
     }
 
+    /**
+     * Displays items in the itemContainer based on the current filter and view mode.
+     * Skips sold items.
+     * Determines if all items are sorted to toggle the proceed button.
+     * Supports three views: "Complete", "Lore", and "Image".
+     */
     private void displayItems() {
         itemContainer.getChildren().clear();
         boolean allSorted = true;
@@ -227,7 +287,8 @@ public class SortPhaseController {
                 ImageView imageView = new ImageView();
                 if (item.getImageLink() != null) {
                     try {
-                        imageView.setImage(new javafx.scene.image.Image(item.getImageLink()));
+                        InputStream is = getClass().getResourceAsStream(item.getImageLink());
+                        imageView.setImage(new Image(is));
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -247,14 +308,22 @@ public class SortPhaseController {
                 itemContainer.getChildren().add(row);
             }
         }
-            proceedButton.setVisible(allSorted);
+        proceedButton.setVisible(allSorted);
     }
 
+    /**
+     * Updates top bar labels for day and total gold.
+     */
     private void updateTopBar() {
         if (dayLabel != null) dayLabel.setText("Day: " + database.getDay());
         if (totalGoldLabel != null) totalGoldLabel.setText("Gold: " + database.getGold());
     }
 
+    /**
+     * Loads items for the day, merging with previously used items,
+     * <p>
+     * and triggers day-start events.
+     */
     private void loadItems() {
         if (database == null) return;
 
@@ -282,11 +351,14 @@ public class SortPhaseController {
         triggerDayStartEvents();
     }
 
+    /**
+     * Triggers all relevant day-start story events for items and dialogues.
+     */
     private void triggerDayStartEvents() {
         for (Item item : items) {
-            if (item.getEvents() == null) continue;
+            if (item.getQuickTimeEvents() == null) continue;
 
-            for (StoryEvent event : item.getEvents()) {
+            for (StoryEvent event : item.getQuickTimeEvents()) {
                 if (event.hasHappened()) continue;
 
                 for (StoryEventTrigger trigger : event.getStoryEventTriggers()) {
@@ -325,6 +397,14 @@ public class SortPhaseController {
         }
     }
 
+    /**
+     * Displays a context menu for sorting an item according to the day and
+     * <p>
+     * current category structure.
+     *
+     * @param button Button that triggers the menu.
+     * @param item   Item to sort.
+     */
     private void showSortMenu(Button button, Item item) {
         ContextMenu menu = new ContextMenu();
         int day = database.getDayInBound();
@@ -339,7 +419,7 @@ public class SortPhaseController {
         }
 
         menu.show(button, Side.BOTTOM, 0, 0);
-        for (StoryEvent event : item.getEvents()) {
+        for (StoryEvent event : item.getQuickTimeEvents()) {
             if (!event.hasHappened() && event.shouldTrigger(database)) {
                 if (event instanceof Dialogue dialogueEvent) {
                     showDialogue(dialogueEvent);
@@ -352,6 +432,11 @@ public class SortPhaseController {
         }
     }
 
+    /**
+     * Shows a dialogue by disabling other UI elements, running the dialogue, and re-enabling the UI once the dialogue ends.
+     *
+     * @param dialogue Dialogue object to display.
+     */
     public void showDialogue(Dialogue dialogue) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/fantasysortinggame/fxmlfiles/dialogueBox.fxml"));
@@ -382,6 +467,14 @@ public class SortPhaseController {
         }
     }
 
+    /**
+     * Creates a MenuItem for a given sort option and attaches the click handler.
+     *
+     * @param name   Name of the sort option.
+     * @param button Button associated with the item being sorted.
+     * @param item   Item to sort.
+     * @return MenuItem configured to sort the given item.
+     */
     private MenuItem createMenuItem(String name, Button button, Item item) {
         MenuItem mi = new MenuItem(name);
         mi.setOnAction(e -> {
@@ -391,6 +484,15 @@ public class SortPhaseController {
         return mi;
     }
 
+    /**
+     * Creates a Menu containing multiple sub-items for sorting.
+     *
+     * @param name     Name of the parent menu.
+     * @param subItems Array of sub-item names.
+     * @param button   Button associated with the item being sorted.
+     * @param item     Item to sort.
+     * @return Menu populated with sub-items.
+     */
     private Menu createSubMenu(String name, String[] subItems, Button button, Item item) {
         Menu menu = new Menu(name);
         for (String sub : subItems) {
@@ -399,6 +501,15 @@ public class SortPhaseController {
         return menu;
     }
 
+    /**
+     * Creates a hierarchical sub-sub menu for sorting items.
+     *
+     * @param name        Name of the parent menu.
+     * @param subSubItems 2D array representing submenus and their child items.
+     * @param button      Button associated with the item being sorted.
+     * @param item        Item to sort.
+     * @return MenuItem representing the hierarchical menu.
+     */
     private MenuItem createSubSubMenu(String name, String[][] subSubItems, Button button, Item item) {
         Menu menu = new Menu(name);
         for (int i = 0; i < subSubItems[0].length; i++) {
@@ -407,10 +518,19 @@ public class SortPhaseController {
         return menu;
     }
 
+    /**
+     * Handles sort selection for an item, triggers events if needed,
+     * <p>
+     * updates UI, and processes correct/incorrect sort logic.
+     *
+     * @param item    Item being sorted.
+     * @param button  Button used to select the sort.
+     * @param newSort The new sort category selected.
+     */
     void handleSortSelection(Item item, Button button, String newSort) {
 
-        if (item.getEvents() != null) {
-            for (StoryEvent event : item.getEvents()) {
+        if (item.getQuickTimeEvents() != null) {
+            for (StoryEvent event : item.getQuickTimeEvents()) {
                 if (!event.hasHappened()) {
                     for (StoryEventTrigger trigger : event.getStoryEventTriggers()) {
                         // Pass the newSort to check sort-dependent triggers
@@ -432,8 +552,7 @@ public class SortPhaseController {
         item.setItemSort(newSort);
         if (newSort.equalsIgnoreCase(item.getItemTypeValue()) || newSort.equalsIgnoreCase("Unsorted")) {
             GameEngine.onCorrectSort(item);
-        }
-        else {
+        } else {
             GameEngine.onIncorrectSort();
         }
         button.setText(newSort);
@@ -441,6 +560,15 @@ public class SortPhaseController {
 
     }
 
+    /**
+     * Finishes the
+     * phase:
+     * closes stage, saves
+     * database,
+     * and runs
+     * <p>
+     * onPhaseComplete callback.
+     */
     private void finishPhase() {
         if (stage != null) {
             stage.close();
@@ -451,6 +579,13 @@ public class SortPhaseController {
         }
     }
 
+    /**
+     * Finds a FilterNode by name in a tree recursively.
+     *
+     * @param node       Root node to search from.
+     * @param filterName Name of the filter to find.
+     * @return FilterNode if found, else null.
+     */
     private FilterNode findFilterNode(FilterNode node, String filterName) {
         if (node.name.equalsIgnoreCase(filterName)) return node;
         for (FilterNode child : node.children) {
@@ -460,6 +595,13 @@ public class SortPhaseController {
         return null;
     }
 
+    /**
+     * Shows the Sort Phase by loading the FXML and initializing the controller.
+     *
+     * @param db              Database instance for the game.
+     * @param parentStage     Stage to display the phase.
+     * @param onPhaseComplete Runnable to execute when the phase ends.
+     */
     public static void showSortPhase(Database db, Stage parentStage, Runnable onPhaseComplete) {
         try {
             javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(SortPhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/sortPhase.fxml"));
@@ -474,30 +616,73 @@ public class SortPhaseController {
         }
     }
 
+    /**
+     * Inner class representing a node in the filter tree for item sorts.
+     */
     class FilterNode {
         String name;
         List<FilterNode> children;
 
+        /**
+         * Creates a leaf FilterNode with no children.
+         *
+         * @param name Name of the filter node.
+         */
         public FilterNode(String name) {
             this.name = name;
             this.children = new ArrayList<>();
         }
 
+        /**
+         * Creates a FilterNode with specified children.
+         *
+         * @param name     Name of the filter node.
+         * @param children List of child FilterNodes.
+         */
         public FilterNode(String name, List<FilterNode> children) {
             this.name = name;
             this.children = children == null ? new ArrayList<>() : children;
         }
 
+        /**
+         * Checks if the node is a leaf (no children).
+         *
+         * @return true if the node has no children, false otherwise.
+         */
         public boolean isLeaf() {
             return children.isEmpty();
         }
 
         /**
-         * Main matching entry.
-         * - exact name match (case-insensitive)
-         * - "All" at root -> match everything
-         * - "All X" -> find node named X in the master tree and match anything in X's subtree
-         * - otherwise: check descendants normally
+         * Determines if an item sort string matches this filter node.
+         * <p>
+         * <p>
+         * <p>
+         * <p>
+         * Matching rules:
+         * <p>
+         * <p>
+         * <p>
+         * <p>
+         * Exact match (case-insensitive)
+         * <p>
+         * <p>
+         * <p>
+         * <p>
+         * Root-level "All" matches everything
+         * <p>
+         * <p>
+         * <p>
+         * <p>
+         * "All X" matches anything in X's canonical subtree
+         * <p>
+         * <p>
+         * <p>
+         * <p>
+         * Otherwise checks descendants recursively
+         *
+         * @param itemSort Item sort string to test.
+         * @return true if the itemSort matches this node.
          */
         public boolean matches(String itemSort) {
             if (itemSort == null) return false;
@@ -530,7 +715,13 @@ public class SortPhaseController {
             return false;
         }
 
-        // Recursively search a node's subtree for a match (case-insensitive)
+        /**
+         * Recursively checks a subtree for a match with the given item sort.
+         *
+         * @param node     Node to search from.
+         * @param itemSort Item sort string to match.
+         * @return true if a match is found in the subtree.
+         */
         private boolean subtreeMatch(FilterNode node, String itemSort) {
             if (node == null || itemSort == null) return false;
             if (itemSort.equalsIgnoreCase(node.name)) return true;

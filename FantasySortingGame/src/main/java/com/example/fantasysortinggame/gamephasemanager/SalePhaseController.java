@@ -17,6 +17,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Controller for the Sale Phase of the game where players sell items.
+ * <p>
+ * Manages item display, filtering, selling, and triggering related story events.
+ * <p>
+ * Also handles dialogue display and top-bar updates (day and gold).
+ */
 public class SalePhaseController {
 
     @FXML
@@ -39,6 +46,14 @@ public class SalePhaseController {
     FilterNode rootFilterNode;
     private Runnable onPhaseComplete;
     final double MIN_ITEM_VALUE = 10;
+
+    /**
+     * Launches the Sale Phase UI.
+     *
+     * @param db          Database containing game state.
+     * @param parentStage The stage to display the sale phase.
+     * @param onComplete  Runnable executed when the phase finishes.
+     */
     public static void showSalePhase(Database db, Stage parentStage, Runnable onComplete) {
         try {
             FXMLLoader loader = new FXMLLoader(SalePhaseController.class.getResource("/com/example/fantasysortinggame/fxmlfiles/SalePhase.fxml"));
@@ -54,6 +69,13 @@ public class SalePhaseController {
         }
     }
 
+    /**
+     * Sets dependencies and initializes the Sale Phase UI.
+     *
+     * @param database   The game database.
+     * @param stage      The stage to show the UI on.
+     * @param onComplete Callback executed when the phase finishes.
+     */
     public void setDependencies(Database database, Stage stage, Runnable onComplete) {
         this.database = database;
         this.stage = stage;
@@ -81,6 +103,12 @@ public class SalePhaseController {
         displayItems();
     }
 
+    /**
+     * Builds a filter tree for items based on the current day.
+     *
+     * @param day The current day.
+     * @return Root FilterNode containing category hierarchy.
+     */
     FilterNode getItemSortCategoriesByDay(int day) {
         FilterNode root = new FilterNode("root");
         if (day <= 2) {
@@ -99,7 +127,11 @@ public class SalePhaseController {
         return root;
     }
 
-
+    /**
+     * Creates filter buttons and menus in the UI from a FilterNode tree.
+     *
+     * @param root Root of the filter tree.
+     */
     private void createFilterButtons(FilterNode root) {
         filterButtonContainer.getChildren().clear();
         for (FilterNode child : root.children) {
@@ -119,6 +151,12 @@ public class SalePhaseController {
         }
     }
 
+    /**
+     * Recursively builds submenu items for a MenuButton.
+     *
+     * @param parent Parent MenuButton to attach submenu items to.
+     * @param node   FilterNode to build from.
+     */
     private void buildSubMenu(MenuButton parent, FilterNode node) {
         for (FilterNode child : node.children) {
             if (child.isLeaf()) {
@@ -137,6 +175,12 @@ public class SalePhaseController {
         }
     }
 
+    /**
+     * Recursively builds submenu items for a Menu.
+     *
+     * @param menu Parent Menu to attach items to.
+     * @param node FilterNode to build from.
+     */
     private void buildSubMenuItems(Menu menu, FilterNode node) {
         for (FilterNode child : node.children) {
             if (child.isLeaf()) {
@@ -155,6 +199,9 @@ public class SalePhaseController {
         }
     }
 
+    /**
+     * Updates the top bar labels (day and gold).
+     */
     void updateTopBar() {
         if (dayLabel != null) {
             dayLabel.setText("Day: " + database.getDay());
@@ -164,6 +211,9 @@ public class SalePhaseController {
         }
     }
 
+    /**
+     * Displays items matching the current filter in the item container.
+     */
     void displayItems() {
         itemContainer.getChildren().clear();
 
@@ -198,6 +248,13 @@ public class SalePhaseController {
         }
     }
 
+    /**
+     * Finds a FilterNode by name recursively.
+     *
+     * @param node       Node to start search from.
+     * @param filterName Name of filter to find.
+     * @return FilterNode with the matching name or null if not found.
+     */
     private FilterNode findFilterNode(FilterNode node, String filterName) {
         if (node.name.equalsIgnoreCase(filterName)) {
             return node;
@@ -209,9 +266,14 @@ public class SalePhaseController {
         return null;
     }
 
+    /**
+     * Handles selling an item, triggers relevant story events if applicable.
+     *
+     * @param item Item to sell.
+     */
     void sellItem(Item item) {
-        if (item.getEvents() != null && !item.getEvents().isEmpty()) {
-            for (StoryEvent event : item.getEvents()) {
+        if (item.getQuickTimeEvents() != null && !item.getQuickTimeEvents().isEmpty()) {
+            for (StoryEvent event : item.getQuickTimeEvents()) {
                 if (event.hasHappened()) continue;
 
                 for (StoryEventTrigger trigger : event.getStoryEventTriggers()) {
@@ -240,10 +302,22 @@ public class SalePhaseController {
         updateTopBar();
     }
 
+    /**
+     * Estimates the base value of an item.
+     *
+     * @param item Item to estimate.
+     * @return Base value of the item.
+     */
     private double estimateItemValue(Item item) {
         return (Math.max(item.getValue(), MIN_ITEM_VALUE));
     }
 
+    /**
+     * Calculates the bonus for correctly sorted items.
+     *
+     * @param item Item to check.
+     * @return Bonus value if item is correctly sorted; otherwise 0.
+     */
     double calculateCorrectSortBonus(Item item) {
         if (item.getItemSort().equalsIgnoreCase(item.getItemTypeValue())) {
             return estimateItemValue(item) * 0.5;
@@ -251,6 +325,11 @@ public class SalePhaseController {
         return 0;
     }
 
+    /**
+     * Shows a dialogue UI for the given Dialogue object.
+     *
+     * @param dialogue Dialogue to display.
+     */
     public void showDialogue(Dialogue dialogue) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -281,7 +360,9 @@ public class SalePhaseController {
         }
     }
 
-
+    /**
+     * Finishes the Sale Phase, saves data, closes the stage, and executes completion callback.
+     */
     private void finishPhase() {
         if (stage != null) {
             stage.close();
@@ -292,6 +373,9 @@ public class SalePhaseController {
         }
     }
 
+    /**
+     * Represents a node in the item filter hierarchy.
+     */
     class FilterNode {
         String name;
         List<FilterNode> children;
@@ -306,10 +390,19 @@ public class SalePhaseController {
             this.children = children == null ? new ArrayList<>() : children;
         }
 
+        /**
+         * Returns true if this node has no children.
+         */
         public boolean isLeaf() {
             return children.isEmpty();
         }
 
+        /**
+         * Checks if a given item sort matches this filter node or subtree.
+         *
+         * @param itemSort Item sort name.
+         * @return True if item matches this node or its subtree.
+         */
         public boolean matches(String itemSort) {
             if (itemSort == null) return false;
 

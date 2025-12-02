@@ -7,18 +7,33 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
+/**
+ * Controller for the Mistake Popup window.
+ * <p>
+ * Displays a message to the user and allows closing the popup.
+ */
 public class MistakePopupController {
 
     @FXML
     private Label messageLabel;
 
+    /**
+     * Sets the text of the mistake message.
+     *
+     * @param msg Message to display.
+     */
     public void setMessage(String msg) {
         messageLabel.setText(msg);
     }
 
-    /** Static factory for showing the popup */
+    /**
+     * Static factory method to display the mistake popup.
+     *
+     * @param text Message to show in the popup.
+     */
     public static void showPopup(String text) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -41,6 +56,11 @@ public class MistakePopupController {
         }
     }
 
+    /**
+     * Closes the popup window.
+     *
+     * @param actionEvent ActionEvent triggered by the close button.
+     */
     @FXML
     public void closeWindow(ActionEvent actionEvent) {
         Stage stage = (Stage) messageLabel.getScene().getWindow();
